@@ -15,8 +15,12 @@ app.use(bodyParser.json())
 /*****VARIABLES******/
 const APP_PORT = process.env.PORT ?? "8080"
 
-app.get("/*", (req, res)=>{
+app.get("/", (req, res)=>{
     res.render("index")
+})
+
+app.get("/proyects", (req, res)=>{
+    res.render("proyects")
 })
 
 app.listen(APP_PORT, ()=>{
