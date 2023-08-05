@@ -1,13 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GERMANJS</title>
-</head>
-<body>
+<html lang="es">
 
-    <h2>HOLA MUNDO</h2>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;600;700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <title>PORTFOLIO</title>
+</head>
+
+<body id="elemBody" class="modoClaro  modoOscuro">
+  <header>
+    <div class="navbar">
+      <div class="navbar--logo">
+        <a href="index.html"> <h1>HTML<span class="main-punto">.</span>CSS<span class="main-punto">.</span>JS</h1></a>
+      </div>
+      <div class="navbar--botones">
+        <ul class="navbar--botones-ul">
+          <li>About</li>
+          <li>Portfolio</li>
+          <li><a style="color: inherit;" href="resources.html"> Resources</a> </li>
+          <li>Contact</li>
+        </ul>
+      </div>
+      <div class="navbar--modo">
+        <input id="btnModo" style="display: none;" type="button" value="-Dark Mode-">
+        <i id="iconoLight" class="fas fa-moon"></i>
+      </div>
+    </div>
+  </header>
+  <div class="containerMain">
+    <div>
+      <p class="main-texto">Hello! my name is <span class="main-nombre"> GERMÁN</span><span class="main-punto"
+          id="main-punto">_</span>
+      </p>
+      <p class="main-texto">I'am full-stack web developer </p>
+      <button class="main-btn">CONTACT</button>
+    </div>
+  </div>
+  <div class="containterMain--portfolio">
+    <ul class="portfolio">
+      <li class="portfolio-items">
+        <img class="paisImagen" src="./images/sitio1.PNG">
+        <h3 class="paisNombre">MUSICAL KEY</h3>
+        <h6 class="paisNombre">HTML CSS JS</h6>
+      </li>
+      <li class="portfolio-items">
+        <img class="paisImagen" src="./images/sitio2.PNG">
+        <h3 class="paisNombre">CLOCK</h3>
+        <h6 class="paisNombre">HTML CSS JS</h6>
+      </li>
+    </ul>
+  </div>
+  <div class="container--skills">
+    <div class="skills-barras">
+      <div class="skill-container">
+        <div class="skill-html">HTML</div>
+      </div>
+      <div class="skill-container">
+        <div class="skill-css">CSS</div>
+      </div>
+      <div class="skill-container">
+        <div class="skill-js">JS</div>
+      </div>
+      <div class="skill-container">
+        <div class="skill-node">NODEJS</div>
+      </div>
+      <div class="skill-container">
+        <div class="skill-sql">SQL</div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div class="containterMain--redes">
+      <ul class="redes">
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fab fa-twitter"></i></a>
+        <a class="redes-items" href="https://github.com/germandeburzaco"><i class="fab fa-github"></i></a>
+        <a class="redes-items" href="https://codepen.io/GermanDaniG"><i class="fab fa-codepen"></i></a>
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fas fa-envelope"></i></a>
+
+      </ul>
+    </div>
+    <div class="footer-bajo">
+
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener("load", () => {
+        var iconoLight = document.getElementsByClassName("fas")
     
+        let puntos = document.getElementById("main-punto")
+        const puntoIntermitente = () => {
+            puntos.classList.toggle("main-punto-oculto")
+            setTimeout(puntoIntermitente, 1000)
+        }
+        puntoIntermitente()
+
+        iconoLight[0].addEventListener('click', (e) => {
+        
+            var btnModo = document.getElementById('btnModo')
+            var elemBody = document.getElementById('elemBody')
+
+            if (btnModo.value == `-Dark Mode-`) {
+                btnModo.value = "-Light Mode-"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            } else {
+                btnModo.value = "-Dark Mode-"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            }
+        });
+
+    })
+
+  </script>
 </body>
+
 </html>
