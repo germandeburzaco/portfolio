@@ -20,6 +20,7 @@ app.get("/", (req, res)=>{
 })
 
 app.get("/proyects", (req, res)=>{
+    console.log("pido pro")
     res.render("proyects")
 })
 
