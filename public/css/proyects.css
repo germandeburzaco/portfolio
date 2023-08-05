@@ -101,6 +101,26 @@ header{
     align-items: center;
 }
 
+.main-texto{
+    color: var(--txtColor1Claro);
+    font-size: 28px;
+}
+
+.main-nombre{
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.main-punto{
+    color: var(--txtColorpunto); 
+    font-weight: 800;
+}
+
+.main-punto-oculto{
+    color:  var(--bkColor2Claro);
+}
+
+
 aside{
     grid-column: 1/6;
     background-color: var(--bkColor1Claro);
