@@ -280,8 +280,20 @@ footer{
     height: 30px;
 }
 
-/*@media screen and (max-width: 700px) {
-    .navbar--botones{
-        display: none;
-    }
-}*/
+/* Estilos para dispositivos móviles utilizando media queries */
+@media (max-width: 768px) {
+    
+    .navbar--botones-ul {
+        display: flex; /* Cambiar a flexbox para apilar elementos verticalmente */
+        flex-direction: column; /* Apilar elementos verticalmente */
+        align-items: center; /* Centrar elementos verticalmente */
+        grid-template-columns: none; /* Desactivar la cuadrícula */        
+        cursor: auto; /* Eliminar el cursor pointer */
+      }
+      
+      .navbar--botones-ul li {
+        margin-right: 0; /* Eliminar el espaciado entre elementos */
+        margin-bottom: 10px; /* Agregar un poco de espaciado vertical */
+        font-size: 18px; /* Tamaño de fuente */
+      }
+  }
