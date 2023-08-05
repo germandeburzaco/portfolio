@@ -125,7 +125,8 @@ footer{
     background-color: var(--bkColor1Claro);
     bottom: 0;
     width: 100%;
-    position: fixed
+    position: fixed;
+    height: 40px;
     
 }
 
