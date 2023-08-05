@@ -45,8 +45,7 @@
   </header>
   <div class="containerMain">
     <div>
-      <p class="main-texto">Hello! my name is <span class="main-nombre"> GERMÁN</span><span class="main-punto"
-          id="main-punto">_</span>
+      <p class="main-texto">Hello! my name is <span class="main-nombre"> GERMÁN</span><span class="main-punto" id="main-punto">_</span>
       </p>
       <p class="main-texto">I'am full-stack web developer </p>
       <button class="main-btn">CONTACT</button>
@@ -67,7 +66,10 @@
     </ul>
   </div>
   <div class="container--skills">
+    
     <div class="skills-barras">
+      <p class="main-texto" style="text-align: center;">My <span class="main-nombre"> SKILLS</span><span class="main-punto" id="main-puntoSkill">_</span>
+      </p>
       <div class="skill-container">
         <div class="skill-html">HTML</div>
       </div>
@@ -106,8 +108,13 @@
         var iconoLight = document.getElementsByClassName("fas")
     
         let puntos = document.getElementById("main-punto")
+        let puntosSkill = document.getElementById("main-puntoSkill")
+
+
+
         const puntoIntermitente = () => {
             puntos.classList.toggle("main-punto-oculto")
+            puntosSkill.classList.toggle("main-punto-oculto")
             setTimeout(puntoIntermitente, 1000)
         }
         puntoIntermitente()
