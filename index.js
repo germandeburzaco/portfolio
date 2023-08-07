@@ -1,7 +1,17 @@
 const express = require("express")
 const path =require("node:path")
 var bodyParser = require('body-parser')
+const mysql = require('mysql');
 const app = express()
+
+
+const connection = mysql.createConnection({
+  host: 'localhost',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
+  user: 'tu_usuario',    // Cambia esto a tu nombre de usuario de MySQL
+  password: 'tu_contraseña', // Cambia esto a tu contraseña de MySQL
+  database: 'nombre_de_tu_base_de_datos' // Cambia esto al nombre de tu base de datos
+});
+
 
 app.use(express.json());
 app.set('views', path.join(__dirname, '/src/views'))
