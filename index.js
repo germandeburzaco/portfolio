@@ -1,16 +1,25 @@
 const express = require("express")
 const path =require("node:path")
 var bodyParser = require('body-parser')
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const app = express()
 
 
 const connection = mysql.createConnection({
-  host: 'localhost',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
-  user: 'tu_usuario',    // Cambia esto a tu nombre de usuario de MySQL
-  password: 'tu_contraseña', // Cambia esto a tu contraseña de MySQL
-  database: 'nombre_de_tu_base_de_datos' // Cambia esto al nombre de tu base de datos
+  host: 'containers-us-west-159.railway.app',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
+  user: 'root',    // Cambia esto a tu nombre de usuario de MySQL
+  password: 'AOOtjjw19l1YZyWBRzhM', // Cambia esto a tu contraseña de MySQL
+  database: 'railway', // Cambia esto al nombre de tu base de datos,
+  port: 5825
 });
+
+connection.connect((err) => {
+    if (err) {
+      console.error('Error de conexión: ', err);
+    } else {
+      console.log('Conexión exitosa a la base de datos');
+    }
+  });
 
 
 app.use(express.json());
@@ -24,6 +33,17 @@ app.use(bodyParser.json())
 
 /*****VARIABLES******/
 const APP_PORT = process.env.PORT ?? "8080"
+
+/*********FUNCIONES************** */
+function generateRandomNumber() {
+    const min = 1000; // El valor mínimo de 4 cifras
+    const max = 9999; // El valor máximo de 4 cifras
+  
+    // Math.random() genera un número decimal entre 0 (incluido) y 1 (excluido)
+    // Multiplicamos por (max - min + 1) para obtener un rango inclusivo
+    // Luego sumamos min para desplazar el rango
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 
 /******MIDDLEWARES********/
@@ -43,6 +63,15 @@ app.use((req, res, next)=>{
 })
 
 app.get("/", (req, res)=>{
+    const randomNum = generateRandomNumber();
+   /* connection.query(
+        `INSERT INTO USUARIOS values(${randomNum}, "test", "123")`,
+        function(err, results, fields) {
+          console.log(results); // results contains rows returned by server
+          console.log(fields); // fields contains extra meta data about results, if available
+        }
+      );*/
+
     res.render("index")
 })
 
