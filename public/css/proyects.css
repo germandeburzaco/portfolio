@@ -132,7 +132,16 @@ aside{
     background-color: lightgreen;
 }
 
-
+.main-btn {
+    padding: 0.5rem 3.2rem;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 40px auto;
+    background-color: var(--txtbtntxt);
+    color: var(--txtbtnbg);
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 
 
