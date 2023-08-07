@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/w3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/proyects.css">
+    <title>PORTFOLIO</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <style>
+        h1{
+          font-family: 'PT Sans', sans-serif;
+          display: block;
+          font-size: 2em;
+          margin-block-start: 0.67em;
+          margin-block-end: 0.67em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 32px;
+        }
+      </style>
+</head>
+
+<body id="elemBody" class="modoClaro  modoOscuro">
+  <header>
+    <%- include ("partials/_heads") %>
+  </header>
+  <div style=" border-bottom: 1px solid rgba(128, 128, 128, 0.282);">
+    <div style="width: 80%; margin: 0 auto;" >
+      <p class="main-texto">Ingrese al <span class="main-nombre"> SISTEMA</span><span class="main-punto"
+          id="main-punto">_</span> con sus credenciales
+      </p>  
+      <br>
+    </div>
+  </div>
+
+  <div style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 50px;"> 
+    <div class="main-texto">
+      <p style="font-size: 20px;" class="main-nombre">USUARIO</p>
+      <input type="text" name="" id="" style="color: black; width: 100%;"> 
+
+      <br>
+
+      <p style="font-size: 20px;" class="main-nombre">CONTRASEÑA</p>
+      <input type="text" name="" id="" style="color: black; width: 100%;"> 
+    </div>
+
+  </div>
+ 
+  
+
+
+
+
+
+
+
+  <footer>
+    <div class="containterMain--redes">
+      <ul class="redes">
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fab fa-twitter"></i></a>
+        <a class="redes-items" href="https://github.com/germandeburzaco"><i class="fab fa-github"></i></a>
+        <a class="redes-items" href="https://codepen.io/GermanDaniG"><i class="fab fa-codepen"></i></a>
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fas fa-envelope"></i></a>
+
+      </ul>
+    </div>
+    <div class="footer-bajo">
+
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener("load", () => {
+        var iconoLight = document.getElementsByClassName("fas")
+    
+        let puntos = document.getElementById("main-punto")
+        const puntoIntermitente = () => {
+            puntos.classList.toggle("main-punto-oculto")
+            setTimeout(puntoIntermitente, 1000)
+        }
+        puntoIntermitente()
+
+        iconoLight[0].addEventListener('click', (e) => {
+        
+            var btnModo = document.getElementById('btnModo')
+            var elemBody = document.getElementById('elemBody')
+
+            if (btnModo.value == `-Dark Mode-`) {
+                btnModo.value = "-Light Mode-"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            } else {
+                btnModo.value = "-Dark Mode-"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            }
+        });
+
+    })
+
+  </script>
+</body>
+
+</html>

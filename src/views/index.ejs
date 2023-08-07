@@ -16,27 +16,27 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
- 
+
   <link rel="stylesheet" href="/css/style.css">
   <title>PORTFOLIO</title>
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-    <style>
-      h1{
-        font-family: 'PT Sans', sans-serif;
-        display: block;
-        font-size: 2em;
-        margin-block-start: 0.67em;
-        margin-block-end: 0.67em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        font-weight: bold;
-        margin-top: 0;
-        margin-bottom: 0;
-        font-size: 32px;
-      }
-    </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <style>
+    h1 {
+      font-family: 'PT Sans', sans-serif;
+      display: block;
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 32px;
+    }
+  </style>
 </head>
 
 <body id="elemBody" class="modoClaro  modoOscuro">
@@ -45,7 +45,8 @@
   </header>
   <div class="containerMain">
     <div>
-      <p class="main-texto">Hello! my name is <span class="main-nombre"> GERMÁN</span><span class="main-punto" id="main-punto">_</span>
+      <p class="main-texto">Hello! my name is <span class="main-nombre"> GERMÁN</span><span class="main-punto"
+          id="main-punto">_</span>
       </p>
       <p class="main-texto">I'am full-stack web developer </p>
       <button class="main-btn">CONTACT</button>
@@ -55,20 +56,21 @@
     <ul class="portfolio">
       <li class="portfolio-items">
         <img class="paisImagen" src="https://i.postimg.cc/Dm0jPMYZ/sitio1.png">
-        <h3 class="paisNombre">MUSICAL KEY</h3>
-        <h6 class="paisNombre">HTML CSS JS</h6>
+        <h3 class="textoBlackMode">MUSICAL KEY</h3>
+        <h6 class="textoBlackMode">HTML CSS JS</h6>
       </li>
       <li class="portfolio-items">
         <img class="paisImagen" src="https://i.postimg.cc/F16PWV2x/sitio2.png">
-        <h3 class="paisNombre">CLOCK</h3>
-        <h6 class="paisNombre">HTML CSS JS</h6>
+        <h3 class="textoBlackMode">CLOCK</h3>
+        <h6 class="textoBlackMode">HTML CSS JS</h6>
       </li>
     </ul>
   </div>
   <div class="container--skills">
-    
+
     <div class="skills-barras">
-      <p class="main-texto" style="text-align: center;">My <span class="main-nombre"> SKILLS</span><span class="main-punto" id="main-puntoSkill">_</span>
+      <p class="main-texto" style="text-align: center;">My <span class="main-nombre"> SKILLS</span><span
+          class="main-punto" id="main-puntoSkill">_</span>
       </p>
       <div class="skill-container">
         <div class="skill-html">HTML</div>
@@ -105,37 +107,37 @@
 
   <script>
     window.addEventListener("load", () => {
-        var iconoLight = document.getElementsByClassName("fas")
-    
-        let puntos = document.getElementById("main-punto")
-        let puntosSkill = document.getElementById("main-puntoSkill")
+      var iconoLight = document.getElementsByClassName("fas")
+
+      let puntos = document.getElementById("main-punto")
+      let puntosSkill = document.getElementById("main-puntoSkill")
 
 
 
-        const puntoIntermitente = () => {
-            puntos.classList.toggle("main-punto-oculto")
-            puntosSkill.classList.toggle("main-punto-oculto")
-            setTimeout(puntoIntermitente, 1000)
+      const puntoIntermitente = () => {
+        puntos.classList.toggle("main-punto-oculto")
+        puntosSkill.classList.toggle("main-punto-oculto")
+        setTimeout(puntoIntermitente, 1000)
+      }
+      puntoIntermitente()
+
+      iconoLight[0].addEventListener('click', (e) => {
+
+        var btnModo = document.getElementById('btnModo')
+        var elemBody = document.getElementById('elemBody')
+
+        if (btnModo.value == `-Dark Mode-`) {
+          btnModo.value = "-Light Mode-"
+          elemBody.classList.toggle("modoClaro")
+          iconoLight[0].classList.toggle("fa-sun")
+          iconoLight[0].classList.toggle("fa-moon")
+        } else {
+          btnModo.value = "-Dark Mode-"
+          elemBody.classList.toggle("modoClaro")
+          iconoLight[0].classList.toggle("fa-sun")
+          iconoLight[0].classList.toggle("fa-moon")
         }
-        puntoIntermitente()
-
-        iconoLight[0].addEventListener('click', (e) => {
-        
-            var btnModo = document.getElementById('btnModo')
-            var elemBody = document.getElementById('elemBody')
-
-            if (btnModo.value == `-Dark Mode-`) {
-                btnModo.value = "-Light Mode-"
-                elemBody.classList.toggle("modoClaro")
-                iconoLight[0].classList.toggle("fa-sun")
-                iconoLight[0].classList.toggle("fa-moon")
-            } else {
-                btnModo.value = "-Dark Mode-"
-                elemBody.classList.toggle("modoClaro")
-                iconoLight[0].classList.toggle("fa-sun")
-                iconoLight[0].classList.toggle("fa-moon")
-            }
-        });
+      });
 
     })
 
