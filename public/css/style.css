@@ -9,13 +9,11 @@
     color: inherit;
 }
 
-
 .modoOscuro {
     --bkColor1Claro: #2b3743;
     --bkColor2Claro: #172027;
     --txtColor1Claro: white;
     --txtColorpunto: rgb(0, 217, 255);
-
     --txtbtntxt: #ffffff;
     --txtbtnbg: #555555;
     transition: all 0.3s ease-out;
