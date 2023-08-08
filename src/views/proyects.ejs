@@ -80,8 +80,10 @@
         var iconoLight = document.getElementsByClassName("fas")
     
         let puntos = document.getElementById("main-punto")
+        let puntoTitulo = document.getElementById("puntoTitulo")
         const puntoIntermitente = () => {
             puntos.classList.toggle("main-punto-oculto")
+            puntoTitulo.classList.toggle("main-punto-oculto")
             setTimeout(puntoIntermitente, 1000)
         }
         puntoIntermitente()

@@ -57,12 +57,12 @@
       <li class="portfolio-items">
         <img class="paisImagen" src="https://i.postimg.cc/Dm0jPMYZ/sitio1.png">
         <h3 class="textoBlackMode">MUSICAL KEY</h3>
-        <h6 class="textoBlackMode">HTML CSS JS</h6>
+        <h6 class="textoBlackMode"></h6>
       </li>
       <li class="portfolio-items">
         <img class="paisImagen" src="https://i.postimg.cc/F16PWV2x/sitio2.png">
         <h3 class="textoBlackMode">CLOCK</h3>
-        <h6 class="textoBlackMode">HTML CSS JS</h6>
+        <h6 class="textoBlackMode"></h6>
       </li>
     </ul>
   </div>
@@ -111,12 +111,14 @@
 
       let puntos = document.getElementById("main-punto")
       let puntosSkill = document.getElementById("main-puntoSkill")
+      let puntoTitulo = document.getElementById("puntoTitulo")
 
 
 
       const puntoIntermitente = () => {
         puntos.classList.toggle("main-punto-oculto")
         puntosSkill.classList.toggle("main-punto-oculto")
+        puntoTitulo.classList.toggle("main-punto-oculto")
         setTimeout(puntoIntermitente, 1000)
       }
       puntoIntermitente()
