@@ -42,7 +42,7 @@ body{
 
 /* HEADER */ 
 header{   
-    box-shadow: 0 4px 6px -6px rgb(5, 5, 5);
+  /*  box-shadow: 0 4px 6px -6px rgb(5, 5, 5);*/
     border-bottom: 1px solid rgba(128, 128, 128, 0.282);
 }
 
@@ -59,11 +59,11 @@ header{
 }
 
 .navbar--botones{
-    grid-column: 10/23;
+    grid-column: 14/23;
 }
 .navbar--botones-ul{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     color: var(--txtColor1Claro); 
     cursor: pointer;
 }

@@ -46,7 +46,7 @@ header {
     grid-template-columns: repeat(24, 1fr);
     align-items: center;
     background-color: var(--bkColor1Claro);
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .navbar--logo {
@@ -55,12 +55,12 @@ header {
 }
 
 .navbar--botones {
-    grid-column: 10/23;
+    grid-column: 14/23;
 }
 
 .navbar--botones-ul {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     color: var(--txtColor1Claro);
     cursor: pointer;
 }
