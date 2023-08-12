@@ -41,7 +41,7 @@ const APP_PORT = process.env.PORT ?? "8080"
 /*********FUNCIONES************** */
 function generateRandomNumber() {
     const min = 1000; // El valor mínimo de 4 cifras
-    const max = 9999; // El valor máximo de 4 cifras
+    const max = 99999; // El valor máximo de 4 cifras
   
     // Math.random() genera un número decimal entre 0 (incluido) y 1 (excluido)
     // Multiplicamos por (max - min + 1) para obtener un rango inclusivo
@@ -99,9 +99,9 @@ app.use((req, res, next)=>{
 })
 
 
-
-
-
+/************************************************************/
+//  RUTAS
+/************************************************************/
 
 app.get("/", authenticateToken, (req, res)=>{
     //console.log(req.user)
@@ -123,7 +123,7 @@ app.get("/proyects", authenticateToken, (req, res)=>{
       userName: req.user
     })
   })
-  
+   
   //MARIANAM password23
   //GERMANG password23
 
