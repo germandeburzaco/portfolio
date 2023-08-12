@@ -63,6 +63,10 @@ header {
     cursor: pointer;
 }
 
+.navbar--menu {
+    grid-column: 23/24;
+}
+
 .navbar--modo {
     grid-column: 24/25;
 }
@@ -310,3 +314,4 @@ footer {
         /* Tamaño de fuente */
     }
 }
+

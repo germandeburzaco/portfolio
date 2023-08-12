@@ -109,12 +109,22 @@
 
   <script>
     window.addEventListener("load", () => {
-      var iconoLight = document.getElementsByClassName("fas")
+
+
+
+
+
+
+      
+
+
+
+      var iconoLight = document.getElementsByClassName("fa-moon")
+      var iconoMenu = document.getElementById("iconoMenu")
 
       let puntos = document.getElementById("main-punto")
       let puntosSkill = document.getElementById("main-puntoSkill")
       let puntoTitulo = document.getElementById("puntoTitulo")
-
 
 
       const puntoIntermitente = () => {
@@ -127,16 +137,19 @@
 
       iconoLight[0].addEventListener('click', (e) => {
 
+      
         var btnModo = document.getElementById('btnModo')
         var elemBody = document.getElementById('elemBody')
 
         if (btnModo.value == `-Dark Mode-`) {
+          iconoMenu.style.color = "#ffffff"
           btnModo.value = "-Light Mode-"
           elemBody.classList.toggle("modoClaro")
           iconoLight[0].classList.toggle("fa-sun")
           iconoLight[0].classList.toggle("fa-moon")
         } else {
           btnModo.value = "-Dark Mode-"
+          iconoMenu.style.color = "#000000"
           elemBody.classList.toggle("modoClaro")
           iconoLight[0].classList.toggle("fa-sun")
           iconoLight[0].classList.toggle("fa-moon")
