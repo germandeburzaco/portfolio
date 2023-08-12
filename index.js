@@ -73,12 +73,16 @@ function authenticateToken(req, res, next) {
   const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
 
   if (!authCookie) {
-    return res.status(401).json({ message: 'Token no proporcionado' });
+    //return res.status(401).json({ message: 'Token no proporcionado' });
+    req.user = "";
+    next();
   }
 
   jwt.verify(authCookie, 'secret_key', (err, user) => {
     if (err) {
-      return res.status(403).json({ message: 'Token inválido' });
+     // return res.status(403).json({ message: 'Token inválido' });
+      req.user = "";
+      next();
     }
     req.user = user;
     next();
@@ -100,7 +104,9 @@ app.get("/", authenticateToken, (req, res)=>{
         }
         );*/
         
-        res.render("index")
+        res.render("index",{
+          user: req.user
+        })
       })
       
 app.get("/proyects", (req, res)=>{
