@@ -50,26 +50,10 @@ function generateRandomNumber() {
   }
 
 
-/******MIDDLEWARES********/
-app.use((req, res, next)=>{
-    console.log("-------------------INICIO----------------------------")
-    console.log("-----------------------------------------------------")
-    const d = new Date();
-    const dia = d.getDate()  
-    const mes = d.getMonth() + 1
-    console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear()  )  
-    console.log("URL: " + req.method + " " + req.originalUrl)  
-    console.log("IP: " + req.ip)  
-    console.log("----------------------------------------------------")
-    console.log("-------------------FIN-------------------------------") 
-
-    next();
-})
-
 
 // Middleware de autenticación
 function authenticateToken(req, res, next) {
-  console.log(req.cookies)
+ // console.log(req.cookies)
   const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
 
   if (!authCookie) {
@@ -90,33 +74,54 @@ function authenticateToken(req, res, next) {
 } 
 
 
+/******MIDDLEWARES********/
+app.use((req, res, next)=>{
+    console.log("-------------------INICIO----------------------------")
+    console.log("-----------------------------------------------------")
+    const d = new Date();
+    const dia = d.getDate()  
+    const mes = d.getMonth() + 1
+    console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear()  )  
+   // console.log(req.cookies)
+    jwt.verify(req.cookies.token, 'secret_key', (err, user) => {
+     // console.log(user)
+      if (err) {
+      }else{
+        console.log("USER: " + user.userId)  
+      }
+    })
+    console.log("URL: " + req.method + " " + req.originalUrl)  
+    console.log("IP: " + req.ip)  
+    console.log("----------------------------------------------------")
+    console.log("-------------------FIN-------------------------------") 
+
+    next();
+})
+
+
 
 
 
 
 app.get("/", authenticateToken, (req, res)=>{
-  console.log(req.user)
-  /*connection.query(
-    `INSERT INTO USUARIOS values(${randomNum}, "hoy", "hoy")`,
-        function(err, results, fields) {
-          console.log(results); // results contains rows returned by server
-          console.log(fields); // fields contains extra meta data about results, if available
-        }
-        );*/
-        
-        res.render("index",{
-          user: req.user
-        })
-      })
+    //console.log(req.user)
+    res.render("index",{
+      userName: req.user
+    })
+  })
       
-app.get("/proyects", (req, res)=>{
+app.get("/proyects", authenticateToken, (req, res)=>{
     
-    res.render("proyects")
+    res.render("proyects",{
+      userName: req.user
+    })
   })
   
   app.get("/login", (req, res)=>{
     
-    res.render("login")
+    res.render("login",{
+      userName: req.user
+    })
   })
   
   //MARIANAM password23

@@ -1,13 +1,18 @@
 
-    <div class="navbar">
+    <div class="navbar">      
       <div class="navbar--logo">
         <a href="/"> <h1>GERMAN<span class="main-punto" id="puntoTitulo">.</span>JS<span class="main-punto"></span></h1></a>
       </div>
       <div class="navbar--botones">
         <ul class="navbar--botones-ul">
+          <%if (userName===undefined || userName===null || userName==='' ) { %>
+            <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
+            <li><a style="color: inherit;" href="/login"> Login</a></li>
+          <% } else { %>
+            <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
+            <li><a style="color: inherit;" href=""> <%- userName.userId %></a></li>
+          <% } %>
           <!--<li>Portfolio</li>-->
-          <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
-          <li><a style="color: inherit;" href="/login"> Login</a></li>
         </ul>
       </div>
       <div class="navbar--modo">
