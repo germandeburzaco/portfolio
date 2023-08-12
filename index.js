@@ -2,6 +2,10 @@ const express = require("express")
 const path =require("node:path")
 var bodyParser = require('body-parser')
 const mysql = require('mysql2');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+
 const app = express()
 
 
@@ -21,7 +25,7 @@ connection.connect((err) => {
     }
   });
 
-
+app.use(cookieParser());
 app.use(express.json());
 app.set('views', path.join(__dirname, '/src/views'))
 app.set("view engine", "ejs")
@@ -62,28 +66,87 @@ app.use((req, res, next)=>{
     next();
 })
 
-app.get("/", (req, res)=>{
-    const randomNum = generateRandomNumber();
-   /* connection.query(
-        `INSERT INTO USUARIOS values(${randomNum}, "test", "123")`,
+
+// Middleware de autenticación
+function authenticateToken(req, res, next) {
+  console.log(req.cookies)
+  const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
+
+  if (!authCookie) {
+    return res.status(401).json({ message: 'Token no proporcionado' });
+  }
+
+  jwt.verify(authCookie, 'secret_key', (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Token inválido' });
+    }
+    req.user = user;
+    next();
+  });
+} 
+
+
+
+
+
+
+app.get("/", authenticateToken, (req, res)=>{
+  console.log(req.user)
+  /*connection.query(
+    `INSERT INTO USUARIOS values(${randomNum}, "hoy", "hoy")`,
         function(err, results, fields) {
           console.log(results); // results contains rows returned by server
           console.log(fields); // fields contains extra meta data about results, if available
         }
-      );*/
-
-    res.render("index")
-})
-
+        );*/
+        
+        res.render("index")
+      })
+      
 app.get("/proyects", (req, res)=>{
     
     res.render("proyects")
-})
-
-app.get("/login", (req, res)=>{
-   
+  })
+  
+  app.get("/login", (req, res)=>{
+    
     res.render("login")
-})
+  })
+  
+  //MARIANAM password23
+  //GERMANG password23
+
+  app.post('/register', (req, res) => {
+    const randomNum = generateRandomNumber();
+    console.log(req.body)
+    const { username, password } = req.body;
+
+  // Hash de la contraseña antes de almacenarla
+  const hashedPassword = bcrypt.hashSync(password, 15);
+
+  connection.query(`INSERT INTO USUARIOS (id, user_name, password) VALUES (${randomNum},?, ?)`, [username, hashedPassword], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: 'Error al registrar el usuario' });
+    } else {
+      res.status(200).json({ message: 'Usuario registrado exitosamente' });
+    }
+  });
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  console.log(username)
+  console.log(password)
+
+  connection.query('SELECT * FROM USUARIOS WHERE user_name = ?', [username], (err, result) => {
+    if (err || result.length === 0 || !bcrypt.compareSync(password, result[0].password)) {
+      res.status(401).json({ message: 'Credenciales inválidas' });
+    } else {
+      const token = jwt.sign({ userId: result[0].id }, 'secret_key', { expiresIn: '1h' });
+      res.status(200).json({ token });
+    }
+  });
+});
 
 app.listen(APP_PORT, ()=>{
     console.log("APP CORRIENDO EN: " + APP_PORT)

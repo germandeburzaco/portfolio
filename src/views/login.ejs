@@ -55,27 +55,23 @@
 
   <div style="width: 40%; min-width: 270px; margin-left: auto; margin-right: auto; margin-top: 60px;"> 
     <div class="main-texto">
-      <p style="font-size: 18px;" class="main-nombre">USUARIO</p>
-      <input type="text" name="" id="" style="color: black; width: 100%;"> 
+      <form id="login-form">
+        <p style="font-size: 18px;" class="main-nombre">USUARIO</p>
+        <input type="text" name="username" id="username" style="color: black; width: 100%;"> 
 
-      <br>
+        <br>
 
-      <p style="font-size: 18px;" class="main-nombre">CONTRASEÑA</p>
-      <input type="password" name="" id="" style="color: black; width: 100%;"> 
-      <br>
-      <div style="text-align: center; align-items: center;">
-        <button class="main-btn" >INGRESAR</button>
-      </div>
+        <p style="font-size: 18px;" class="main-nombre">CONTRASEÑA</p>
+        <input type="password" name="password" id="password" style="color: black; width: 100%;"> 
+        <br>
+        <div style="text-align: center; align-items: center;">
+          <button type="submit" class="main-btn" >INGRESAR</button>
+        </div>
+      </form>
     </div>
 
   </div>
  
-  
-
-
-
-
-
 
 
   <footer>
@@ -95,6 +91,51 @@
 
   <script>
     window.addEventListener("load", () => {
+
+      const loginForm = document.getElementById('login-form');
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log(response)
+          console.log(data)
+          document.cookie = `token=${data.token}; path=/;`;
+          // Redirigir al sitio raíz
+          window.location.href = '/';
+        } else {
+          console.log(data)
+        }
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         var iconoLight = document.getElementsByClassName("fas")
     
         let puntos = document.getElementById("main-punto")
