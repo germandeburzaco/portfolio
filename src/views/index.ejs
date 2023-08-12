@@ -38,6 +38,43 @@
     }
 
     
+    #sidebar {
+      top:70px;
+      position: fixed;
+      width: 370px;
+      height: 300px;
+      background: #ffffff;
+      left: -370px;
+      transition: all 20ms linear;
+    }
+
+    #sidebar.active {
+      left: 0px;
+    }
+
+    #sidebar ul li {
+      list-style: none;
+      padding: 10px 5px;
+      border-bottom: 1px solid rgba(100, 100, 100, .3);
+      text-align: center;
+    }
+
+    #sidebar .toggle-btn {
+      position: absolute;
+      left: 180px;
+      top: 5px;
+      cursor: pointer;
+      background: #f1f2f3;
+    }
+
+    #sidebar .toggle-btn span {
+      display: block;
+      width: 20px;
+      text-align: center;
+      font-size: 10px;
+      border: 1px solid #000;
+    }
+    
   </style>
 </head>
 
@@ -135,9 +172,7 @@
       }
       puntoIntermitente()
 
-      iconoLight[0].addEventListener('click', (e) => {
-
-      
+      iconoLight[0].addEventListener('click', (e) => {      
         var btnModo = document.getElementById('btnModo')
         var elemBody = document.getElementById('elemBody')
 
@@ -155,6 +190,10 @@
           iconoLight[0].classList.toggle("fa-moon")
         }
       });
+
+      iconoMenu.addEventListener("click", ()=>{
+        document.getElementById('sidebar').classList.toggle('active');
+      })
 
     })
 

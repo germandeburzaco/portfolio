@@ -24,3 +24,20 @@
         <i id="iconoLight" class="fas fa-moon"></i>
       </div>
     </div>
+
+    <!-- SIDEBAR PARA MENU -->  
+    <div id="sidebar" >
+      <div class="toggle-btnCustom" >
+        <span style="background-color: white; cursor: pointer">&#9776</span>
+        <ul >
+          <%if (userName===undefined || userName===null || userName==='' ) { %>
+            <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
+            <li><a style="color: inherit;" href="/login"> Login</a></li>
+          <% } else { %>
+            <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
+            <li><a style="color: inherit;" href=""> <%- userName.userId %></a></li>
+          <% } %>
+          <!--<li>Portfolio</li>-->
+        </ul>
+      </div> 
+    </div>

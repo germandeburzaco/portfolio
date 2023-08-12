@@ -150,7 +150,10 @@ app.post('/login', (req, res) => {
   console.log(password)
 
   connection.query('SELECT * FROM USUARIOS WHERE user_name = ?', [username], (err, result) => {
+    console.log("RESULTADO D LA BD")
+    console.log(result)
     if (err || result.length === 0 || !bcrypt.compareSync(password, result[0].password)) {
+      console
       res.status(401).json({ message: 'Credenciales inválidas' });
     } else {
       const token = jwt.sign({ userId: result[0].id }, 'secret_key', { expiresIn: '1h' });
