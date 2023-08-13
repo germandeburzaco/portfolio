@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
+const util = require('util');
+
 
 const app = express()
 
@@ -66,10 +68,31 @@ function authenticateToken(req, res, next) {
     let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
     decryptedNombreUsuario += decipher.final('utf8');
     req.user = user;
-
     next();
   });
 } 
+
+// Middleware de autenticación
+async function varificarUser(token) {
+  const authCookie = token; // Lee el valor del token desde la cookie   
+
+  const verifyAsync = util.promisify(jwt.verify);
+  try {
+    const user = await verifyAsync(authCookie, secretKey);
+
+    // Desencriptar el nombre de usuario
+    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
+    let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
+    decryptedNombreUsuario += decipher.final('utf8');
+    return decryptedNombreUsuario;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+
+
+} 
+
 
 
 /******MIDDLEWARES********/
@@ -81,13 +104,7 @@ app.use((req, res, next)=>{
     const mes = d.getMonth() + 1
     console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear()  )  
    // console.log(req.cookies)
-    jwt.verify(req.cookies.token, 'secret_key', (err, user) => {
-     // console.log(user)
-      if (err) {
-      }else{
-        console.log("USER: " + user.userId)  
-      }
-    })
+    
     console.log("URL: " + req.method + " " + req.originalUrl)  
     console.log("IP: " + req.ip)  
     console.log("----------------------------------------------------")
@@ -101,50 +118,38 @@ app.use((req, res, next)=>{
 //  RUTAS
 /************************************************************/
 
-app.get("/", async (req, res)=>{
+app.get("/", async (req, res)=>{    
     if(req.cookies.token){
-      console.log(req.user.userId)  
-      var respuestaQRY
-      miSQLqry = `SELECT * FROM USUARIOS WHERE id = ${req.user.userId}`
-      respuestaQRY = await misDatos(miSQLqry)
-      datosDesdeBD = respuestaQRY
-      console.log(respuestaQRY)
+      var usuario = await varificarUser(req.cookies.token)         
     }
 
     res.render("index",{
-      token: req.user,
-      userName: datosDesdeBD
+      token: req.cookies.token,
+      userName: usuario
     })
   })
-      
+       
 app.get("/proyects", authenticateToken, async (req, res)=>{
-  var respuestaQRY
-  miSQLqry = `SELECT * FROM USUARIOS WHERE id = ${req.user.userId}`
-  respuestaQRY = await misDatos(miSQLqry)
-  console.log(respuestaQRY)
+  if(req.cookies.token){
+    var usuario = await varificarUser(req.cookies.token)         
+  }
 
-    res.render("proyects",{
-      token: req.user,
-      userName: respuestaQRY
-    })
+  res.render("proyects",{
+    token: req.cookies.token,
+    userName: usuario
   })
+})
   
-  app.get("/login", async (req, res)=>{
-    if(req.cookies.token){
-      console.log(req.user.userId)  
-      var respuestaQRY
-      miSQLqry = `SELECT * FROM USUARIOS WHERE id = ${req.user.userId}`
-      respuestaQRY = await misDatos(miSQLqry)
-      datosDesdeBD = respuestaQRY
-      console.log(respuestaQRY)
-    }
+app.get("/login", async (req, res)=>{
+  if(req.cookies.token){
+    var usuario = await varificarUser(req.cookies.token)         
+  }
 
-
-    res.render("login",{
-      token: req.user,
-      userName: datosDesdeBD
-    })
+  res.render("login",{
+    token: req.cookies.token,
+    userName: usuario
   })
+})
    
   //MARIANAM password23
   //GERMANG password23
