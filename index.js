@@ -152,6 +152,7 @@ app.post('/login', (req, res) => {
   connection.query('SELECT * FROM USUARIOS WHERE user_name = ?', [username], (err, result) => {
     console.log("RESULTADO D LA BD")
     console.log(result)
+    console.log(err)
     if (err || result.length === 0 || !bcrypt.compareSync(password, result[0].password)) {
       console
       res.status(401).json({ message: 'Credenciales inválidas' });

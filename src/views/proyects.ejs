@@ -77,7 +77,10 @@
 
   <script>
     window.addEventListener("load", () => {
+
+      
         var iconoLight = document.getElementsByClassName("fa-moon")
+        var iconoMenu = document.getElementById("iconoMenu")
     
         let puntos = document.getElementById("main-punto")
         let puntoTitulo = document.getElementById("puntoTitulo")
@@ -94,17 +97,23 @@
             var elemBody = document.getElementById('elemBody')
 
             if (btnModo.value == `-Dark Mode-`) {
+                iconoMenu.style.color = "#ffffff"
                 btnModo.value = "-Light Mode-"
                 elemBody.classList.toggle("modoClaro")
                 iconoLight[0].classList.toggle("fa-sun")
                 iconoLight[0].classList.toggle("fa-moon")
             } else {
                 btnModo.value = "-Dark Mode-"
+                iconoMenu.style.color = "#000000"
                 elemBody.classList.toggle("modoClaro")
                 iconoLight[0].classList.toggle("fa-sun")
                 iconoLight[0].classList.toggle("fa-moon")
             }
         });
+
+        iconoMenu.addEventListener("click", ()=>{
+          document.getElementById('sidebar').classList.toggle('active');
+        })
 
     })
 
