@@ -5,12 +5,12 @@
       </div>
       <div class="navbar--botones">
         <ul class="navbar--botones-ul">
-          <%if (userName===undefined || userName===null || userName==='' ) { %>
+          <%if (token===undefined || token===null || token==='' ) { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
             <li><a style="color: inherit;" href="/login"> Login</a></li>
           <% } else { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
-            <li><a style="color: inherit;" href=""> <%- userName.userId %></a></li>
+            <li><a style="color: inherit;" href=""> <%- userName[0].user_name %></a></li>
           <% } %>
           <!--<li>Portfolio</li>-->
         </ul>
@@ -30,12 +30,12 @@
       <div class="toggle-btnCustom" >
         <span style="background-color: white; cursor: pointer"><i class="fas fa-x"></i></span>
         <ul >
-          <%if (userName===undefined || userName===null || userName==='' ) { %>
+          <%if (token===undefined || token===null || token==='' ) { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
             <li><a style="color: inherit;" href="/login"> Login</a></li>
           <% } else { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
-            <li><a style="color: inherit;" href=""> <%- userName.userId %></a></li>
+            <li><a style="color: inherit;" href=""> <%- userName[0].user_name %></a></li>
           <% } %>
           <!--<li>Portfolio</li>-->
         </ul>
