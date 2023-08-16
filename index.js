@@ -49,27 +49,41 @@ function generateRandomNumber() {
 
 // Middleware de autenticación
 function authenticateToken(req, res, next) {
-  const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
-  if (!authCookie) {
-    //return res.status(401).json({ message: 'Token no proporcionado' });
-    req.user = "";
-    next();
+  
+  if(!req.cookies.token){
+    console.log("no existe el token")
+    usuario = ""
+    return res.render("login",{
+      token: req.cookies.token,
+      userName: usuario
+    })
+  }else{
+
+    const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
+  
+    jwt.verify(authCookie, secretKey, (err, user) => {
+      if (err) {
+        console.log("no es valido el token")
+        usuario = ""
+        return res.render("login",{
+          token: req.cookies.token,
+          userName: usuario
+        })
+      }
+  
+      // Desencriptar el nombre de usuario
+      const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
+      let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
+      decryptedNombreUsuario += decipher.final('utf8'); 
+      next
+      //return decryptedNombreUsuario   
+      
+    });
   }
 
-  jwt.verify(authCookie, secretKey, (err, user) => {
-    if (err) {
-     // return res.status(403).json({ message: 'Token inválido' });
-      req.user = "";
-      next();
-    }
 
-    // Desencriptar el nombre de usuario
-    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
-    let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
-    decryptedNombreUsuario += decipher.final('utf8');
-    req.user = user;
-    next();
-  });
+
+
 } 
 
 // Middleware de autenticación
@@ -87,12 +101,12 @@ async function varificarUser(token) {
     return decryptedNombreUsuario;
   } catch (err) {
     console.error(err);
-    throw err;
+    return err
+    //throw err;
   }
 
-
 } 
-
+ 
 
 
 /******MIDDLEWARES********/
@@ -102,9 +116,7 @@ app.use((req, res, next)=>{
     const d = new Date();
     const dia = d.getDate()  
     const mes = d.getMonth() + 1
-    console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear()  )  
-   // console.log(req.cookies)
-    
+    console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear() )   
     console.log("URL: " + req.method + " " + req.originalUrl)  
     console.log("IP: " + req.ip)  
     console.log("----------------------------------------------------")
@@ -119,23 +131,38 @@ app.use((req, res, next)=>{
 /************************************************************/
 
 app.get("/", async (req, res)=>{    
+    
     if(req.cookies.token){
-      var usuario = await varificarUser(req.cookies.token)         
+      var respuesta = await varificarUser(req.cookies.token) 
+      if(respuesta = "TokenExpiredError: jwt expired"){
+        res.clearCookie("token")
+        usuario=""
+      }
+      console.log("estaria ok")
+      console.log(usuario)
+    }else{ 
+      usuario=""
     }
 
-    res.render("index",{
-      token: req.cookies.token,
+    res.render("index",{      
       userName: usuario
     })
   })
        
 app.get("/proyects", authenticateToken, async (req, res)=>{
   if(req.cookies.token){
-    var usuario = await varificarUser(req.cookies.token)         
+    var respuesta = await varificarUser(req.cookies.token) 
+    if(respuesta = "TokenExpiredError: jwt expired"){
+      res.clearCookie("token")
+      usuario=""
+    }
+    console.log("estaria ok")
+    console.log(usuario)
+  }else{ 
+    usuario=""
   }
 
-  res.render("proyects",{
-    token: req.cookies.token,
+  res.render("proyects",{    
     userName: usuario
   })
 })
@@ -146,7 +173,7 @@ app.get("/login", async (req, res)=>{
   }
 
   res.render("login",{
-    token: req.cookies.token,
+    
     userName: usuario
   })
 })
@@ -172,7 +199,7 @@ app.get("/login", async (req, res)=>{
       encryptedNombreUsuario += cipher.final('base64');
   
       const token = jwt.sign({ userId: respuestaQRY[0].id, 
-        nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '1h' });
+        nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '1m' });
       res.status(200).json({ token });
     }
   

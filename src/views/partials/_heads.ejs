@@ -5,7 +5,7 @@
       </div>
       <div class="navbar--botones">
         <ul class="navbar--botones-ul">
-          <%if (token===undefined || token===null || token==='' ) { %>
+          <%if (userName==='' || userName===undefined) { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
             <li><a style="color: inherit;" href="/login"> Login</a></li>
           <% } else { %>
@@ -30,7 +30,7 @@
       <div class="toggle-btnCustom" >
         <span style="background-color: white; cursor: pointer"><i class="fas fa-x"></i></span>
         <ul >
-          <%if (token===undefined || token===null || token==='' ) { %>
+          <%if ( userName==='' || userName===undefined ) { %>
             <li><a style="color: inherit;" href="/proyects"> Proyects</a> </li>
             <li><a style="color: inherit;" href="/login"> Login</a></li>
           <% } else { %>

@@ -53,7 +53,7 @@ header {
 }
 
 .navbar--botones {
-    grid-column: 14/23;
+    grid-column: 14/22;
 }
 
 .navbar--botones-ul {
@@ -64,11 +64,11 @@ header {
 }
 
 .navbar--menu {
-    grid-column: 23/24;
+    grid-column: 22/23;
 }
 
 .navbar--modo {
-    grid-column: 24/25;
+    grid-column: 23/24;
 }
 
 /*
