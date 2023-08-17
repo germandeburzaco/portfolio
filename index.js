@@ -10,6 +10,7 @@ const util = require('util');
 
 
 const app = express()
+var usuario = ""
 
 const connection = mysql.createConnection({ 
   host: 'containers-us-west-159.railway.app',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
@@ -52,21 +53,23 @@ function authenticateToken(req, res, next) {
   
   if(!req.cookies.token){
     console.log("no existe el token")
+    console.log(req.originalUrl)
+    var rutaURL = req.originalUrl
     usuario = ""
     return res.render("login",{
-      token: req.cookies.token,
-      userName: usuario
+      userName: usuario,
+      rutaURL: rutaURL 
     })
   }else{
-
+    console.log("existe el token")
     const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
-  
+    
     jwt.verify(authCookie, secretKey, (err, user) => {
+      
       if (err) {
         console.log("no es valido el token")
         usuario = ""
         return res.render("login",{
-          token: req.cookies.token,
           userName: usuario
         })
       }
@@ -75,16 +78,15 @@ function authenticateToken(req, res, next) {
       const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
       let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
       decryptedNombreUsuario += decipher.final('utf8'); 
-      next
-      //return decryptedNombreUsuario   
+
+      usuario = decryptedNombreUsuario
+
+      next()   
       
     });
   }
-
-
-
-
 } 
+
 
 // Middleware de autenticación
 async function varificarUser(token) {
@@ -132,7 +134,7 @@ app.use((req, res, next)=>{
 
 app.get("/", async (req, res)=>{    
     
-    if(req.cookies.token){
+   /* if(req.cookies.token){
       var respuesta = await varificarUser(req.cookies.token) 
       if(respuesta = "TokenExpiredError: jwt expired"){
         res.clearCookie("token")
@@ -142,7 +144,7 @@ app.get("/", async (req, res)=>{
       console.log(usuario)
     }else{ 
       usuario=""
-    }
+    }*/
 
     res.render("index",{      
       userName: usuario
@@ -150,57 +152,44 @@ app.get("/", async (req, res)=>{
   })
        
 app.get("/proyects", authenticateToken, async (req, res)=>{
-  if(req.cookies.token){
-    var respuesta = await varificarUser(req.cookies.token) 
-    if(respuesta = "TokenExpiredError: jwt expired"){
-      res.clearCookie("token")
-      usuario=""
-    }
-    console.log("estaria ok")
-    console.log(usuario)
-  }else{ 
-    usuario=""
-  }
+  
 
   res.render("proyects",{    
     userName: usuario
   })
 })
   
-app.get("/login", async (req, res)=>{
-  if(req.cookies.token){
-    var usuario = await varificarUser(req.cookies.token)         
-  }
+app.get("/login", async (req, res)=>{  
+  
 
-  res.render("login",{
-    
+  res.render("login",{    
     userName: usuario
   })
 })
    
   //MARIANAM password23
   //GERMANG password23
-
+ 
  app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     var respuestaQRY
     miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
     respuestaQRY = await misDatos(miSQLqry)
+    console.log("DESDE BD WEB DIGO:")
     console.log(respuestaQRY)
-    
-    
+     
+      
     if (respuestaQRY.length === 0 || !bcrypt.compareSync(password, respuestaQRY[0].password)) {
       console
       res.status(401).json({ message: 'Credenciales inválidas' });
-    } else {
-  
+    } else { 
+   
       let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
       encryptedNombreUsuario += cipher.final('base64');
   
-      const token = jwt.sign({ userId: respuestaQRY[0].id, 
-        nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '1m' });
-      res.status(200).json({ token });
+      const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '24h' });
+      res.status(200).json({ token, rutaURL: req.originalUrl });
     }
   
  });

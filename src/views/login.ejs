@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
     <link rel="stylesheet" href="/css/proyects.css">
+    <link rel="stylesheet" href="/css/iziToast.min.css">
+
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -89,8 +91,13 @@
     </div>
   </footer>
 
+  <script src="/js/iziToast.min.js"></script>
+
   <script>
     window.addEventListener("load", () => {
+
+      var rutaURL = <%- JSON.stringify(rutaURL) %>;
+      console.log(rutaURL)
 
       const loginForm = document.getElementById('login-form');
       loginForm.addEventListener('submit', async (e) => {
@@ -98,7 +105,14 @@
 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-
+        iziToast.show({     
+            id: 'iziAguarde', // Asigna un ID a la notificación               
+            title: "ATENCION",
+            message: "Aguarde un instante....",
+            closeOnClick: true,                    
+            position: 'bottomRight',
+            timeout: 300000
+        });
         const response = await fetch('/login', {
           method: 'POST',
           headers: {
@@ -110,20 +124,32 @@
         const data = await response.json();
 
         if (response.ok) {
+          const notificationId = 'iziAguarde'; 
+          iziToast.hide({}, document.getElementById(notificationId));
           console.log(response)
           console.log(data)
           document.cookie = `token=${data.token}; path=/;`;
           // Redirigir al sitio raíz
-          window.location.href = '/';
+          window.location.href = rutaURL;
         } else {
           console.log(data)
+          const notificationId = 'iziAguarde'; 
+          iziToast.hide({}, document.getElementById(notificationId));
+          iziToast.warning({     
+            id: 'iziError', // Asigna un ID a la notificación               
+            title: "ATENCION",
+            message: "USUARIO y/o CONTRASEÑA incorrectas....REINTENTE",
+            closeOnClick: true,                    
+            position: 'bottomRight',
+            timeout: 300000
+        });
         }
       });
 
 
 
 
-
+     
 
 
 
