@@ -37,6 +37,45 @@
           margin-bottom: 0;
           font-size: 32px;
         }
+
+        .card {          
+          transition: 0.3s;         
+          margin: auto;
+          text-align: center;
+        }
+        
+
+        .container {
+          padding: 2px 16px;
+        }
+
+        .icon {
+          padding: 10px;
+          background: dodgerblue;
+          color: white;
+          min-width: 50px;
+          text-align: center;
+        }
+
+        .input-field {
+          width: 80%;
+          padding: 5px;
+          outline: none;
+        }
+
+        .input-field:focus {
+          border: 2px solid dodgerblue;
+        }
+        .btn {
+        background-color: dodgerblue;
+        color: white;
+        padding: 15px 10px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+        margin: auto;
+      }
       </style>
 </head>
 
@@ -49,6 +88,36 @@
       <p class="main-texto">Mi <span class="main-nombre"> PERFIL</span><span class="main-punto"
           id="main-punto">_</span>
       </p>      
+    </div>
+  </div>
+  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282);">
+    <div class="card">
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width: 150px; text-align: center;
+      ">
+        <h4><b><%- datosUsuario[0].user_name %></b></h4> 
+        <p><%- datosUsuario[0].EMAIL %></p> 
+      <div class="container">
+      </div>
+    </div>
+  </div>
+
+  <div >
+    <div class="w3-container" style="width: 35%; margin: auto;">
+      <div class="input-container">
+        <i class="fa fa-user icon"></i>
+        <input class="input-field" type="text" placeholder="Contraseña Actual" name="usrnm">
+      </div>
+    
+      <div class="input-container">
+        <i class="fa fa-envelope icon"></i>
+        <input class="input-field" type="text" placeholder="Nueva contraseña" name="email">
+      </div>
+      
+      <div class="input-container">
+        <i class="fa fa-key icon"></i>
+        <input class="input-field" type="password" placeholder="Repita contraseña" name="psw">
+      </div>
+      <button type="submit" class="btn">Register</button>
     </div>
   </div>
  

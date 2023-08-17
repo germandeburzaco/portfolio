@@ -10,7 +10,7 @@ const util = require('util');
 
 
 const app = express()
-var usuario
+var usuario = ""
 
 const connection = mysql.createConnection({ 
   host: 'containers-us-west-159.railway.app',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
@@ -22,8 +22,8 @@ const connection = mysql.createConnection({
 });
 
 const secretKey = 'una_clave_secreta123456789123456';
-const iv = crypto.randomBytes(16); // Initialization Vector
-const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
+//const iv = crypto.randomBytes(16); // Initialization Vector
+//const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
  
 var datosDesdeBD = []
 
@@ -133,16 +133,28 @@ app.get("/", async (req, res)=>{
 })
         
 app.get("/proyects", authenticateToken, async (req, res)=>{  
- 
+  if(!req.cookies.token){    
+    usuario = ""
+  }
+
   res.render("proyects",{    
     userName: usuario
   })
 })
   
 app.get("/perfil", authenticateToken, async (req, res)=>{  
- 
+  if(!req.cookies.token){    
+    usuario = ""
+  }
+
+  var respuestaQRY
+  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${usuario}'`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log(respuestaQRY)
+
   res.render("perfil",{    
-    userName: usuario
+    userName: usuario,
+    datosUsuario: respuestaQRY
   })
 })
 
@@ -173,10 +185,14 @@ app.post('/login', async (req, res) => {
     // console
     res.status(401).json({ message: 'Credenciales inválidas' });
   } else { 
+    const iv = crypto.randomBytes(16); // Initialization Vector
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
    
     let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
     encryptedNombreUsuario += cipher.final('base64');
-  
+    
+
+
     const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '15m' });
     usuario = respuestaQRY[0].user_name
     res.status(200).json({ token, rutaURL: req.originalUrl });
