@@ -96,8 +96,7 @@
   <script>
     window.addEventListener("load", () => {
 
-      var rutaURL = <%- JSON.stringify(rutaURL) %>;
-      console.log(rutaURL)
+      
 
       const loginForm = document.getElementById('login-form');
       loginForm.addEventListener('submit', async (e) => {
@@ -122,17 +121,17 @@
         });
 
         const data = await response.json();
-
+        console.log(data)
         if (response.ok) {
           const notificationId = 'iziAguarde'; 
           iziToast.hide({}, document.getElementById(notificationId));
-          console.log(response)
+     
           console.log(data)
           document.cookie = `token=${data.token}; path=/;`;
           // Redirigir al sitio raíz
-          window.location.href = rutaURL;
+           window.location.href = "/";
         } else {
-          console.log(data)
+          
           const notificationId = 'iziAguarde'; 
           iziToast.hide({}, document.getElementById(notificationId));
           iziToast.warning({     

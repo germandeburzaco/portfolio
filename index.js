@@ -10,7 +10,7 @@ const util = require('util');
 
 
 const app = express()
-var usuario = ""
+var usuario
 
 const connection = mysql.createConnection({ 
   host: 'containers-us-west-159.railway.app',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
@@ -53,62 +53,50 @@ function authenticateToken(req, res, next) {
   
   if(!req.cookies.token){
     console.log("no existe el token")
-    console.log(req.originalUrl)
-    var rutaURL = req.originalUrl
+    
     usuario = ""
     return res.render("login",{
       userName: usuario,
-      rutaURL: rutaURL 
     })
   }else{
     console.log("existe el token")
-    const authCookie = req.cookies.token; // Lee el valor del token desde la cookie
+    const authCookie = req.cookies.token; // Lee el valor del token desde la cookie  
     
-    jwt.verify(authCookie, secretKey, (err, user) => {
+    jwt.verify(authCookie, secretKey, (err, user) => {  
+      
+      const decodedToken = jwt.decode(authCookie);
+      console.log(decodedToken)
+      console.log(user)
+      const expirationDate = new Date(decodedToken.exp * 1000); // Convertir a milisegundos
+      console.log('Fecha de expiración:', expirationDate);
       
       if (err) {
-        console.log("no es valido el token")
+        console.log("error del token")
+        console.log(err.name)
+        res.clearCookie("token")
         usuario = ""
         return res.render("login",{
-          userName: usuario
+          userName: usuario,      
         })
-      }
-  
+      }    
+      
       // Desencriptar el nombre de usuario
       const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
       let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
-      decryptedNombreUsuario += decipher.final('utf8'); 
-
+      decryptedNombreUsuario += decipher.final('utf8');      
+      
+      console.log(decryptedNombreUsuario) 
       usuario = decryptedNombreUsuario
 
+      //REFRESCANDO EL TOKEN EN LA COOKIE    
+      const newToken = jwt.sign({ userId: decodedToken.userId, nombreUsuario: user.nombreUsuario, iv: decodedToken.iv }, secretKey, { expiresIn: '15m' });
+      res.clearCookie("token")
+      res.cookie("token", newToken)      
       next()   
       
     });
   }
 } 
-
-
-// Middleware de autenticación
-async function varificarUser(token) {
-  const authCookie = token; // Lee el valor del token desde la cookie   
-
-  const verifyAsync = util.promisify(jwt.verify);
-  try {
-    const user = await verifyAsync(authCookie, secretKey);
-
-    // Desencriptar el nombre de usuario
-    const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
-    let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
-    decryptedNombreUsuario += decipher.final('utf8');
-    return decryptedNombreUsuario;
-  } catch (err) {
-    console.error(err);
-    return err
-    //throw err;
-  }
-
-} 
- 
 
 
 /******MIDDLEWARES********/
@@ -121,11 +109,12 @@ app.use((req, res, next)=>{
     console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear() )   
     console.log("URL: " + req.method + " " + req.originalUrl)  
     console.log("IP: " + req.ip)  
+    console.log("USUARIO: " + usuario)  
     console.log("----------------------------------------------------")
     console.log("-------------------FIN-------------------------------") 
-
     next();
 })
+
 
 
 /************************************************************/
@@ -133,66 +122,58 @@ app.use((req, res, next)=>{
 /************************************************************/
 
 app.get("/", async (req, res)=>{    
-    
-   /* if(req.cookies.token){
-      var respuesta = await varificarUser(req.cookies.token) 
-      if(respuesta = "TokenExpiredError: jwt expired"){
-        res.clearCookie("token")
-        usuario=""
-      }
-      console.log("estaria ok")
-      console.log(usuario)
-    }else{ 
-      usuario=""
-    }*/
-
-    res.render("index",{      
-      userName: usuario
-    })
-  })
-       
-app.get("/proyects", authenticateToken, async (req, res)=>{
   
+  if(!req.cookies.token){
+    
+    usuario = ""
+  }
 
+  res.render("index",{      
+    userName: usuario
+  })
+})
+        
+app.get("/proyects", authenticateToken, async (req, res)=>{  
+ 
   res.render("proyects",{    
     userName: usuario
   })
 })
   
-app.get("/login", async (req, res)=>{  
+app.get("/login", async (req, res)=>{   
   
-
   res.render("login",{    
     userName: usuario
   })
 })
-   
+     
   //MARIANAM password23
   //GERMANG password23
- 
- app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+  
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
 
-    var respuestaQRY
-    miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
-    respuestaQRY = await misDatos(miSQLqry)
-    console.log("DESDE BD WEB DIGO:")
-    console.log(respuestaQRY)
-     
-      
-    if (respuestaQRY.length === 0 || !bcrypt.compareSync(password, respuestaQRY[0].password)) {
-      console
-      res.status(401).json({ message: 'Credenciales inválidas' });
-    } else { 
+  var respuestaQRY
+  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log("DESDE BD WEB DIGO:")
+  console.log(respuestaQRY)
+    
+       
+  if (respuestaQRY.length === 0 || !bcrypt.compareSync(password, respuestaQRY[0].password)) {
+    // console
+    res.status(401).json({ message: 'Credenciales inválidas' });
+  } else { 
    
-      let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
-      encryptedNombreUsuario += cipher.final('base64');
+    let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
+    encryptedNombreUsuario += cipher.final('base64');
   
-      const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '24h' });
-      res.status(200).json({ token, rutaURL: req.originalUrl });
-    }
+    const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '15m' });
+    usuario = respuestaQRY[0].user_name
+    res.status(200).json({ token, rutaURL: req.originalUrl });
+  }
   
- });
+ }); 
 
 
 app.post('/register', (req, res) => {
