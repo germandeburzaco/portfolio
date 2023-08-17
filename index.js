@@ -24,7 +24,7 @@ const connection = mysql.createConnection({
 const secretKey = 'una_clave_secreta123456789123456';
 const iv = crypto.randomBytes(16); // Initialization Vector
 const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
-
+ 
 var datosDesdeBD = []
 
 app.use(cookieParser());
@@ -93,7 +93,7 @@ function authenticateToken(req, res, next) {
       res.clearCookie("token")
       res.cookie("token", newToken)      
       next()   
-      
+       
     });
   }
 } 
@@ -139,7 +139,17 @@ app.get("/proyects", authenticateToken, async (req, res)=>{
   })
 })
   
+app.get("/perfil", authenticateToken, async (req, res)=>{  
+ 
+  res.render("perfil",{    
+    userName: usuario
+  })
+})
+
 app.get("/login",  async (req, res)=>{   
+  if(!req.cookies.token){    
+    usuario = ""
+  }
 
   res.render("login",{    
     userName: usuario
