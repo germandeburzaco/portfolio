@@ -65,7 +65,7 @@ function authenticateToken(req, res, next) {
     jwt.verify(authCookie, secretKey, (err, user) => {  
       
       const decodedToken = jwt.decode(authCookie);
-      console.log(decodedToken)
+      //console.log(decodedToken)
       console.log(user)
       const expirationDate = new Date(decodedToken.exp * 1000); // Convertir a milisegundos
       console.log('Fecha de expiración:', expirationDate);
@@ -123,8 +123,7 @@ app.use((req, res, next)=>{
 
 app.get("/", async (req, res)=>{    
   
-  if(!req.cookies.token){
-    
+  if(!req.cookies.token){    
     usuario = ""
   }
 
@@ -140,8 +139,8 @@ app.get("/proyects", authenticateToken, async (req, res)=>{
   })
 })
   
-app.get("/login", async (req, res)=>{   
-  
+app.get("/login",  async (req, res)=>{   
+
   res.render("login",{    
     userName: usuario
   })
@@ -173,8 +172,17 @@ app.post('/login', async (req, res) => {
     res.status(200).json({ token, rutaURL: req.originalUrl });
   }
   
- }); 
+}); 
 
+app.get("/salir",  async (req, res)=>{   
+
+  res.clearCookie("token")
+  usuario = ""
+
+  res.render("index",{    
+    userName: usuario
+  })
+})
 
 app.post('/register', (req, res) => {
     const randomNum = generateRandomNumber();
