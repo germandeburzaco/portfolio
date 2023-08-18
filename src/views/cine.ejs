@@ -79,6 +79,17 @@
           font-style: italic;
           text-align: center;
         }
+
+        .main-btn {
+            padding: 0.5rem 1rem;
+            font-size: 13px;
+            font-weight: 400;
+            margin: 10px auto;
+            background-color: var(--txtbtntxt);
+            color: var(--txtbtnbg);
+            border-radius: 5px;
+            cursor: pointer;
+        }
       </style>
 </head>
 
@@ -93,8 +104,13 @@
       </p>      
     </div>
   </div>
-  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282);">
-    <button id="btnTopMovies">TOP10</button>
+  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); display: flex;   justify-content: center; align-items: center;">
+    <button id="btnTopMovies" class="main-btn">TOP</button>
+  </div>
+  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
+    <button id="btnIzquierda" class="main-btn"><</button>
+    <input id="inpNroPAgina" type="number" value="1" style="width: 40px; text-align: center;">
+    <button id="btnDerecha" class="main-btn">></button>
   </div>
   
   <div style="margin-top: 3px;">
@@ -123,33 +139,52 @@
   <script>
     window.addEventListener("load", () => {
       
+      var inpNroPAgina = document.getElementById("inpNroPAgina")
+      const btnTopMovies = document.getElementById("btnTopMovies"); 
+      const btnIzquierda = document.getElementById("btnIzquierda"); 
+      const btnDerecha = document.getElementById("btnDerecha"); 
+          
 
-      const btnTopMovies = document.getElementById("btnTopMovies");     
-
-      btnTopMovies.addEventListener("click", function () {
-        document.getElementById("clsTarjetas").innerHTML = "";
-
-        //INICIO
-        fetch(
-          `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=a7499e5ecf0fb5add0e060e12d189dad&query=`
-        )
-          .then((res) => res)
-          .then((res) => res.json())
-          .then((res) => {
-            //console.log(res.results) })
-
-            const peliculas = res.results;
-            console.log(peliculas);
-            peliculas.forEach((pelicula) => {
-              document.getElementById("clsTarjetas").innerHTML += `
-                      <li class"movies">                    
-                          <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
-                          <p class="clsTituloMovie">${pelicula.title}</p>                                      
-                          <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
-                      </li>`;
-            }); //FIN
-          });
+      btnTopMovies.addEventListener("click", async function () {
+        inpNroPAgina.value = 1
+        console.log(inpNroPAgina.value)
+        fetchTopTen(inpNroPAgina.value)
       });
+
+      btnIzquierda.addEventListener("click", async function () {
+        console.log(inpNroPAgina.value)
+        inpNroPAgina.value = parseInt(inpNroPAgina.value) - 1
+        fetchTopTen(parseInt(inpNroPAgina.value) - 1)
+      });
+
+      btnDerecha.addEventListener("click", async function () {
+        console.log(inpNroPAgina.value)
+        inpNroPAgina.value = parseInt(inpNroPAgina.value) + 1
+        fetchTopTen(parseInt(inpNroPAgina.value) + 1)
+      });
+
+
+      function fetchTopTen(numeroPagina){
+
+        document.getElementById("clsTarjetas").innerHTML = "";        
+          fetch( `https://api.themoviedb.org/3/movie/top_rated?language=es-es&page=${numeroPagina}&api_key=a7499e5ecf0fb5add0e060e12d189dad&query=`)
+            .then((res) => res)
+            .then((res) => res.json())
+            .then((res) => {
+              //console.log(res.results) })
+  
+              const peliculas = res.results;
+              console.log(peliculas);
+              peliculas.forEach((pelicula) => {
+                document.getElementById("clsTarjetas").innerHTML += `
+                        <li class"movies">                    
+                            <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
+                            <p class="clsTituloMovie">${pelicula.title}</p>                                      
+                            <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
+                        </li>`;
+              }); //FIN
+            });
+      }
 
 
 
