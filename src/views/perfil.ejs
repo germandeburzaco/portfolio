@@ -59,9 +59,10 @@
 
         .input-field {
           min-width: 270px;
-          width: 80%;
+          width: 100%;
           padding: 5px;
           outline: none;
+          margin: auto;
         }
 
         .input-field:focus {
@@ -70,7 +71,7 @@
         .btn {
         background-color: dodgerblue;
         color: white;
-        padding: 15px 10px;
+        padding: 10px 5px;
         border: none;
         cursor: pointer;
         width: 100%;
@@ -105,21 +106,18 @@
 
   <div >
     <div class="w3-container" style="width: 35%; margin: auto; min-width: 290px">
-      <div class="input-container">
-        <i class="fa fa-user icon"></i>
+      <div class="input-container" style="margin: 5px;">        
         <input class="input-field" type="text" placeholder="Contraseña Actual" name="usrnm">
       </div>
     
-      <div class="input-container">
-        <i class="fa fa-envelope icon"></i>
+      <div class="input-container" style="margin: 5px;">        
         <input class="input-field" type="text" placeholder="Nueva contraseña" name="email">
       </div>
       
-      <div class="input-container">
-        <i class="fa fa-key icon"></i>
-        <input class="input-field" type="password" placeholder="Repita contraseña" name="psw">
+      <div class="input-container" style="margin: 5px;">        
+        <input class="input-field" type="password" placeholder="Repita nueva contraseña" name="psw">
       </div>
-      <button type="submit" class="btn">Register</button>
+      <button type="submit" class="btn" style="margin: 5px;">CAMBIAR CONTRASEÑA</button>
     </div>
   </div>
  
