@@ -98,7 +98,7 @@
   </div>
   
   <div style="margin-top: 3px;">
-    <div class="clsMovies">
+    <div class="clsMovies" style="width: 80%; margin: auto;">
       <ul class="clsTarjetas" id="clsTarjetas">
   
       </ul>
@@ -145,7 +145,7 @@
                       <li class"movies">                    
                           <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
                           <p class="clsTituloMovie">${pelicula.title}</p>                                      
-                          <p class="clsTituloMovie"><meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
+                          <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
                       </li>`;
             }); //FIN
           });
