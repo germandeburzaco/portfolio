@@ -141,6 +141,16 @@ app.get("/proyects", authenticateToken, async (req, res)=>{
     userName: usuario
   })
 })
+
+app.get("/cine", authenticateToken, async (req, res)=>{  
+  if(!req.cookies.token){    
+    usuario = ""
+  }
+
+  res.render("cine",{    
+    userName: usuario
+  })
+})
   
 app.get("/perfil", authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    

@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/w3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/proyects.css">
+    <title>PORTFOLIO</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <style>
+        h1{
+          font-family: 'PT Sans', sans-serif;
+          display: block;
+          font-size: 2em;
+          margin-block-start: 0.67em;
+          margin-block-end: 0.67em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 32px;
+        }
+
+        .clsTarjetas {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, 230px);
+          padding: 20px;
+          justify-content: center;
+          gap: 30px;
+        }
+
+        .movies {
+          width: 250px;
+          height: 350px;
+          background-color: rgb(255, 255, 255);
+          padding: 10px;
+          border-radius: 4px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .movies p {
+          margin-top: 4px;
+        }
+
+        img {
+          border-radius: 10px;
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          /* box-shadow: 5px 5px 5px #aaaaaa;*/
+        }
+
+        img:hover {
+          /*  scale: 1.1;*/
+          transition: 0.4s;
+          /* box-shadow: 5px 5px 5px #aaaaaa;*/
+          opacity: 0.8;
+        }
+
+        .clsTituloMovie {
+          font-style: italic;
+          text-align: center;
+        }
+      </style>
+</head>
+
+<body id="elemBody" class="modoClaro  modoOscuro">
+  <header>
+    <%- include ("partials/_heads") %>
+  </header>
+  <div >
+    <div style="width: 80%; margin: 0 auto;">
+      <p class="main-texto">Mis <span class="main-nombre"> PELICULAS</span><span class="main-punto"
+          id="main-punto">_</span>
+      </p>      
+    </div>
+  </div>
+  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282);">
+    <button id="btnTopMovies">TOP10</button>
+  </div>
+  
+  <div style="margin-top: 3px;">
+    <div class="clsMovies">
+      <ul class="clsTarjetas" id="clsTarjetas">
+  
+      </ul>
+    </div>   
+  </div>
+
+  <footer>
+    <div class="containterMain--redes">
+      <ul class="redes">
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fab fa-twitter"></i></a>
+        <a class="redes-items" href="https://github.com/germandeburzaco"><i class="fab fa-github"></i></a>
+        <a class="redes-items" href="https://codepen.io/GermanDaniG"><i class="fab fa-codepen"></i></a>
+        <a class="redes-items" href="https://twitter.com/GermanDaniG"><i class="fas fa-envelope"></i></a>
+
+      </ul>
+    </div>
+    <div class="footer-bajo">
+
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener("load", () => {
+      
+
+      const btnTopMovies = document.getElementById("btnTopMovies");     
+
+      btnTopMovies.addEventListener("click", function () {
+        document.getElementById("clsTarjetas").innerHTML = "";
+
+        //INICIO
+        fetch(
+          `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&api_key=a7499e5ecf0fb5add0e060e12d189dad&query=`
+        )
+          .then((res) => res)
+          .then((res) => res.json())
+          .then((res) => {
+            //console.log(res.results) })
+
+            const peliculas = res.results;
+            console.log(peliculas);
+            peliculas.forEach((pelicula) => {
+              document.getElementById("clsTarjetas").innerHTML += `
+                      <li class"movies">                    
+                          <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
+                          <p class="clsTituloMovie">${pelicula.title}</p>                                      
+                          <p class="clsTituloMovie"><meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
+                      </li>`;
+            }); //FIN
+          });
+      });
+
+
+
+
+
+
+
+
+
+        var iconoLight = document.getElementsByClassName("fa-moon")
+        var iconoMenu = document.getElementById("iconoMenu")
+    
+        let puntos = document.getElementById("main-punto")
+        let puntoTitulo = document.getElementById("puntoTitulo")
+        const puntoIntermitente = () => {
+            puntos.classList.toggle("main-punto-oculto")
+            puntoTitulo.classList.toggle("main-punto-oculto")
+            setTimeout(puntoIntermitente, 1000)
+        }
+        puntoIntermitente()
+
+        iconoLight[0].addEventListener('click', (e) => {
+        
+            var btnModo = document.getElementById('btnModo')
+            var elemBody = document.getElementById('elemBody')
+
+            if (btnModo.value == `-Dark Mode-`) {
+                iconoMenu.style.color = "#ffffff"
+                btnModo.value = "-Light Mode-"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            } else {
+                btnModo.value = "-Dark Mode-"
+                iconoMenu.style.color = "#000000"
+                elemBody.classList.toggle("modoClaro")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            }
+        });
+
+        iconoMenu.addEventListener("click", ()=>{
+          document.getElementById('sidebar').classList.toggle('active');
+        })
+
+    })
+
+  </script>
+</body>
+
+</html>
