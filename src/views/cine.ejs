@@ -104,8 +104,9 @@
       </p>      
     </div>
   </div>
-  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); display: flex;   justify-content: center; align-items: center;">
+  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
     <button id="btnTopMovies" class="main-btn">TOP</button>
+    <button id="btnTrendingMovies" class="main-btn">TREND</button>
   </div>
   <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
     <button id="btnIzquierda" class="main-btn"><</button>
@@ -143,36 +144,60 @@
       const btnTopMovies = document.getElementById("btnTopMovies"); 
       const btnIzquierda = document.getElementById("btnIzquierda"); 
       const btnDerecha = document.getElementById("btnDerecha"); 
-          
+      const btnTrendingMovies = document.getElementById("btnTrendingMovies")
+      var urlToFetch = ""
 
       btnTopMovies.addEventListener("click", async function () {
         inpNroPAgina.value = 1
+        urlToFetch= `https://api.themoviedb.org/3/movie/top_rated?language=es-es&api_key=a7499e5ecf0fb5add0e060e12d189dad&page=`
         console.log(inpNroPAgina.value)
-        fetchTopTen(inpNroPAgina.value)
+        fetchMoviesPlusPage(inpNroPAgina.value)
       });
+
+      btnTrendingMovies.addEventListener("click", ()=>{
+        inpNroPAgina.value = 1
+        urlToFetch = `https://api.themoviedb.org/3/trending/movie/week?language=es-es&api_key=a7499e5ecf0fb5add0e060e12d189dad&page=`
+        fetchMoviesPlusPage(inpNroPAgina.value)
+      })
 
       btnIzquierda.addEventListener("click", async function () {
         console.log(inpNroPAgina.value)
         inpNroPAgina.value = parseInt(inpNroPAgina.value) - 1
-        fetchTopTen(parseInt(inpNroPAgina.value) - 1)
+        fetchMoviesPlusPage(parseInt(inpNroPAgina.value) - 1)
       });
 
       btnDerecha.addEventListener("click", async function () {
         console.log(inpNroPAgina.value)
         inpNroPAgina.value = parseInt(inpNroPAgina.value) + 1
-        fetchTopTen(parseInt(inpNroPAgina.value) + 1)
+        fetchMoviesPlusPage(parseInt(inpNroPAgina.value) + 1)
       });
 
 
-      function fetchTopTen(numeroPagina){
-
-        document.getElementById("clsTarjetas").innerHTML = "";        
-          fetch( `https://api.themoviedb.org/3/movie/top_rated?language=es-es&page=${numeroPagina}&api_key=a7499e5ecf0fb5add0e060e12d189dad&query=`)
+      function fetchMoviesPlusPage(numeroPagina){
+        document.getElementById("clsTarjetas").innerHTML = "";             
+          fetch(urlToFetch +  numeroPagina)
             .then((res) => res)
             .then((res) => res.json())
-            .then((res) => {
-              //console.log(res.results) })
-  
+            .then((res) => {  
+              const peliculas = res.results;
+              console.log(peliculas);
+              peliculas.forEach((pelicula) => {
+                document.getElementById("clsTarjetas").innerHTML += `
+                        <li class"movies">                    
+                            <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
+                            <p class="clsTituloMovie">${pelicula.title}</p>                                      
+                            <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
+                        </li>`;
+              }); //FIN
+            });
+      }
+
+      function fetchMovies(){
+        document.getElementById("clsTarjetas").innerHTML = "";             
+          fetch(urlToFetch)
+            .then((res) => res)
+            .then((res) => res.json())
+            .then((res) => {  
               const peliculas = res.results;
               console.log(peliculas);
               peliculas.forEach((pelicula) => {
