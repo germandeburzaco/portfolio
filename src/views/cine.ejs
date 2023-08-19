@@ -46,14 +46,16 @@
           gap: 30px;
         }
 
-        .movies {
-          width: 250px;
-          height: 350px;
-          background-color: rgb(255, 255, 255);
-          padding: 10px;
+        .movies {          
+          background-color: var(--bkColor1Claro);          
           border-radius: 4px;
           display: flex;
           flex-direction: column;
+          align-items: center;    
+          text-align: center;          
+          box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
+          border-radius: 5px;
+          cursor: pointer;
         }
 
         .movies p {
@@ -61,10 +63,10 @@
         }
 
         img {
-          border-radius: 10px;
-          width: 80%;
-          margin-left: auto;
-          margin-right: auto;
+          border-radius: 4px 4px 0 0 ;
+          width:100% ;                   
+          object-fit: cover;
+          height: 345px;
           /* box-shadow: 5px 5px 5px #aaaaaa;*/
         }
 
@@ -75,8 +77,7 @@
           opacity: 0.8;
         }
 
-        .clsTituloMovie {
-          font-style: italic;
+        .clsTituloMovie {         
           text-align: center;
         }
 
@@ -118,7 +119,7 @@
   </div>
   
   <div style="margin-top: 3px;">
-    <div class="clsMovies" style="width: 80%; margin: auto;">
+    <div class="clsMovies" style="width: 80%; margin: auto; margin-bottom: 40px;">
       <ul class="clsTarjetas" id="clsTarjetas">
   
       </ul>
@@ -186,11 +187,16 @@
               console.log(peliculas);
               peliculas.forEach((pelicula) => {
                 document.getElementById("clsTarjetas").innerHTML += `
-                        <li class"movies">                    
-                            <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
-                            <p class="clsTituloMovie">${pelicula.title}</p>                                      
-                            <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
-                        </li>`;
+                          <li class="movies">                    
+                              <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
+                              <p class="clsTituloMovie">${pelicula.title}</p>                                      
+                              <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>          
+                              <p class="clsTituloMovie"> 
+                                <button id="btnIzquierda" >FAV</button>
+                                <button id="btnIzquierda" >VISTO</button>
+                                <button id="btnIzquierda" >VER</button> 
+                              </p>              
+                          </li>`;
               }); //FIN
             });
       }
@@ -205,7 +211,7 @@
               console.log(peliculas);
               peliculas.forEach((pelicula) => {
                 document.getElementById("clsTarjetas").innerHTML += `
-                        <li class"movies">                    
+                        <li class="movies">                    
                             <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
                             <p class="clsTituloMovie">${pelicula.title}</p>                                      
                             <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
