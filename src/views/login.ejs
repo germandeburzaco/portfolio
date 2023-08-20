@@ -67,7 +67,7 @@
         <input type="password" name="password" id="password" style="color: black; width: 100%;"> 
         <br>
         <div style="text-align: center; align-items: center;">
-          <button type="submit" class="main-btn" >INGRESAR</button>
+          <button type="submit" class="main-btn" id="main-btn">INGRESAR</button>
         </div>
       </form>
     </div>
@@ -104,6 +104,9 @@
 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const mainbtn = document.getElementById('main-btn');
+
+        mainbtn.disabled = true
         iziToast.info({     
             id: 'iziAguarde', // Asigna un ID a la notificación               
             title: "ATENCION",
@@ -123,6 +126,7 @@
         const data = await response.json();
         console.log(data)
         if (response.ok) {
+          mainbtn.disabled = false
           const notificationId = 'iziAguarde'; 
           iziToast.hide({}, document.getElementById(notificationId));
      
@@ -131,7 +135,7 @@
           // Redirigir al sitio raíz
            window.location.href = "/";
         } else {
-          
+          mainbtn.disabled = false
           const notificationId = 'iziAguarde'; 
           iziToast.hide({}, document.getElementById(notificationId));
           iziToast.warning({     

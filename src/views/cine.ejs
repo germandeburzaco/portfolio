@@ -108,8 +108,10 @@
   <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
     <button id="btnTopMovies" class="main-btn">TOP</button>
     <button id="btnTrendingMovies" class="main-btn">TREND</button>
+    <button id="btnUpcomingMovies" class="main-btn">UPCOMING</button>
     <input id="inpBuscar" type="text" placeholder="Pelicula.." value="" style="width: 100px; text-align: center; margin-left: 3px;">
     <button id="btnBuscar" class="main-btn" style="margin-right: 3px;">BUSCAR</button>
+    <br>
     <button id="" class="main-btn">MIS FAV</button>
     <button id="" class="main-btn">VISTAS</button>
     <button id="" class="main-btn">A VER</button>
@@ -151,9 +153,12 @@
       const btnIzquierda = document.getElementById("btnIzquierda"); 
       const btnDerecha = document.getElementById("btnDerecha"); 
       const btnTrendingMovies = document.getElementById("btnTrendingMovies")
+      const btnUpcomingMovies = document.getElementById("btnUpcomingMovies")
       const btnBuscar = document.getElementById("btnBuscar")
       const inpBuscar = document.getElementById("inpBuscar")
       var urlToFetch = ""
+
+      //https://api.themoviedb.org/3/movie/upcoming
 
       btnBuscar.addEventListener("click", async function () {
         inpNroPAgina.value = 1
@@ -174,6 +179,13 @@
         urlToFetch = `https://api.themoviedb.org/3/trending/movie/week?language=es-es&api_key=a7499e5ecf0fb5add0e060e12d189dad&page=`
         fetchMoviesPlusPage(inpNroPAgina.value)
       })
+
+      btnUpcomingMovies.addEventListener("click", async function () {
+        inpNroPAgina.value = 1
+        urlToFetch= `https://api.themoviedb.org/3/movie/upcoming?language=es-es&api_key=a7499e5ecf0fb5add0e060e12d189dad&page=`
+        console.log(inpNroPAgina.value)
+        fetchMoviesPlusPage(inpNroPAgina.value)
+      });
 
       btnIzquierda.addEventListener("click", async function () {
         console.log(inpNroPAgina.value)
@@ -203,9 +215,9 @@
                               <p class="clsTituloMovie">${pelicula.title}</p>                                      
                               <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>          
                               <p class="clsTituloMovie"> 
-                                <button id="btnIzquierda" >FAV</button>
-                                <button id="btnIzquierda" >VISTO</button>
-                                <button id="btnIzquierda" >VER</button> 
+                                <i class="fas fa-bookmark"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-eye"></i>
                               </p>              
                           </li>`;
               }); //FIN
