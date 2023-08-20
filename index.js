@@ -1,5 +1,5 @@
 const express = require("express")
-const path =require("node:path")
+const path = require("node:path")
 var bodyParser = require('body-parser')
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
@@ -7,26 +7,27 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const util = require('util');
+const {config} = require('dotenv');
+const middlewares = require('./middlewares/middlewares.js');
 
 
 const app = express()
 var usuario = ""
 
+config()
+
 const connection = mysql.createConnection({ 
-  host: 'containers-us-west-159.railway.app',     // Cambia esto a la dirección de tu servidor MySQL si es diferente
-  user: 'root',    // Cambia esto a tu nombre de usuario de MySQL
-  password: 'AOOtjjw19l1YZyWBRzhM', // Cambia esto a tu contraseña de MySQL
+  host: process.env.DB_HOST,     // Cambia esto a la dirección de tu servidor MySQL si es diferente
+  user: process.env.DB_USER,    // Cambia esto a tu nombre de usuario de MySQL
+  password: process.env.DB_PASSWORD, // Cambia esto a tu contraseña de MySQL
   database: 'railway', // Cambia esto al nombre de tu base de datos,
   port: 5825,
   connectionLimit: 500,
 });
-
-const secretKey = 'una_clave_secreta123456789123456';
+    
 //const iv = crypto.randomBytes(16); // Initialization Vector
 //const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
  
-var datosDesdeBD = []
-
 app.use(cookieParser());
 app.use(express.json());
 app.set('views', path.join(__dirname, '/src/views'))
@@ -37,10 +38,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-/*****VARIABLES******/
+//************************************************************/
+// VARIABLES
+//************************************************************/
+var datosDesdeBD = []
+const secretKey = 'una_clave_secreta123456789123456';
 const APP_PORT = process.env.PORT ?? "8080"
 
-/*********FUNCIONES************** */
+//************************************************************/
+// FUNCIONES
+//************************************************************/
 function generateRandomNumber() {
     const min = 1000; // El valor mínimo de 4 cifras
     const max = 99999; // El valor máximo de 4 cifras
@@ -48,58 +55,14 @@ function generateRandomNumber() {
 }
 
 
-// Middleware de autenticación
-function authenticateToken(req, res, next) {
-  
-  if(!req.cookies.token){
-    console.log("no existe el token")
-    
-    usuario = ""
-    return res.render("login",{
-      userName: usuario,
-    })
-  }else{
-    console.log("existe el token")
-    const authCookie = req.cookies.token; // Lee el valor del token desde la cookie  
-    
-    jwt.verify(authCookie, secretKey, (err, user) => {  
-      
-      const decodedToken = jwt.decode(authCookie);
-      //console.log(decodedToken)
-      console.log(user)
-      const expirationDate = new Date(decodedToken.exp * 1000); // Convertir a milisegundos
-      console.log('Fecha de expiración:', expirationDate);
-      
-      if (err) {
-        console.log("error del token")
-        console.log(err.name)
-        res.clearCookie("token")
-        usuario = ""
-        return res.render("login",{
-          userName: usuario,      
-        })
-      }    
-      
-      // Desencriptar el nombre de usuario
-      const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
-      let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
-      decryptedNombreUsuario += decipher.final('utf8');      
-      
-      console.log(decryptedNombreUsuario) 
-      usuario = decryptedNombreUsuario
-
-      //REFRESCANDO EL TOKEN EN LA COOKIE    
-      const newToken = jwt.sign({ userId: decodedToken.userId, nombreUsuario: user.nombreUsuario, iv: decodedToken.iv }, secretKey, { expiresIn: '15m' });
-      res.clearCookie("token")
-      res.cookie("token", newToken)      
-      next()   
-       
-    });
-  }
-} 
+//************************************************************/
+// MIDDLEWARES
+//************************************************************/
 
 
-/******MIDDLEWARES********/
+
+
+// MIDDLEWARES DE LOG
 app.use((req, res, next)=>{
     console.log("-------------------INICIO----------------------------")
     console.log("-----------------------------------------------------")
@@ -117,9 +80,9 @@ app.use((req, res, next)=>{
 
 
 
-/************************************************************/
-//  RUTAS
-/************************************************************/
+//************************************************************/
+// VARIABLES
+//************************************************************/
 
 app.get("/", async (req, res)=>{    
   
@@ -132,7 +95,7 @@ app.get("/", async (req, res)=>{
   })
 })
         
-app.get("/proyects", authenticateToken, async (req, res)=>{  
+app.get("/proyects", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     usuario = ""
   }
@@ -142,7 +105,7 @@ app.get("/proyects", authenticateToken, async (req, res)=>{
   })
 })
 
-app.get("/cine", authenticateToken, async (req, res)=>{  
+app.get("/cine", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     usuario = ""
   }
@@ -152,7 +115,7 @@ app.get("/cine", authenticateToken, async (req, res)=>{
   })
 })
   
-app.get("/perfil", authenticateToken, async (req, res)=>{  
+app.get("/perfil", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     usuario = ""
   }
@@ -211,6 +174,19 @@ app.post('/login', async (req, res) => {
 }); 
 
 app.get("/salir",  async (req, res)=>{   
+
+  res.clearCookie("token")
+  usuario = ""
+
+  res.render("index",{    
+    userName: usuario
+  })
+})
+
+//************************************************************/
+// API UNIVERSAL
+//************************************************************/
+app.get("/protegida/api*",  async (req, res)=>{   
 
   res.clearCookie("token")
   usuario = ""
