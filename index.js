@@ -6,13 +6,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
+
 const util = require('util');
 const {config} = require('dotenv');
-const middlewares = require('./middlewares/middlewares.js');
 
+const middlewares = require('./middlewares/middlewares.js');
+var helpersENV = require('./helpers/variables.js');
+var funcionesENV = require('./helpers/funciones')
 
 const app = express()
-var usuario = ""
+helpersENV.usuario = ""
 
 config()
 
@@ -41,17 +44,8 @@ app.use(bodyParser.json())
 //************************************************************/
 // VARIABLES
 //************************************************************/
-var datosDesdeBD = []
-const APP_PORT = process.env.PORT ?? "8080"
 
-//************************************************************/
-// FUNCIONES
-//************************************************************/
-function generateRandomNumber() {
-    const min = 1000; // El valor mínimo de 4 cifras
-    const max = 99999; // El valor máximo de 4 cifras
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const APP_PORT = process.env.PORT ?? "8080"
 
 
 //************************************************************/
@@ -59,84 +53,68 @@ function generateRandomNumber() {
 //************************************************************/
 
 
-
-
 // MIDDLEWARES DE LOG
-app.use((req, res, next)=>{
-    console.log("-------------------INICIO----------------------------")
-    console.log("-----------------------------------------------------")
-    const d = new Date();
-    const dia = d.getDate()  
-    const mes = d.getMonth() + 1
-    console.log(d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0") + ":" + d.getSeconds().toString().padStart(2, "0") +"  -  " + dia +"-" + mes +"-" + d.getFullYear() )   
-    console.log("URL: " + req.method + " " + req.originalUrl)  
-    console.log("IP: " + req.ip)  
-    console.log("USUARIO: " + usuario)  
-    console.log("----------------------------------------------------")
-    console.log("-------------------FIN-------------------------------") 
-    next();
-})
 
-
+app.use(middlewares.logRequestInfo);
 
 //************************************************************/
-// VARIABLES
+// RUTAS
 //************************************************************/
 
 app.get("/", async (req, res)=>{    
   
   if(!req.cookies.token){    
-    usuario = ""
+    helpersENV.usuario = ""
   }
 
   res.render("index",{      
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
         
 app.get("/proyects", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
-    usuario = ""
+    helpersENV.usuario = ""
   }
 
   res.render("proyects",{    
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
 
 app.get("/cine", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
-    usuario = ""
+    helpersENV.usuario = ""
   }
 
   res.render("cine",{    
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
   
 app.get("/perfil", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
-    usuario = ""
+    helpersENV.usuario = ""
   }
 
   var respuestaQRY
-  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${usuario}'`
+  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${helpersENV.usuario}'`
   respuestaQRY = await misDatos(miSQLqry)
   console.log(respuestaQRY)
 
   res.render("perfil",{    
-    userName: usuario,
+    userName: helpersENV.usuario,
     datosUsuario: respuestaQRY
   })
 })
 
 app.get("/login",  async (req, res)=>{   
   if(!req.cookies.token){    
-    usuario = ""
+    helpersENV.usuario = ""
   }
 
   res.render("login",{    
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
      
@@ -166,7 +144,7 @@ app.post('/login', async (req, res) => {
 
 
     const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
-    usuario = respuestaQRY[0].user_name
+    helpersENV.usuario = respuestaQRY[0].user_name
     res.status(200).json({ token, rutaURL: req.originalUrl });
   }
   
@@ -175,10 +153,10 @@ app.post('/login', async (req, res) => {
 app.get("/salir",  async (req, res)=>{   
 
   res.clearCookie("token")
-  usuario = ""
+  helpersENV.usuario = ""
 
   res.render("index",{    
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
 
@@ -188,15 +166,15 @@ app.get("/salir",  async (req, res)=>{
 app.get("/protegida/api*",  async (req, res)=>{   
 
   res.clearCookie("token")
-  usuario = ""
+  helpersENV.usuario = ""
 
   res.render("index",{    
-    userName: usuario
+    userName: helpersENV.usuario
   })
 })
 
 app.post('/register', (req, res) => {
-    const randomNum = generateRandomNumber();
+    const randomNum = funcionesENV.generateRandomNumber();
     console.log(req.body)
     const { username, password } = req.body;
 
@@ -217,9 +195,9 @@ app.post('/register', (req, res) => {
 
 async function misDatos(qry) {
   const connection = await mysql.createConnection({ 
-    host: 'containers-us-west-159.railway.app',    
-    user: 'root',    
-    password: 'AOOtjjw19l1YZyWBRzhM', 
+    host: process.env.DB_HOST,    
+    user: process.env.DB_USER,    
+    password: process.env.DB_PASSWORD, 
     database: 'railway', 
     port: 5825,
     connectionLimit: 500,
