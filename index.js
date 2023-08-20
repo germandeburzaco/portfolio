@@ -42,7 +42,6 @@ app.use(bodyParser.json())
 // VARIABLES
 //************************************************************/
 var datosDesdeBD = []
-const secretKey = 'una_clave_secreta123456789123456';
 const APP_PORT = process.env.PORT ?? "8080"
 
 //************************************************************/
@@ -159,14 +158,14 @@ app.post('/login', async (req, res) => {
     res.status(401).json({ message: 'Credenciales inválidas' });
   } else { 
     const iv = crypto.randomBytes(16); // Initialization Vector
-    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(process.env.CRYPTO_SECRETKEY), iv);
    
     let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
     encryptedNombreUsuario += cipher.final('base64');
     
 
 
-    const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, secretKey, { expiresIn: '15m' });
+    const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
     usuario = respuestaQRY[0].user_name
     res.status(200).json({ token, rutaURL: req.originalUrl });
   }

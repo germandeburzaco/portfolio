@@ -16,7 +16,7 @@ function authenticateToken(req, res, next) {
       console.log("existe el token")
       const authCookie = req.cookies.token; // Lee el valor del token desde la cookie  
       
-      jwt.verify(authCookie, secretKey, (err, user) => {  
+      jwt.verify(authCookie, process.env.CRYPTO_SECRETKEY, (err, user) => {  
         
         const decodedToken = jwt.decode(authCookie);
         //console.log(decodedToken)
@@ -35,7 +35,7 @@ function authenticateToken(req, res, next) {
         }    
         
         // Desencriptar el nombre de usuario
-        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey), Buffer.from(user.iv, 'base64'));
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(process.env.CRYPTO_SECRETKEY), Buffer.from(user.iv, 'base64'));
         let decryptedNombreUsuario = decipher.update(user.nombreUsuario, 'base64', 'utf8');
         decryptedNombreUsuario += decipher.final('utf8');      
         
@@ -43,7 +43,7 @@ function authenticateToken(req, res, next) {
         usuario = decryptedNombreUsuario
   
         //REFRESCANDO EL TOKEN EN LA COOKIE    
-        const newToken = jwt.sign({ userId: decodedToken.userId, nombreUsuario: user.nombreUsuario, iv: decodedToken.iv }, secretKey, { expiresIn: '15m' });
+        const newToken = jwt.sign({ userId: decodedToken.userId, nombreUsuario: user.nombreUsuario, iv: decodedToken.iv }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
         res.clearCookie("token")
         res.cookie("token", newToken)      
         next()   
