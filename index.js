@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
+const fetch = require("node-fetch");
 
 const util = require('util');
 const {config} = require('dotenv');
@@ -13,10 +14,11 @@ const {config} = require('dotenv');
 const middlewares = require('./middlewares/middlewares.js');
 var helpersENV = require('./helpers/variables.js');
 var funcionesENV = require('./helpers/funciones')
+const appConfiguraciones = require("./helpers/configuraciones");
 
 const app = express()
 helpersENV.usuario = ""
-
+ 
 config()
 
 const connection = mysql.createConnection({ 
@@ -31,15 +33,7 @@ const connection = mysql.createConnection({
 //const iv = crypto.randomBytes(16); // Initialization Vector
 //const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
  
-app.use(cookieParser());
-app.use(express.json());
-app.set('views', path.join(__dirname, '/src/views'))
-app.set("view engine", "ejs")
-
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+appConfiguraciones(app);
 
 //************************************************************/
 // VARIABLES
@@ -163,14 +157,37 @@ app.get("/salir",  async (req, res)=>{
 //************************************************************/
 // API UNIVERSAL
 //************************************************************/
-app.get("/protegida/api*",  async (req, res)=>{   
+app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{   
+  var apiKey = '&api_key=' + 'a7499e5ecf0fb5add0e060e12d189dad'
 
-  res.clearCookie("token")
-  helpersENV.usuario = ""
+  if(req.query.tipoQry === "TOPMovies"){ // top trend upcoming
+    var setPAge = `&page=${req.query.NroPagina}`  
 
-  res.render("index",{    
-    userName: helpersENV.usuario
-  })
+    fetch(`${req.query.urlToFetch}${apiKey}${setPAge}`)   
+    .then(promesaFetch => promesaFetch.json())
+    .then(contenido => {
+     // console.log(contenido)
+      res.json(contenido)
+    }) 
+    
+  }else if(req.query.tipoQry === "QRYmovies"){ // busca peli por nombre
+
+    var setPage = `&page=${req.query.NroPagina}`
+    var setNombreMovie = `&query=${req.query.query}`
+    var setPopularity = '&sort_by=popularity.desc'
+    console.log(req.query)  
+    console.log(`${req.query.urlToFetch}${apiKey}${setPage}${setNombreMovie}${setPopularity}`)    
+
+    fetch(`${req.query.urlToFetch}${apiKey}${setPage}${setNombreMovie}${setPopularity}`)   
+    .then(promesaFetch => promesaFetch.json())
+    .then(contenido => {
+     // console.log(contenido)
+      res.json(contenido)
+    }) 
+    
+  }
+
+ 
 })
 
 app.post('/register', (req, res) => {
