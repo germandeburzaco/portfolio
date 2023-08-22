@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
     <link rel="stylesheet" href="/css/proyects.css">
+    <link rel="stylesheet" href="/css/iziToast.min.css">
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -55,7 +56,7 @@
           text-align: center;          
           box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
           border-radius: 5px;
-          cursor: pointer;
+          
         }
 
         .movies p {
@@ -122,7 +123,7 @@
     <button id="btnDerecha" class="main-btn">></button>
   </div>
   
-  <div style="margin-top: 3px;">
+  <div style="margin-top: 3px;" id="divPrincipal">
     <div class="clsMovies" style="width: 80%; margin: auto; margin-bottom: 40px;">
       <ul class="clsTarjetas" id="clsTarjetas">
   
@@ -144,6 +145,9 @@
 
     </div>
   </footer>
+
+  <script src="/js/iziToast.min.js"></script>
+
   <script>
    
     window.addEventListener("load", () => {
@@ -213,15 +217,94 @@
               const peliculas = res.results;
               console.log(peliculas);
               peliculas.forEach((pelicula) => {
+                var colorAgendar = "grey"
+                var colorFavorito = "grey"
+                var colorVisto = "grey"
+                if(pelicula.agendar){
+                  colorAgendar = "red"
+                }
+
+                if(pelicula.favorito){
+                  colorFavorito = "red"
+                }
+
+                if(pelicula.visto){
+                  colorVisto = "red"
+                }
                 document.getElementById("clsTarjetas").innerHTML += `
                         <li class="movies">                    
                             <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
                             <p class="clsTituloMovie">${pelicula.title}</p>                                      
-                            <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>                    
-                        </li>`;
+                            <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>     
+                            <div style="width: 100%; margin-top: 3px; margin-bottom: 3px">  
+                            <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
+                            <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
+                            <i class="far fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
+                          </div>               
+                      </li>`;
               }); //FIN
             });
-      }
+      }// FIN FETCHDATA
+
+      /**********************************************/
+      // CONTROLAR DINAMICAMENTE CLICK A DIVPRINCIPAL
+      /**********************************************/      
+      const divPrincipal = document.getElementById('divPrincipal'); 
+      divPrincipal.addEventListener('click', function (e) {
+        console.log(e)
+        console.log(e.target)
+        if(e.target.style.color === "red"){
+          e.target.style.color = "grey"
+
+          fetchAddRemoveMOVIEuser("baja", e.target.dataset.id , e.target.dataset.descrip)
+
+          iziToast.warning({     
+            id: 'iziAguarde', // Asigna un ID a la notificación               
+            title: "ELIMINADO",
+            message: "esta pelicula fue eliminada de su lista",
+            closeOnClick: true,                    
+            position: 'bottomRight',
+            timeout: 300000
+          });
+
+        }else{
+          e.target.style.color = "red"
+          
+          fetchAddRemoveMOVIEuser("alta", e.target.dataset.id , e.target.dataset.descrip)
+
+          iziToast.success({     
+            id: 'iziAguarde', // Asigna un ID a la notificación               
+            title: "AGREGADO",
+            message: "esta pelicula fue agregada a su lista",
+            closeOnClick: true,                    
+            position: 'bottomRight',
+            timeout: 300000
+          });
+
+        }
+      })// FIN MANEJO DINAMICO A DIVPRINCIPAL
+
+
+      /**********************************************/
+      // FUNCION FETCH ADD REMOVE MOVIES A LISTA DEL USUARIO
+      /**********************************************/ 
+      function fetchAddRemoveMOVIEuser(accion, id, descripcion){    
+        console.log("fetchAddRemoveMOVIEuser")      
+                       
+        fetch(`/protegida/api?tipoQry=AddRemoveMOVIESuser&accion=${accion}&id=${id}&descripcion=${descripcion}`)         
+          .then((res) => res.json())
+          .then((res) => {  
+            const respuesta = res;
+            console.log(respuesta);
+            
+          });
+      }// FIN FETCHDATA
+
+
+
+
+
+
 
 
 

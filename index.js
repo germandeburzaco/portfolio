@@ -18,6 +18,7 @@ const appConfiguraciones = require("./helpers/configuraciones");
 
 const app = express()
 helpersENV.usuario = ""
+helpersENV.usuario_id = ""
  
 config()
 
@@ -59,6 +60,7 @@ app.get("/", async (req, res)=>{
   
   if(!req.cookies.token){    
     helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
   }
 
   res.render("index",{      
@@ -69,6 +71,7 @@ app.get("/", async (req, res)=>{
 app.get("/proyects", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
   }
 
   res.render("proyects",{    
@@ -79,6 +82,7 @@ app.get("/proyects", middlewares.authenticateToken, async (req, res)=>{
 app.get("/cine", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
   }
 
   res.render("cine",{    
@@ -89,6 +93,7 @@ app.get("/cine", middlewares.authenticateToken, async (req, res)=>{
 app.get("/perfil", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
   }
 
   var respuestaQRY
@@ -105,6 +110,7 @@ app.get("/perfil", middlewares.authenticateToken, async (req, res)=>{
 app.get("/login",  async (req, res)=>{   
   if(!req.cookies.token){    
     helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
   }
 
   res.render("login",{    
@@ -137,8 +143,9 @@ app.post('/login', async (req, res) => {
     
 
 
-    const token = jwt.sign({ userId: respuestaQRY[0].id,nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
+    const token = jwt.sign({ userId: respuestaQRY[0].id, nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
     helpersENV.usuario = respuestaQRY[0].user_name
+    helpersENV.usuario_id = respuestaQRY[0].id
     res.status(200).json({ token, rutaURL: req.originalUrl });
   }
   
@@ -148,6 +155,7 @@ app.get("/salir",  async (req, res)=>{
 
   res.clearCookie("token")
   helpersENV.usuario = ""
+  helpersENV.usuario_id = ""
 
   res.render("index",{    
     userName: helpersENV.usuario
@@ -160,34 +168,67 @@ app.get("/salir",  async (req, res)=>{
 app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{   
   var apiKey = '&api_key=' + 'a7499e5ecf0fb5add0e060e12d189dad'
 
+  var moviesFromUser = ""
+  //SELECT * FROM USUARIO_MOVIA WHERE (ID_USUARIO = ${helpersENV.usuario_id})
+  miSQLqry = `SELECT * FROM USUARIO_MOVIA WHERE (ID_USUARIO = ${helpersENV.usuario_id})`
+  moviesFromUser = await misDatos(miSQLqry)
+ // console.log(moviesFromUser)
+
+  console.log(req.query)
+
   if(req.query.tipoQry === "TOPMovies"){ // top trend upcoming
     var setPAge = `&page=${req.query.NroPagina}`  
-
     fetch(`${req.query.urlToFetch}${apiKey}${setPAge}`)   
     .then(promesaFetch => promesaFetch.json())
-    .then(contenido => {
-     // console.log(contenido)
+    .then(contenido => {      
+      contenido.results.forEach(movieData => {
+        moviesFromUser.forEach(movieUser =>{
+          if(movieUser.ID_MOVIE === movieData.id.toString() ){          
+            movieData[movieUser.DESCRIPCION] = true;
+          }
+        })             
+      });
       res.json(contenido)
-    }) 
+    })  
     
-  }else if(req.query.tipoQry === "QRYmovies"){ // busca peli por nombre
+  } else if(req.query.tipoQry === "QRYmovies"){ // busca peli por nombre
 
     var setPage = `&page=${req.query.NroPagina}`
     var setNombreMovie = `&query=${req.query.query}`
-    var setPopularity = '&sort_by=popularity.desc'
-    console.log(req.query)  
-    console.log(`${req.query.urlToFetch}${apiKey}${setPage}${setNombreMovie}${setPopularity}`)    
+    var setPopularity = '&sort_by=popularity.desc' 
 
     fetch(`${req.query.urlToFetch}${apiKey}${setPage}${setNombreMovie}${setPopularity}`)   
     .then(promesaFetch => promesaFetch.json())
     .then(contenido => {
-     // console.log(contenido)
+      contenido.results.forEach(movieData => {
+        moviesFromUser.forEach(movieUser =>{
+          if(movieUser.ID_MOVIE === movieData.id.toString() ){          
+            movieData[movieUser.DESCRIPCION] = true;
+          }
+        })             
+      });
       res.json(contenido)
-    }) 
-    
-  }
-
+    })     
+  } else if(req.query.tipoQry === "AddRemoveMOVIESuser"){ // busca peli por nombre
+     
+    console.log(req.query)
+    var respuestaQRY
+    if(req.query.accion === "alta"){
+      miSQLqry = `INSERT INTO USUARIO_MOVIA (ID_USUARIO, ID_MOVIE, DESCRIPCION ) values (${helpersENV.usuario_id}, ${req.query.id}, N'${req.query.descripcion}')`
+      respuestaQRY = await misDatos(miSQLqry)
+    }else{
+      miSQLqry = `DELETE FROM USUARIO_MOVIA WHERE (ID_USUARIO = ${helpersENV.usuario_id} AND ID_MOVIE = ${req.query.id} AND DESCRIPCION = N'${req.query.descripcion}')`
+      respuestaQRY = await misDatos(miSQLqry)
+    } 
  
+    console.log(miSQLqry)
+    console.log(respuestaQRY)
+    res.json(respuestaQRY)
+    //`https://api.themoviedb.org/3/movie/${id pelicula}?api_key=a7499e5ecf0fb5add0e060e12d189dad`
+
+  }// ACA CONTINUA EL IF ELSE
+
+
 })
 
 app.post('/register', (req, res) => {
