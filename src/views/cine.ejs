@@ -113,9 +113,9 @@
     <input id="inpBuscar" type="text" placeholder="Pelicula.." value="" style="width: 100px; text-align: center; margin-left: 3px;">
     <button id="btnBuscar" class="main-btn" style="margin-right: 3px;">BUSCAR</button>
     <br>
-    <button id="" class="main-btn">MIS FAV</button>
-    <button id="" class="main-btn">VISTAS</button>
-    <button id="" class="main-btn">A VER</button>
+    <button id="btnAgendar" class="main-btn">A VER</button>
+    <button id="btnFavorito" class="main-btn" >MIS FAV</button>
+    <button id="btnVisto" class="main-btn">VISTAS</button>
   </div>
   <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
     <button id="btnIzquierda" class="main-btn"><</button>
@@ -160,6 +160,10 @@
       const btnUpcomingMovies = document.getElementById("btnUpcomingMovies")
       const btnBuscar = document.getElementById("btnBuscar")
       const inpBuscar = document.getElementById("inpBuscar")
+      const btnFavorito = document.getElementById("btnFavorito")
+      const btnVisto = document.getElementById("btnVisto")
+      const btnAgendar = document.getElementById("btnAgendar")
+
       
       var urlToFetch = ""
       var tipoQry = ""
@@ -207,6 +211,27 @@
         fetchData(urlToFetch, inpNroPagina.value)
       });
 
+      btnFavorito.addEventListener("click", async function () {//ok
+        inpNroPagina.value = 1
+        tipoQry = 'FAVORITASmovies'
+        urlToFetch= `https://api.themoviedb.org/3/movie/upcoming?language=es-es&tipoDescripcion=favorito`
+        fetchData(urlToFetch, inpNroPagina.value)
+      });
+
+      btnVisto.addEventListener("click", async function () {//ok
+        inpNroPagina.value = 1
+        tipoQry = 'FAVORITASmovies'
+        urlToFetch= `https://api.themoviedb.org/3/movie/upcoming?language=es-es&tipoDescripcion=visto`
+        fetchData(urlToFetch, inpNroPagina.value)
+      });
+
+      btnAgendar.addEventListener("click", async function () {//ok
+        inpNroPagina.value = 1
+        tipoQry = 'FAVORITASmovies'
+        urlToFetch= `https://api.themoviedb.org/3/movie/upcoming?language=es-es&tipoDescripcion=agendar`
+        fetchData(urlToFetch, inpNroPagina.value)
+      });
+
       
       function fetchData(urlToFetch, NroPagina){  
         console.log(urlToFetch)
@@ -214,6 +239,7 @@
           fetch(`/protegida/api?tipoQry=${tipoQry}&urlToFetch=${urlToFetch}&NroPagina=${NroPagina}`)         
             .then((res) => res.json())
             .then((res) => {  
+              console.log(res);
               const peliculas = res.results;
               console.log(peliculas);
               peliculas.forEach((pelicula) => {
@@ -239,7 +265,7 @@
                             <div style="width: 100%; margin-top: 3px; margin-bottom: 3px">  
                             <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
                             <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
-                            <i class="far fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
+                            <i class="fas fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
                           </div>               
                       </li>`;
               }); //FIN
@@ -251,37 +277,41 @@
       /**********************************************/      
       const divPrincipal = document.getElementById('divPrincipal'); 
       divPrincipal.addEventListener('click', function (e) {
-        console.log(e)
-        console.log(e.target)
-        if(e.target.style.color === "red"){
-          e.target.style.color = "grey"
+        if (e.target.classList.contains('fas')) {
+          console.log(e)
+          console.log(e.target)
 
-          fetchAddRemoveMOVIEuser("baja", e.target.dataset.id , e.target.dataset.descrip)
+          if(e.target.style.color === "red"){
+            e.target.style.color = "grey"
 
-          iziToast.warning({     
-            id: 'iziAguarde', // Asigna un ID a la notificación               
-            title: "ELIMINADO",
-            message: "esta pelicula fue eliminada de su lista",
-            closeOnClick: true,                    
-            position: 'bottomRight',
-            timeout: 300000
-          });
+            fetchAddRemoveMOVIEuser("baja", e.target.dataset.id , e.target.dataset.descrip)
 
-        }else{
-          e.target.style.color = "red"
-          
-          fetchAddRemoveMOVIEuser("alta", e.target.dataset.id , e.target.dataset.descrip)
+            iziToast.warning({     
+              id: 'iziAguarde', // Asigna un ID a la notificación               
+              title: "ELIMINADO",
+              message: "esta pelicula fue eliminada de su lista",
+              closeOnClick: true,                    
+              position: 'bottomRight',
+              timeout: 2000
+            });
 
-          iziToast.success({     
-            id: 'iziAguarde', // Asigna un ID a la notificación               
-            title: "AGREGADO",
-            message: "esta pelicula fue agregada a su lista",
-            closeOnClick: true,                    
-            position: 'bottomRight',
-            timeout: 300000
-          });
+          }else{
+            e.target.style.color = "red"
+            
+            fetchAddRemoveMOVIEuser("alta", e.target.dataset.id , e.target.dataset.descrip)
 
+            iziToast.success({     
+              id: 'iziAguarde', // Asigna un ID a la notificación               
+              title: "AGREGADO",
+              message: "esta pelicula fue agregada a su lista",
+              closeOnClick: true,                    
+              position: 'bottomRight',
+              timeout: 2000
+            });
+
+          }
         }
+
       })// FIN MANEJO DINAMICO A DIVPRINCIPAL
 
 

@@ -224,7 +224,40 @@ app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{
     console.log(miSQLqry)
     console.log(respuestaQRY)
     res.json(respuestaQRY)
+    
+  } else if(req.query.tipoQry === "FAVORITASmovies"){ // busca peli por nombre
+
     //`https://api.themoviedb.org/3/movie/${id pelicula}?api_key=a7499e5ecf0fb5add0e060e12d189dad`
+
+    const uniqueIds = [...new Set(moviesFromUser.filter(movie => movie.DESCRIPCION === req.query.tipoDescripcion).map(movie => movie.ID_MOVIE))];
+
+    const fetchPromises = uniqueIds.map(id => {
+      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=a7499e5ecf0fb5add0e060e12d189dad`;
+    
+      return fetch(url)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => {
+          console.error(`Error fetching movie with ID ${id}:`, error);
+          return null;
+        });
+    });
+    
+    Promise.all(fetchPromises)
+      .then(results => {
+        const moviesData = { results: results.filter(movie => movie !== null) };
+        moviesData.results.forEach(movieData => {
+          moviesFromUser.forEach(movieUser =>{
+            if(movieUser.ID_MOVIE === movieData.id.toString() ){          
+              movieData[movieUser.DESCRIPCION] = true;
+            }
+          })             
+        });
+        res.json(moviesData)
+      })
+      .catch(error => {
+        console.error('Error fetching movies:', error);
+      });
 
   }// ACA CONTINUA EL IF ELSE
 
