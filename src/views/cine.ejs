@@ -80,10 +80,11 @@
 
         .clsTituloMovie {         
           text-align: center;
+          color: var(--txtColor1Claro);
         }
 
         .main-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 1rem;
             font-size: 13px;
             font-weight: 400;
             margin: 10px auto;
@@ -110,12 +111,13 @@
     <button id="btnTopMovies" class="main-btn">TOP</button>
     <button id="btnTrendingMovies" class="main-btn">TREND</button>
     <button id="btnUpcomingMovies" class="main-btn">UPCOMING</button>
+   
     <input id="inpBuscar" type="text" placeholder="Pelicula.." value="" style="width: 100px; text-align: center; margin-left: 3px;">
     <button id="btnBuscar" class="main-btn" style="margin-right: 3px;">BUSCAR</button>
-    <br>
-    <button id="btnAgendar" class="main-btn">A VER</button>
-    <button id="btnFavorito" class="main-btn" >MIS FAV</button>
-    <button id="btnVisto" class="main-btn">VISTAS</button>
+ 
+    <button id="btnAgendar" class="main-btn"> <i class="fas fa-bookmark"></i> A VER</button>
+    <button id="btnFavorito" class="main-btn"><i class="fas fa-star"></i> MIS FAV</button>
+    <button id="btnVisto" class="main-btn"><i class="fas fa-eye"></i> VISTAS</button>
   </div>
   <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">
     <button id="btnIzquierda" class="main-btn"><</button>
@@ -124,7 +126,7 @@
   </div>
   
   <div style="margin-top: 3px;" id="divPrincipal">
-    <div class="clsMovies" style="width: 80%; margin: auto; margin-bottom: 40px;">
+    <div class="clsMovies" style="width: 85%; margin: auto; margin-bottom: 40px;">
       <ul class="clsTarjetas" id="clsTarjetas">
   
       </ul>
@@ -145,6 +147,33 @@
 
     </div>
   </footer>
+
+
+  <!-- MODAL DETALLE PELICULA -->
+  <div id="id03" class="w3-modal">
+    <div class="w3-modal-content" style="min-height: 65%; width:65%; background-color: var(--bkColor1Claro); box-shadow: 0 1px 6px rgba(32, 33, 36, .28);">
+      
+      
+      <div class="w3-row">
+
+        <div class="w3-col" style="width:350px;" id="modalIMG"> <!-- IMG-->
+        </div>
+
+        <div class="w3-rest " style="height: 100%; padding: 10px 20px;"> <!-- DETALLES-->
+          <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
+          <br>
+          <br>
+          <p id="overView" style="font-size: 18px;"></p>
+          <br>
+          <div id="modalRATE"></div>
+        </div>
+      </div>
+      
+
+    </div>    
+  </div>
+
 
   <script src="/js/iziToast.min.js"></script>
 
@@ -259,7 +288,7 @@
                 }
                 document.getElementById("clsTarjetas").innerHTML += `
                         <li class="movies">                    
-                            <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}">  
+                            <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" alt="${pelicula.title}" style="cursor:pointer" class="imgMovie" data-id="${pelicula.id}">  
                             <p class="clsTituloMovie">${pelicula.title}</p>                                      
                             <p class="clsTituloMovie">${pelicula.vote_average}<meter min="0" max="10"low="3" high="7"optimum="10"value="${pelicula.vote_average}"></p>     
                             <div style="width: 100%; margin-top: 3px; margin-bottom: 3px">  
@@ -271,6 +300,47 @@
               }); //FIN
             });
       }// FIN FETCHDATA
+
+      // FETCHDATA PELICULA POR ID
+      function fetchDataxID(id_pelicula){  
+        
+        document.getElementById("modalIMG").innerHTML = "";      
+
+          fetch(`/protegida/api?tipoQry=QRYpeliXid&id_pelicula=${id_pelicula}`)         
+            .then((res) => res.json())
+            .then((res) => {  
+              console.log(res);
+              const pelicula = res;
+              console.log(pelicula);
+              
+              var colorAgendar = "grey"
+              var colorFavorito = "grey"
+              var colorVisto = "grey"
+              if(pelicula.agendar){
+                colorAgendar = "red"
+              }
+
+              if(pelicula.favorito){
+                colorFavorito = "red"
+              }
+
+              if(pelicula.visto){
+                colorVisto = "red"
+              }
+              document.getElementById("modalIMG").innerHTML += `
+                <img src="https://image.tmdb.org/t/p/w200${pelicula.poster_path}" class="imgMovie" style="border-radius: 4px 0px 0 4px; height: 100%";>               
+                `;
+
+              document.getElementById("txtTitulo").innerText = pelicula.title
+              document.getElementById("overView").innerText = pelicula.overview
+              document.getElementById("modalRATE").innerHTML = `<div style="width: 100%; margin-top: 3px; margin-bottom: 3px"> 
+                <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
+                <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
+                <i class="fas fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
+              </div> `
+               
+            });
+      }// FIN FETCHDATA x ID
 
       /**********************************************/
       // CONTROLAR DINAMICAMENTE CLICK A DIVPRINCIPAL
@@ -310,9 +380,17 @@
             });
 
           }
+        } else if (e.target.classList.contains('imgMovie')) { 
+
+          console.log(e.target.dataset.id)
+          fetchDataxID(e.target.dataset.id)
+          document.getElementById('id03').style.display = 'block' 
+
         }
 
       })// FIN MANEJO DINAMICO A DIVPRINCIPAL
+
+
 
 
       /**********************************************/
@@ -331,6 +409,7 @@
       }// FIN FETCHDATA
 
 
+       
 
 
 
@@ -338,47 +417,50 @@
 
 
 
+      var modalDETALLE = document.getElementById('id03');
+      window.onclick = function (event) {
+          if (event.target == modalDETALLE){
+            modalDETALLE.style.display = "none"
+          } 
+      }  
 
+      var iconoLight = document.getElementsByClassName("fa-moon")
+      var iconoMenu = document.getElementById("iconoMenu")
+  
+      let puntos = document.getElementById("main-punto")
+      let puntoTitulo = document.getElementById("puntoTitulo")
+      const puntoIntermitente = () => {
+          puntos.classList.toggle("main-punto-oculto")
+          puntoTitulo.classList.toggle("main-punto-oculto")
+          setTimeout(puntoIntermitente, 1000)
+      }
+      puntoIntermitente()
 
+      iconoLight[0].addEventListener('click', (e) => {
+        toogleModeLightBlack()          
+      });
 
-
-
-
-        var iconoLight = document.getElementsByClassName("fa-moon")
-        var iconoMenu = document.getElementById("iconoMenu")
-    
-        let puntos = document.getElementById("main-punto")
-        let puntoTitulo = document.getElementById("puntoTitulo")
-        const puntoIntermitente = () => {
-            puntos.classList.toggle("main-punto-oculto")
-            puntoTitulo.classList.toggle("main-punto-oculto")
-            setTimeout(puntoIntermitente, 1000)
+      function toogleModeLightBlack(){
+        var btnModo = document.getElementById('btnModo')
+        var elemBody = document.getElementById('elemBody')
+        console.log(btnModo)
+        if (btnModo.value == `-Dark Mode-`) {
+            iconoMenu.style.color = "#ffffff"
+            btnModo.value = "-Light Mode-"
+            elemBody.classList.toggle("modoClaro")
+            iconoLight[0].classList.toggle("fa-sun")
+            iconoLight[0].classList.toggle("fa-moon")            
+        } else {
+            btnModo.value = "-Dark Mode-"
+            iconoMenu.style.color = "#000000"
+            elemBody.classList.toggle("modoClaro")
+            iconoLight[0].classList.toggle("fa-sun")
+            iconoLight[0].classList.toggle("fa-moon")            
         }
-        puntoIntermitente()
-
-        iconoLight[0].addEventListener('click', (e) => {
-        
-            var btnModo = document.getElementById('btnModo')
-            var elemBody = document.getElementById('elemBody')
-
-            if (btnModo.value == `-Dark Mode-`) {
-                iconoMenu.style.color = "#ffffff"
-                btnModo.value = "-Light Mode-"
-                elemBody.classList.toggle("modoClaro")
-                iconoLight[0].classList.toggle("fa-sun")
-                iconoLight[0].classList.toggle("fa-moon")
-            } else {
-                btnModo.value = "-Dark Mode-"
-                iconoMenu.style.color = "#000000"
-                elemBody.classList.toggle("modoClaro")
-                iconoLight[0].classList.toggle("fa-sun")
-                iconoLight[0].classList.toggle("fa-moon")
-            }
-        });
-
-        iconoMenu.addEventListener("click", ()=>{
-          document.getElementById('sidebar').classList.toggle('active');
-        })
+      }
+      iconoMenu.addEventListener("click", ()=>{
+      document.getElementById('sidebar').classList.toggle('active');
+      })
 
     })
 

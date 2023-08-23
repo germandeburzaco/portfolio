@@ -232,7 +232,7 @@ app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{
     const uniqueIds = [...new Set(moviesFromUser.filter(movie => movie.DESCRIPCION === req.query.tipoDescripcion).map(movie => movie.ID_MOVIE))];
 
     const fetchPromises = uniqueIds.map(id => {
-      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=a7499e5ecf0fb5add0e060e12d189dad`;
+      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=a7499e5ecf0fb5add0e060e12d189dad&language=es-es`;
     
       return fetch(url)
         .then(response => response.json())
@@ -259,7 +259,27 @@ app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{
         console.error('Error fetching movies:', error);
       });
 
-  }// ACA CONTINUA EL IF ELSE
+  } else if(req.query.tipoQry === "QRYpeliXid"){ // busca peli por nombre
+
+    //`https://api.themoviedb.org/3/movie/${id pelicula}?api_key=a7499e5ecf0fb5add0e060e12d189dad`
+    
+      const url = `https://api.themoviedb.org/3/movie/${req.query.id_pelicula}?api_key=a7499e5ecf0fb5add0e060e12d189dad&language=es-es`;
+    
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {          
+          
+          res.json(data)
+        })
+        .catch(error => {
+          console.error(`Error fetching movie with ID ${id}:`, error);
+          return null;
+        });
+   
+    
+   
+
+  } // ACA CONTINUA EL IF ELSE
 
 
 })
