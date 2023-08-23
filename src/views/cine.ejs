@@ -156,7 +156,7 @@
       <div class="w3-row">
         <div class="w3-col"  id="modalIMG"> <!-- IMG-->
         </div>
-        <div class="w3-rest " style="height: 100%; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
+        <div class="w3-rest " style="height: 525px; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
           <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
           <div class="tituloFull" style="margin-bottom: 20px;">
             <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 26px; font-weight: 700;"></h4>
@@ -307,6 +307,10 @@
       function fetchDataxID(id_pelicula){  
         
         document.getElementById("modalIMG").innerHTML = "";      
+        document.getElementById("overView").innerText = ""
+        document.getElementById("txtTitulo").innerText = ""
+        document.getElementById("release_date").innerText =  ""
+        document.getElementById("genre").innerHTML = ""
 
           fetch(`/protegida/api?tipoQry=QRYpeliXid&id_pelicula=${id_pelicula}`)         
             .then((res) => res.json())
@@ -384,8 +388,8 @@
               position: 'bottomRight',
               timeout: 2000
             });
-
           }
+
         } else if (e.target.classList.contains('imgMovie')) { 
 
           console.log(e.target.dataset.id)

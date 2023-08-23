@@ -123,7 +123,8 @@ app.get("/login",  async (req, res)=>{
   
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(username)
+  console.log(password)
   var respuestaQRY
   miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
   respuestaQRY = await misDatos(miSQLqry)
