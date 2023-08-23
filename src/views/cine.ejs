@@ -158,19 +158,19 @@
         </div>
         <div class="w3-rest " style="height: 100%; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
           <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-          <div>
-            <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
+          <div class="tituloFull" style="margin-bottom: 20px;">
+            <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 26px; font-weight: 700;"></h4>
           </div>
-          <div>
+          <div class="tituloFull" style="margin-bottom: 20px;">
             <p id="release_date"></p> 
           </div>
-          <div>
+          <div class="tituloFull" style="margin-bottom: 20px;">
             <p id="genre"></p> 
           </div>
-          <div>
+          <div class="tituloFull" style="margin-bottom: 20px;">
             <p id="overView" style="font-size: 18px;"></p>
           </div>          
-          <div id="modalRATE"></div>
+          <div id="modalRATE" style="bottom: 0; width: 100%;"></div>
         </div>
       </div>  
     </div>    
@@ -340,9 +340,9 @@
                 document.getElementById("genre").innerHTML += `<i class="fas fa-film"></i> ${genre.name} `
               })
               document.getElementById("modalRATE").innerHTML = `<div style="width: 100%; margin-top: 3px; margin-bottom: 3px"> 
-                <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
-                <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
-                <i class="fas fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
+                <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer ; text-align: center" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
+                <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer; text-align: center" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
+                <i class="fas fa-eye" style="width: 32% ; color:${colorVisto}; cursor: pointer; text-align: center" data-id="${pelicula.id}" data-descrip="visto" title="Ya ví esta pelicula!"></i>
               </div> `
                
             });
