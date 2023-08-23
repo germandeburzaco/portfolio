@@ -151,15 +151,13 @@
 
   <!-- MODAL DETALLE PELICULA -->
   <div id="id03" class="w3-modal">
-    <div class="w3-modal-content" style="min-height: 65%; width:65%; background-color: var(--bkColor1Claro); box-shadow: 0 1px 6px rgba(32, 33, 36, .28);">
-      
+    <div class="w3-modal-content" style="min-height: 65%; width:65%; background-color: var(--bkColor1Claro); box-shadow: 0 1px 6px rgba(32, 33, 36, .28);">      
       
       <div class="w3-row">
-
         <div class="w3-col" style="width:350px;" id="modalIMG"> <!-- IMG-->
         </div>
 
-        <div class="w3-rest " style="height: 100%; padding: 10px 20px;"> <!-- DETALLES-->
+        <div class="w3-rest " style="height: 100%; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
           <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
           <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
           <br>
@@ -168,9 +166,7 @@
           <br>
           <div id="modalRATE"></div>
         </div>
-      </div>
-      
-
+      </div>  
     </div>    
   </div>
 

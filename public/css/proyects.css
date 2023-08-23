@@ -234,6 +234,19 @@ footer{
         display: none; /* Cambiar a flexbox para apilar elementos verticalmente */
        
       }
+
+      .w3-row {
+        display: block; /* Cambia la visualización a bloque en pantallas más pequeñas */
+      }
+
+      .w3-col {
+        width: 100%; /* Establece el ancho completo para que ocupe toda la columna en pantallas pequeñas */
+        margin-bottom: 10px; /* Agrega un margen inferior para separar los elementos */
+      }
+      .w3-rest{
+        width: 100%; /* Establece el ancho completo para que ocupe toda la columna en pantallas pequeñas */
+        margin-bottom: 10px; /* Agrega un margen inferior para separar los elementos */
+      }
       
       
 }
