@@ -150,17 +150,20 @@
 
 
   <!-- MODAL DETALLE PELICULA -->
-  <div id="id03" class="w3-modal">
+  <div id="id03" class="w3-modal" style="padding-top: 40px;">
     <div class="w3-modal-content" style="min-height: 65%; width:65%; background-color: var(--bkColor1Claro); box-shadow: 0 1px 6px rgba(32, 33, 36, .28);">      
       
       <div class="w3-row">
-        <div class="w3-col" style="width:350px;" id="modalIMG"> <!-- IMG-->
+        <div class="w3-col"  id="modalIMG"> <!-- IMG-->
         </div>
-
         <div class="w3-rest " style="height: 100%; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
           <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+
           <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
-          <br>
+          <div>
+           <p id="release_date"></p> 
+
+          </div>
           <br>
           <p id="overView" style="font-size: 18px;"></p>
           <br>
@@ -328,6 +331,7 @@
                 `;
 
               document.getElementById("txtTitulo").innerText = pelicula.title
+              document.getElementById("release_date").innerText = pelicula.release_date
               document.getElementById("overView").innerText = pelicula.overview
               document.getElementById("modalRATE").innerHTML = `<div style="width: 100%; margin-top: 3px; margin-bottom: 3px"> 
                 <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>

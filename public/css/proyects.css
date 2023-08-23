@@ -229,24 +229,34 @@ footer{
     border: 1px solid #000;
   }
 
+#modalIMG{
+    width:350px
+}  
+
 @media screen and (max-width: 700px) {
     .navbar--botones-ul {
         display: none; /* Cambiar a flexbox para apilar elementos verticalmente */
        
       }
 
-      .w3-row {
-        display: block; /* Cambia la visualización a bloque en pantallas más pequeñas */
-      }
+    #modalIMG {
+        width: 100%;
+    }  
+    
+    .w3-row {
+    width: 100%;
+    display: block; /* Cambia la visualización a bloque en pantallas más pequeñas */
+    }
 
-      .w3-col {
+    .w3-col {
         width: 100%; /* Establece el ancho completo para que ocupe toda la columna en pantallas pequeñas */
         margin-bottom: 10px; /* Agrega un margen inferior para separar los elementos */
-      }
-      .w3-rest{
-        width: 100%; /* Establece el ancho completo para que ocupe toda la columna en pantallas pequeñas */
-        margin-bottom: 10px; /* Agrega un margen inferior para separar los elementos */
-      }
+        height: 300px;
+    }
+    .w3-rest{
+    width: 100%; /* Establece el ancho completo para que ocupe toda la columna en pantallas pequeñas */
+    margin-bottom: 10px; /* Agrega un margen inferior para separar los elementos */
+    }
       
       
 }
