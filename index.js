@@ -283,7 +283,7 @@ app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{
   } // ACA CONTINUA EL IF ELSE
 
 
-})
+}) 
 
 app.post('/register', (req, res) => {
     const randomNum = funcionesENV.generateRandomNumber();
