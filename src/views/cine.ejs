@@ -158,15 +158,18 @@
         </div>
         <div class="w3-rest " style="height: 100%; padding: 10px 20px;background: var(--bkColor2Claro);" id="modalDETALLE"> <!-- DETALLES-->
           <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-
-          <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
           <div>
-           <p id="release_date"></p> 
-
+            <h4 id="txtTitulo" style="text-align: center; color: var(--txtColor1Claro); font-size: 24px; font-weight: 700;"></h4>
           </div>
-          <br>
-          <p id="overView" style="font-size: 18px;"></p>
-          <br>
+          <div>
+            <p id="release_date"></p> 
+          </div>
+          <div>
+            <p id="genre"></p> 
+          </div>
+          <div>
+            <p id="overView" style="font-size: 18px;"></p>
+          </div>          
           <div id="modalRATE"></div>
         </div>
       </div>  
@@ -333,6 +336,9 @@
               document.getElementById("txtTitulo").innerText = pelicula.title
               document.getElementById("release_date").innerText = pelicula.release_date
               document.getElementById("overView").innerText = pelicula.overview
+              pelicula.genres.forEach(genre =>{
+                document.getElementById("genre").innerHTML += `<i class="fas fa-film"></i> ${genre.name} `
+              })
               document.getElementById("modalRATE").innerHTML = `<div style="width: 100%; margin-top: 3px; margin-bottom: 3px"> 
                 <i class="fas fa-bookmark" style="width: 32%; color:${colorAgendar}; cursor: pointer" data-id="${pelicula.id}" data-descrip="agendar" title="Quiero ver esta pelicula!"></i>
                 <i class="fas fa-star" style="width: 32% ; color:${colorFavorito}; cursor: pointer" data-id="${pelicula.id}" data-descrip="favorito" title="Pelicula favorita!"></i>
