@@ -159,14 +159,29 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
   }
-  //TOKEN 
-  //eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ0MTY1MDUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJnZXJtYW5kZWJ1cnphY29AaG90bWFpbC5jb20ifQ.uaF2hN8910mFcW52Ww8TampquBO0D1Jc4rIPefuog25-SjgPpEdLgl2yq-p_Yd0DeuuCM_9mpaQIwSMcVEHOWg
-
-  //Authorization: BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ0MTY1MDUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJnZXJtYW5kZWJ1cnphY29AaG90bWFpbC5jb20ifQ.uaF2hN8910mFcW52Ww8TampquBO0D1Jc4rIPefuog25-SjgPpEdLgl2yq-p_Yd0DeuuCM_9mpaQIwSMcVEHOWg
-
-  res.render("bancocentral",{    
-    userName: helpersENV.usuario
+ 
+  const url = `https://api.estadisticasbcra.com/inflacion_mensual_oficial?d=01/01/2021`;
+    
+  fetch(url,{
+    headers: {
+      Authorization: `${process.env.BAN_CEN_BEARER}`
+    }
   })
+    .then(response => response.json())
+    .then(data => {          
+      var datosCentral =  data
+      console.log(datosCentral)
+      res.render("bancocentral",{    
+        userName: helpersENV.usuario,
+        datosCentral:datosCentral
+      })
+    })
+    .catch(error => {
+      console.error(`Error fetching movie with ID ${id}:`, error);
+      return null;
+    });
+
+  
 })
 
 

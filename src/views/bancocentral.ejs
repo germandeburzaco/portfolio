@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-
+    <link rel="stylesheet" href="/css/c3.css">
     <link rel="stylesheet" href="/css/proyects.css">
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
@@ -37,6 +37,16 @@
           margin-bottom: 0;
           font-size: 32px;
         }
+        #contenedorPrincipal {
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            grid-template-rows: 1fr 1fr 1fr; 
+            gap: 4px 4px; 
+            grid-template-areas: 
+              ". . ."
+              ". . ."
+              ". . ."; 
+          }
       </style>
 </head>
 
@@ -46,20 +56,21 @@
   </header>
   <div >
     <div style="width: 80%; margin: 0 auto;">
-      <p class="main-texto">Estos son mis <span class="main-nombre"> PROYECTOS</span><span class="main-punto"
+      <p class="main-texto">Datos desde  <span class="main-nombre"> BANCO CENTRAL</span><span class="main-punto"
           id="main-punto">_</span>
       </p>      
     </div>
   </div>
- 
-  
-
-
-
-
-
-
-
+  <div  style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">   
+    <div id="contenedorPrincipal" style="width: 80%; margin: 0 auto;">
+      <div id="grafico1">1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+    </div>
+</div>
   <footer>
     <div class="containterMain--redes">
       <ul class="redes">
@@ -71,12 +82,134 @@
       </ul>
     </div>
     <div class="footer-bajo">
-
     </div>
   </footer>
+  <script src="/js/d3.v5.min.js"></script>
+  <script src="/js/c3.min.js"></script>
 
   <script>
     window.addEventListener("load", () => {
+
+      var dataProv = ['data1', 'data2'];
+      var dataCant = [12, 34];
+
+      var chart1 = c3.generate({
+        bindto: "#grafico1",
+        data: {
+            rows: [
+            dataProv,
+            dataCant,
+            ],
+            type: 'pie',
+            
+            labels: true,
+        },
+        title: {
+            text: `ESTO ES UN TEST`
+        },
+        size: {
+            height: 440,                                   
+        },
+        labels: true,
+        }); 
+
+/*
+      var chart = c3.generate({
+        bindto: d3.select('.cc'),
+        type: 'bar',
+        data: {
+          x: 'AÑO:',
+          columns: [
+            añño,
+            ccantidad,
+            ccproced,
+            ccdete,
+          ],
+          labels: true,
+          type: 'bar',
+          colors: {
+            'CANTIDAD (KG):': 'rgba( 183, 28, 28, 1)',
+            'PROCEDIMIENTOS:': '#25221b',
+            'DETENIDOS:': 'rgba( 0, 0, 0, 1)'
+          },
+          hide: ['DETENIDOS:', 'PROCEDIMIENTOS:']
+        },
+        tooltip: {
+          show: false
+        },
+        legend: {
+          show: true
+        },
+        title: {
+          text: 'Cocaina'
+        }
+      });
+
+      let tipoConsulta = "reportesVariosMEDIOSEMPLEADOSgraficos"
+                        fetch("/protected/api?tipoqry=" + tipoConsulta + "&qrydesde=" + reportedesde + "&qryhasta=" + reportehasta + "&qryMEDIOEMPLEADO=" + medioEmpleado + "&slcRegion=" + slcRegion )
+                            .then(response => response.json())
+                            .then(data => { 
+
+                                document.getElementById("tablaMEDIOSEMPLEADOSEdetallesgraficos").innerHTML = ""
+
+                                document.getElementById("txtMEDIOSEMPLEADOSgraficos").innerText = "MEDIOS EMPLEADOS: " + document.getElementById("slcMEDIOEMPLEADO").value 
+
+                                data.respuestaMEDIOSEMPLEADOSprovincia.forEach(dato => {                 
+                                    let tr = document.createElement('tr')
+                                    tr.innerHTML = `
+                                                <tr class="trHover">                                              
+                                                    <td style=" font-size: 10px " >${dato.PROVINCIA}</td> 
+                                                    <td style=" text-align: right; font-size: 10px">${dato.PROCEDIMIENTOS}</td> 
+                                                </tr>
+                                        `;
+                                    document.getElementById("tablaMEDIOSEMPLEADOSEdetallesgraficos").appendChild(tr)
+                                })  
+                                
+                                // GENERACION DE GRAFICO
+
+                                //console.log(data.respuestaMEDIOSEMPLEADOSprovincia)
+
+                                var dataProv = [];
+                                var dataCant = [];
+
+                                dataProv.push("PROVINCIA");
+                                dataCant.push("PROCEDIMIENTOS");
+
+                                data.respuestaMEDIOSEMPLEADOSprovincia.forEach(dato => {
+                                        dataProv.push(dato.PROVINCIA);
+                                        dataCant.push(dato.PROCEDIMIENTOS);                                 
+                                })
+
+                                var chart1 = c3.generate({
+                                bindto: "#graphMediosEmpleados",
+                                data: {
+                                    rows: [
+                                    dataProv,
+                                    dataCant,
+                                    ],
+                                    type: 'pie',
+                                    
+                                    labels: true,
+                                },
+                                title: {
+                                    text: `${document.getElementById("slcMEDIOEMPLEADO").value }`
+                                },
+                                size: {
+                                    height: 440,                                   
+                                },
+                                labels: true,
+                                });                                  
+                                
+                            })  
+                    })*/
+                    /***** FIN MODAL PARA MEDIOS EMPLEADOS GRAFICOS*********/
+
+
+
+
+
+
+
 
       
         var iconoLight = document.getElementsByClassName("fa-moon")
