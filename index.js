@@ -160,7 +160,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario_id = ""
   }
  
-  const url = `https://api.estadisticasbcra.com/inflacion_mensual_oficial?d=01/01/2021`;
+  const url = `https://api.estadisticasbcra.com/inflacion_mensual_oficial`;
     
   fetch(url,{
     headers: {
@@ -170,16 +170,16 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
     .then(response => response.json())
     .then(data => {          
       var datosCentral =  data
-      console.log(datosCentral)
+     // console.log(datosCentral)
       res.render("bancocentral",{    
         userName: helpersENV.usuario,
-        datosCentral:datosCentral
+        datosCentral: datosCentral
       })
     })
-    .catch(error => {
+    /*.catch(error => {
       console.error(`Error fetching movie with ID ${id}:`, error);
       return null;
-    });
+    });*/
 
   
 })
