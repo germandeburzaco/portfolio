@@ -160,7 +160,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario_id = ""
   }
  
-  const url = `https://api.estadisticasbcra.com/inflacion_mensual_oficial`;
+  const url = `https://api.estadisticasbcra.com/tasa_depositos_30_dias`;
     
   fetch(url,{
     headers: {
@@ -169,7 +169,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
   })
     .then(response => response.json())
     .then(data => {          
-      var datosCentral =  data
+      var datosCentral =  data.slice(-30)
      // console.log(datosCentral)
       res.render("bancocentral",{    
         userName: helpersENV.usuario,

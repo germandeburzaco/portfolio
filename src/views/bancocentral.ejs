@@ -39,13 +39,21 @@
         }
         #contenedorPrincipal {
             display: grid; 
-            grid-template-columns: 1fr 1fr 1fr; 
-            grid-template-rows: 1fr 1fr 1fr; 
+            grid-template-columns: 1fr; 
+            grid-auto-rows: auto; 
             gap: 4px 4px; 
-            grid-template-areas: 
-              ". . ."
-              ". . ."
-              ". . ."; 
+            
+          }
+
+          @media screen and (max-width: 768px) {
+            #contenedorPrincipal {
+              grid-template-columns: 1fr;
+              grid-template-rows: auto; /* Puedes ajustar esto según tus necesidades */
+              grid-template-areas:
+                "."
+                "."
+                ".";
+            }
           }
       </style>
 </head>
@@ -63,8 +71,8 @@
   </div>
   <div  style="border-bottom: 1px solid rgba(128, 128, 128, 0.282); text-align: center;">   
     <div id="contenedorPrincipal" style="width: 80%; margin: 0 auto;">
-      <div id="grafico1">1</div>
-      <div>2</div>
+      <div id="grafico1"></div>
+      <div id="grafico2"></div>
       <div>3</div>
       <div>4</div>
       <div>5</div>
@@ -90,8 +98,37 @@
   <script>
     window.addEventListener("load", () => {
 
-      var dataProv = ['data1', 'data2'];
-      var dataCant = [12, 34];
+      var dataBanco = <%- JSON.stringify(datosCentral) %>;
+     // var datosCentral = <%- (datosCentral) %>;
+
+     // console.log(dataBanco)
+
+      const chart = c3.generate({
+        bindto: '#grafico2', // ID del elemento HTML donde se mostrará el gráfico
+        data: {
+          json: dataBanco,
+          keys: {
+            x: 'd', // Datos para el eje X
+            value: ['v'] // Datos para el eje Y
+          },
+          type: 'bar',
+          labels: true
+        },
+        zoom: {
+            enabled: true
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d'
+            }
+          }
+        }
+      });
+
+      var dataProv = ['data1', 'data2', 'data3', 'data4'];
+      var dataCant = [12, 34, 34 , 66, 77];
 
       var chart1 = c3.generate({
         bindto: "#grafico1",
@@ -99,9 +136,9 @@
             rows: [
             dataProv,
             dataCant,
-            ],            
-            
+            ],   
             labels: true,
+            type: 'bar'
         },
         title: {
             text: `ESTO ES UN TEST`
