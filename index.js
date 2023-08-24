@@ -68,7 +68,7 @@ app.get("/", async (req, res)=>{
   })
 })
         
-app.get("/proyects", middlewares.authenticateToken, async (req, res)=>{  
+app.get("/proyects",  async (req, res)=>{  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
@@ -151,6 +151,25 @@ app.post('/login', async (req, res) => {
   }
   
 }); 
+
+
+
+app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{  
+  if(!req.cookies.token){    
+    helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
+  }
+  //TOKEN 
+  //eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ0MTY1MDUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJnZXJtYW5kZWJ1cnphY29AaG90bWFpbC5jb20ifQ.uaF2hN8910mFcW52Ww8TampquBO0D1Jc4rIPefuog25-SjgPpEdLgl2yq-p_Yd0DeuuCM_9mpaQIwSMcVEHOWg
+
+  //Authorization: BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ0MTY1MDUsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJnZXJtYW5kZWJ1cnphY29AaG90bWFpbC5jb20ifQ.uaF2hN8910mFcW52Ww8TampquBO0D1Jc4rIPefuog25-SjgPpEdLgl2yq-p_Yd0DeuuCM_9mpaQIwSMcVEHOWg
+
+  res.render("bancocentral",{    
+    userName: helpersENV.usuario
+  })
+})
+
+
 
 app.get("/salir",  async (req, res)=>{   
 

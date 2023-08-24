@@ -53,18 +53,18 @@ header {
 }
 
 .navbar--botones {
-    grid-column: 14/22;
+    grid-column: 11/20;
 }
 
 .navbar--botones-ul {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     color: var(--txtColor1Claro);
     cursor: pointer;
 }
 
 .navbar--menu {
-    grid-column: 22/23;
+    grid-column: 20/21;
 }
 
 .navbar--modo {

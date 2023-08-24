@@ -227,7 +227,7 @@
       btnUpcomingMovies.addEventListener("click", async function () {//ok
         inpNroPagina.value = 1
         tipoQry = 'TOPMovies'
-        urlToFetch= `https://api.themoviedb.org/3/movie/upcoming?language=es-es`
+        urlToFetch= `https://api.themoviedb.org/3/movie/now_playing?language=es-es`
         fetchData(urlToFetch, inpNroPagina.value)
       });
 
