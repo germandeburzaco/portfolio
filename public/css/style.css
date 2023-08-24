@@ -49,11 +49,11 @@ header {
 
 .navbar--logo {
     color: var(--txtColor1Claro);
-    grid-column: 2/10;
+    grid-column: 2/6;
 }
 
 .navbar--botones {
-    grid-column: 11/20;
+    grid-column: 7/18;
 }
 
 .navbar--botones-ul {
@@ -64,7 +64,7 @@ header {
 }
 
 .navbar--menu {
-    grid-column: 20/21;
+    grid-column: 19/20;
 }
 
 .navbar--modo {
