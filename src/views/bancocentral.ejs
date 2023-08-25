@@ -73,10 +73,10 @@
     <div id="contenedorPrincipal" style="width: 80%; margin: 0 auto;">
       <div id="grafico1"></div>
       <div id="grafico2"></div>
-      <div>3</div>
-      <div>4</div>
-      <div>5</div>
-      <div>6</div>
+      <div id="grafico3">3</div>
+      <div id="grafico4">4</div>
+      <div id="grafico5">5</div>
+      <div id="grafico6">6</div>
     </div>
 </div>
   <footer>
@@ -101,12 +101,12 @@
       var dataBanco = <%- JSON.stringify(datosCentral) %>;
      // var datosCentral = <%- (datosCentral) %>;
 
-     // console.log(dataBanco)
+      console.log(dataBanco)
 
-      const chart = c3.generate({
-        bindto: '#grafico2', // ID del elemento HTML donde se mostrará el gráfico
+      const chart1 = c3.generate({
+        bindto: '#grafico1', // ID del elemento HTML donde se mostrará el gráfico
         data: {
-          json: dataBanco,
+          json: dataBanco[0],
           keys: {
             x: 'd', // Datos para el eje X
             value: ['v'] // Datos para el eje Y
@@ -116,6 +116,9 @@
         },
         zoom: {
             enabled: true
+        },
+        title: {
+            text: `TASA DE INTERES A 30 DIAS`
         },
         axis: {
           x: {
@@ -129,11 +132,128 @@
         }
       });
 
+      const chart2 = c3.generate({
+        bindto: '#grafico2', // ID del elemento HTML donde se mostrará el gráfico
+        data: {
+          json: dataBanco[1],
+          keys: {
+            x: 'd', // Datos para el eje X
+            value: ['v'] // Datos para el eje Y
+          },
+          type: 'bar',
+          labels: true
+        },
+        zoom: {
+            enabled: true
+        },
+        title: {
+            text: `INFLACION MENSUAL OFICIAL`
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d',
+              rotate: 90, // Ángulo de rotación en grados
+              multiline: false
+            }
+          }
+        }
+      });
+
+      const chart3 = c3.generate({
+        bindto: '#grafico3', // ID del elemento HTML donde se mostrará el gráfico
+        data: {
+          json: dataBanco[2],
+          keys: {
+            x: 'd', // Datos para el eje X
+            value: ['v'] // Datos para el eje Y
+          },
+          type: 'bar',
+          labels: true
+        },
+        zoom: {
+            enabled: true
+        },
+        title: {
+            text: `inflacion_interanual_oficial`
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d',
+              rotate: 90, // Ángulo de rotación en grados
+              multiline: false
+            }
+          }
+        }
+      });
+
+      const chart4 = c3.generate({
+        bindto: '#grafico4', // ID del elemento HTML donde se mostrará el gráfico
+        data: {
+          json: dataBanco[3],
+          keys: {
+            x: 'd', // Datos para el eje X
+            value: ['v'] // Datos para el eje Y
+          },
+          type: 'bar',
+          labels: true
+        },
+        zoom: {
+            enabled: true
+        },
+        title: {
+            text: `inflacion_esperada_oficial`
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d',
+              rotate: 90, // Ángulo de rotación en grados
+              multiline: false
+            }
+          }
+        }
+      });
+
+      const chart5 = c3.generate({
+        bindto: '#grafico5', // ID del elemento HTML donde se mostrará el gráfico
+        data: {
+          json: dataBanco[4],
+          keys: {
+            x: 'd', // Datos para el eje X
+            value: ['v'] // Datos para el eje Y
+          },
+          type: 'bar',
+          labels: true
+        },
+        zoom: {
+            enabled: true
+        },
+        title: {
+            text: `inflacion_esperada_oficial`
+        },
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              format: '%Y-%m-%d',
+              rotate: 90, // Ángulo de rotación en grados
+              multiline: false
+            }
+          }
+        }
+      });
+
+      /****/
       var dataProv = ['data1', 'data2', 'data3', 'data4'];
       var dataCant = [12, 34, 34 , 66, 77];
 
-      var chart1 = c3.generate({
-        bindto: "#grafico1",
+      var chartx = c3.generate({
+        bindto: "#grafico6",
         data: {
             rows: [
             dataProv,

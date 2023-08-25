@@ -159,7 +159,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
   }
- 
+ /*
   const url = `https://api.estadisticasbcra.com/tasa_depositos_30_dias`;
     
   fetch(url,{
@@ -175,11 +175,43 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
         userName: helpersENV.usuario,
         datosCentral: datosCentral
       })
-    })
-    /*.catch(error => {
-      console.error(`Error fetching movie with ID ${id}:`, error);
-      return null;
-    });*/
+    })   */ 
+
+    const urls = [
+      'https://api.estadisticasbcra.com/tasa_depositos_30_dias',
+      'https://api.estadisticasbcra.com/inflacion_mensual_oficial',
+      'https://api.estadisticasbcra.com/inflacion_interanual_oficial',
+      'https://api.estadisticasbcra.com/inflacion_esperada_oficial',
+      'https://api.estadisticasbcra.com/dif_inflacion_esperada_vs_interanual'
+    ];
+    
+    const fetchPromises = urls.map(url => {
+      return fetch(url, {
+        headers: {
+          Authorization: `${process.env.BAN_CEN_BEARER}`
+        }
+      })
+      .then(response => response.json());
+    });
+    
+    Promise.all(fetchPromises)
+      .then(responses => {
+        const processedData = responses.map(data => {
+          // Realiza aquí el procesamiento que necesitas en cada conjunto de datos
+          return data.slice(-40);
+        });
+    
+        // Renderizar la vista con los datos procesados
+        res.render("bancocentral", {
+          userName: helpersENV.usuario,
+          datosCentral: processedData
+        });
+      })
+      .catch(error => {
+        // Manejar errores si es necesario
+        console.error(error);
+        res.status(500).send('Error en la solicitud');
+      });
 
   
 })
