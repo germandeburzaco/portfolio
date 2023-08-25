@@ -158,24 +158,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
   if(!req.cookies.token){    
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
-  }
- /*
-  const url = `https://api.estadisticasbcra.com/tasa_depositos_30_dias`;
-    
-  fetch(url,{
-    headers: {
-      Authorization: `${process.env.BAN_CEN_BEARER}`
-    }
-  })
-    .then(response => response.json())
-    .then(data => {          
-      var datosCentral =  data.slice(-30)
-     // console.log(datosCentral)
-      res.render("bancocentral",{    
-        userName: helpersENV.usuario,
-        datosCentral: datosCentral
-      })
-    })   */ 
+  } 
 
     const urls = [
       'https://api.estadisticasbcra.com/tasa_depositos_30_dias',
@@ -213,6 +196,22 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
         res.status(500).send('Error en la solicitud');
       });
 
+  
+})
+
+
+app.get("/clima", middlewares.authenticateToken, async (req, res)=>{  
+
+  if(!req.cookies.token){    
+    helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
+  }    
+    
+
+  res.render("clima", {
+    userName: helpersENV.usuario   
+  });
+       
   
 })
 

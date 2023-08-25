@@ -242,6 +242,7 @@
             tick: {
               format: '%Y-%m-%d',
               rotate: 90, // Ángulo de rotación en grados
+              format: function (x) { return x.getFullYear() + " " + x.getMonth(); },
               multiline: false
             }
           }
