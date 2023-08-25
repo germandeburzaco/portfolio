@@ -58,7 +58,7 @@
         @media screen and (max-width: 768px) {
           #map {
               width: 99%;
-              height: 75vh;
+              height: 65vh;
               margin: 0 auto;
               background-color: rgb(247, 250, 241);
             }
@@ -130,8 +130,8 @@
               .setLatLng(e.latlng)
               .setContent(`<div>
               <p style="font-weight: 700; margin: 0">${datosClima.name} (${datosClima.sys.country})</p>
-              <p style=" margin: 0"> <img style="width: 45%" src="https://openweathermap.org/img/wn/${datosClima.weather[0].icon}@2x.png"> ${datosClima.main.temp}</p>
-              <p style=" margin: 0">La termica actual es: ${datosClima.main.feels_like}</p>   
+              <p style=" margin: 0; font-size: 15px"> <img style="width: 45%" src="https://openweathermap.org/img/wn/${datosClima.weather[0].icon}@2x.png"> ${datosClima.main.temp}</p>
+              <p style=" margin: 0; ">La termica actual es: ${datosClima.main.feels_like}</p>   
               <p style=" margin: 0">Descripción del clima: ${datosClima.weather[0].description}</p>
             </div>`)
               .openOn(map);
