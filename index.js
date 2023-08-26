@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const fetch = require("node-fetch");
-const { Client, LocalAuth } = require('whatsapp-web.js');
+
 const qrcode = require('qrcode-terminal');
 
 const util = require('util');
@@ -394,7 +394,7 @@ async function misDatos(qry) {
 //WHATSAPP WEB
 //***************************************************** */
 //https://medium.com/como-programar-em-1-dia/como-fazer-um-rob%C3%B4-de-whatsapp-chatbot-em-1-dia-644ee98054d7
-const client = new Client({
+/*const client = new Client({
   headless:false,
   puppeteer: {
 		args: ['--no-sandbox'],
@@ -456,7 +456,7 @@ client.on('message', async message => {
 
 }); 
  
-client.initialize();
+client.initialize();*/
 
 
 
