@@ -1,5 +1,5 @@
 const express = require("express")
-const path = require("node:path")
+const path = require("path")
 var bodyParser = require('body-parser')
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
