@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const fetch = require("node-fetch");
 
-const qrcode = require('qrcode-terminal');
 
 const util = require('util');
 const {config} = require('dotenv');
