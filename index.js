@@ -395,6 +395,9 @@ async function misDatos(qry) {
 //***************************************************** */
 
 const client = new Client({
+  puppeteer: {
+		args: ['--no-sandbox'],
+	},
   authStrategy: new LocalAuth()
 });
 
