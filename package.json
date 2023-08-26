@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.1",
     "mysql2": "^3.6.0",
     "node-fetch": "^2.6.13",
+    "path": "^0.12.7",
     "util": "^0.12.5"
   },
   "devDependencies": {
