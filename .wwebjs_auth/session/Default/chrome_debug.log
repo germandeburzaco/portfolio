@@ -1,0 +1,5 @@
+[0825/220355.029:WARNING:backend_impl.cc(1826)] Destroying invalid entry.
+[0825/220355.368:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.", source:  (0)
+[0825/220355.368:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.", source:  (0)
+[0825/220356.620:INFO:CONSOLE(7)] "Another connection wants to delete database 'wawc'. Closing db now to resume the delete request.", source: https://web.whatsapp.com/vendor1~app.7f14216f970118f62a35.js (7)
+[0825/220523.101:WARNING:backend_impl.cc(1826)] Destroying invalid entry.

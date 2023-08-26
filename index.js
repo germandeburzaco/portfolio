@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const fetch = require("node-fetch");
+const { Client, LocalAuth } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
 
 const util = require('util');
 const {config} = require('dotenv');
@@ -384,6 +386,80 @@ async function misDatos(qry) {
    
   return rows
 }
+
+
+
+
+//***************************************************** */
+//WHATSAPP WEB
+//***************************************************** */
+
+const client = new Client({
+  authStrategy: new LocalAuth()
+});
+
+
+client.on('qr', (qr) => {
+  // Generate and scan this code with your phone
+  console.log('QR RECEIVED', qr);
+  qrcode.generate(qr, {small: true});
+});
+
+client.on('ready', () => {
+  console.log('Client is ready!');
+});
+
+
+
+client.on('message', async message => { 
+ 
+  const d = new Date();
+  console.log("-------------------------" )
+  console.log(d )
+  console.log(message.from )
+  console.log(message.body )
+  console.log("-------------------------" )
+  //CONTROL USUARIOS AUTENTICADOS
+  if(message.from == "5491138026729@c.us"){
+      client.sendMessage(message.from, 'Hola German soy *SHERLOCK* 🕵️ v1');
+  }else if(message.from == "5491132852915@c.us"){
+     // client.sendMessage(message.from, 'Hola German soy *SHERLOCK* 🕵️ v1');
+  }else {
+     // client.sendMessage(message.from, 'Hola soy *SHERLOCK* 🕵️ v1 - NO estas registrado en mi base de datos');
+      return
+  }// FIN CONTROL USUARIOS AUTENTICADOS
+
+ // console.log(message);
+ // console.log(message.body);
+  if (message.body.toLowerCase() == 'hola') {      
+      
+      const contact = await message.getContact();
+      const chat = await message.getChat();
+      
+     // console.log(contact)
+      
+      await chat.sendMessage(`Hola @${contact.id.user}`, {
+          mentions: [contact]
+      });
+
+      await chat.sendMessage(`Soy una version mejorada 🤙... probá CHISTE`, {
+          mentions: [contact]
+      });
+
+     // return client.sendMessage(message.from, `Hola ${message._data.notifyName}, soy un bot 🤖`);
+
+  }  
+
+}); 
+ 
+client.initialize();
+
+
+
+//***************************************************** */
+
+
+
 
 
 
