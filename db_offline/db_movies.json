@@ -1,0 +1,164 @@
+[
+  {
+    "id": 16,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "424",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 22,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "497",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 24,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "502356",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 25,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "551988",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 26,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "329",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 27,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "569094",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 28,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "976573",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 29,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "424",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 32,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "116745",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 34,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "116745",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 35,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "351819",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 36,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "216015",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 37,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "337167",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 38,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "341174",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 39,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "4348",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 40,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "150540",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 41,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "497",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 42,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "44943",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 43,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "13",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 45,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "615656",
+    "DESCRIPCION": "agendar"
+  },
+  {
+    "id": 46,
+    "ID_USUARIO": 9794,
+    "ID_MOVIE": "1143319",
+    "DESCRIPCION": "agendar"
+  },
+  {
+    "id": 47,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "155",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 48,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "557",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 49,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "557",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 50,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "569094",
+    "DESCRIPCION": "visto"
+  },
+  {
+    "id": 51,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "7347",
+    "DESCRIPCION": "favorito"
+  },
+  {
+    "id": 52,
+    "ID_USUARIO": 3394,
+    "ID_MOVIE": "47931",
+    "DESCRIPCION": "favorito"
+  }
+]

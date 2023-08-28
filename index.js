@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 const fetch = require("node-fetch");
+const fs = require('fs');
 
  
 const util = require('util');
@@ -74,6 +75,8 @@ app.get("/proyects",  async (req, res)=>{
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
   }
+
+  bk_bd()
 
   res.render("proyects",{    
     userName: helpersENV.usuario
@@ -387,6 +390,19 @@ async function misDatos(qry) {
 }
 
 
+async function bk_bd(qry) {
+  miSQLqry = `SELECT * FROM USUARIOS`
+  moviesFromUser = await misDatos(miSQLqry)
+
+  const filePath = './db_offline/db_users.json';
+  fs.writeFile(filePath, JSON.stringify(moviesFromUser, null, 2), err => {
+    if (err) {
+      console.error('Error al guardar en el archivo:', err);
+      return;
+    }
+    console.log('Datos guardados en el archivo:', filePath);
+  });
+}
 
 
 //***************************************************** */
