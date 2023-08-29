@@ -76,7 +76,7 @@ app.get("/proyects",  async (req, res)=>{
     helpersENV.usuario_id = ""
   }
 
-  bk_bd()
+ // bk_bd()
 
   res.render("proyects",{    
     userName: helpersENV.usuario
