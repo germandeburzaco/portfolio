@@ -1,3 +1,4 @@
+const mysql = require('mysql2/promise');
 
 function generateRandomNumber() {
     const min = 1000; // El valor mínimo de 4 cifras
@@ -6,8 +7,22 @@ function generateRandomNumber() {
 }
 
 
-
+async function misDatos(qry) {
+    const connection = await mysql.createConnection({ 
+      host: process.env.DB_HOST,    
+      user: process.env.DB_USER,    
+      password: process.env.DB_PASSWORD, 
+      database: 'railway', 
+      port: 5825,
+      connectionLimit: 500,
+    });
+    
+    const [rows, fields] = await connection.execute(qry);
+     
+    return rows
+  }
 
 module.exports = {
-    generateRandomNumber
+    generateRandomNumber,
+    misDatos
 }

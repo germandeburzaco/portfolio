@@ -2,10 +2,9 @@ const express = require("express")
 const path = require("path")
 var bodyParser = require('body-parser')
 const mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 const cookieParser = require('cookie-parser');
-const crypto = require('crypto');
+
 const fetch = require("node-fetch");
 const fs = require('fs');
 
@@ -24,14 +23,6 @@ helpersENV.usuario_id = ""
  
 config()
 
-const connection = mysql.createConnection({ 
-  host: process.env.DB_HOST,     // Cambia esto a la dirección de tu servidor MySQL si es diferente
-  user: process.env.DB_USER,    // Cambia esto a tu nombre de usuario de MySQL
-  password: process.env.DB_PASSWORD, // Cambia esto a tu contraseña de MySQL
-  database: 'railway', // Cambia esto al nombre de tu base de datos,
-  port: 5825,
-  connectionLimit: 500,
-});
     
 //const iv = crypto.randomBytes(16); // Initialization Vector
 //const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
@@ -58,103 +49,20 @@ app.use(middlewares.logRequestInfo);
 // RUTAS
 //************************************************************/
 
-app.get("/", async (req, res)=>{    
-  
-  if(!req.cookies.token){    
-    helpersENV.usuario = ""
-    helpersENV.usuario_id = ""
-  }
-
-  res.render("index",{      
-    userName: helpersENV.usuario
-  })
-})
+app.get("/", require("./routes/index.js"))
         
-app.get("/proyects",  async (req, res)=>{  
-  if(!req.cookies.token){    
-    helpersENV.usuario = ""
-    helpersENV.usuario_id = ""
-  }
+app.get("/proyects",  require("./routes/index.js"))
 
- // bk_bd()
-
-  res.render("proyects",{    
-    userName: helpersENV.usuario
-  })
-})
-
-app.get("/cine", middlewares.authenticateToken, async (req, res)=>{  
-  if(!req.cookies.token){    
-    helpersENV.usuario = ""
-    helpersENV.usuario_id = ""
-  }
-
-  res.render("cine",{    
-    userName: helpersENV.usuario
-  })
-})
+app.get("/cine", require("./routes/secure.js"))
   
-app.get("/perfil", middlewares.authenticateToken, async (req, res)=>{  
-  if(!req.cookies.token){    
-    helpersENV.usuario = ""
-    helpersENV.usuario_id = ""
-  }
+app.get("/perfil", require("./routes/secure.js"))
 
-  var respuestaQRY
-  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${helpersENV.usuario}'`
-  respuestaQRY = await misDatos(miSQLqry)
-  console.log(respuestaQRY)
-
-  res.render("perfil",{    
-    userName: helpersENV.usuario,
-    datosUsuario: respuestaQRY
-  })
-})
-
-app.get("/login",  async (req, res)=>{   
-  if(!req.cookies.token){    
-    helpersENV.usuario = ""
-    helpersENV.usuario_id = ""
-  }
-
-  res.render("login",{    
-    userName: helpersENV.usuario
-  })
-})
+app.get("/login", require("./routes/secure.js") )
      
   //MARIANAM password23
   //GERMANG password23
   
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  console.log(username)
-  console.log(password)
-  var respuestaQRY
-  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
-  respuestaQRY = await misDatos(miSQLqry)
-  console.log("DESDE BD WEB DIGO:")
-  console.log(respuestaQRY)
-    
-       
-  if (respuestaQRY.length === 0 || !bcrypt.compareSync(password, respuestaQRY[0].password)) {
-    // console
-    res.status(401).json({ message: 'Credenciales inválidas' });
-  } else { 
-    const iv = crypto.randomBytes(16); // Initialization Vector
-    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(process.env.CRYPTO_SECRETKEY), iv);
-   
-    let encryptedNombreUsuario = cipher.update(respuestaQRY[0].user_name, 'utf8', 'base64');
-    encryptedNombreUsuario += cipher.final('base64');
-    
-
-
-    const token = jwt.sign({ userId: respuestaQRY[0].id, nombreUsuario: encryptedNombreUsuario, iv: iv.toString('base64') }, process.env.CRYPTO_SECRETKEY, { expiresIn: '15m' });
-    helpersENV.usuario = respuestaQRY[0].user_name
-    helpersENV.usuario_id = respuestaQRY[0].id
-    res.status(200).json({ token, rutaURL: req.originalUrl });
-  }
-  
-}); 
+app.post('/login', require("./routes/secure.js")); 
 
 
 
@@ -220,7 +128,7 @@ app.get("/clima", middlewares.authenticateToken, async (req, res)=>{
 })
 
 
-
+ 
 app.get("/salir",  async (req, res)=>{   
 
   res.clearCookie("token")
@@ -354,21 +262,24 @@ app.get("/protegida/api*", middlewares.authenticateToken,  async (req, res)=>{
 
 }) 
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const randomNum = funcionesENV.generateRandomNumber();
     console.log(req.body)
     const { username, password } = req.body;
 
   // Hash de la contraseña antes de almacenarla
-  const hashedPassword = bcrypt.hashSync(password, 15);
+  const hashedPassword = bcrypt.hashSync(password, 15);  
 
-  connection.query(`INSERT INTO USUARIOS (id, user_name, password) VALUES (${randomNum},?, ?)`, [username, hashedPassword], (err, result) => {
-    if (err) {
-      res.status(500).json({ message: 'Error al registrar el usuario' });
-    } else {
-      res.status(200).json({ message: 'Usuario registrado exitosamente' });
-    }
-  });
+  miSQLqry = `INSERT INTO USUARIOS (id, user_name, password) VALUES (${randomNum},N'${username}', N'${hashedPassword}')`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log(respuestaQRY)
+  if(respuestaQRY){
+    res.status(200).json({ message: 'Usuario registrado exitosamente' })
+  } else {
+    res.status(500).json({ message: 'Error al registrar el usuario' });
+  }
+
+
 });
 
 
