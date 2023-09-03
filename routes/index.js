@@ -10,8 +10,6 @@ router.get("/", async (req, res)=>{
     
     let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
 
-    console.log(usuario_config)
-
     res.render("index",{      
       userName: helpersENV.usuario,
       usuario_config: usuario_config

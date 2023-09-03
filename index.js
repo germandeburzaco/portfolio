@@ -96,9 +96,11 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
         });
     
         // Renderizar la vista con los datos procesados
+        let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
         res.render("bancocentral", {
           userName: helpersENV.usuario,
-          datosCentral: processedData
+          datosCentral: processedData,
+          usuario_config: usuario_config
         });
       })
       .catch(error => {
@@ -112,7 +114,8 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
 
 
 app.get("/clima", middlewares.authenticateToken, async (req, res)=>{  
-
+  let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
+  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
@@ -120,7 +123,8 @@ app.get("/clima", middlewares.authenticateToken, async (req, res)=>{
     
 
   res.render("clima", {
-    userName: helpersENV.usuario   
+    userName: helpersENV.usuario,
+    usuario_config: usuario_config   
   });
        
   

@@ -13,8 +13,11 @@ router.get("/cine", middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario_id = ""
   }
 
+  let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
+
   res.render("cine",{    
-    userName: helpersENV.usuario
+    userName: helpersENV.usuario,
+    usuario_config: usuario_config
   })
 })
 
