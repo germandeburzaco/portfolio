@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
-    <link rel="stylesheet" href="/css/proyects.css">
+    <link rel="stylesheet" href="/css/test.css">
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -38,96 +38,73 @@
           font-size: 32px;
         }
 
-        .card {          
-          transition: 0.3s;         
+        #portfolioContainer{
+          display: grid;
+          grid-template-columns: repeat(auto-fill, 340px);
+          justify-content: center;
+          gap: 10px;
+          max-width: 1100px;
           margin: auto;
-          text-align: center;
-        }
-        
-
-        .container {
-          padding: 2px 16px;
+          margin-bottom: 70px;
         }
 
-        .icon {
-          padding: 10px;
-          background: dodgerblue;
-          color: white;
-          min-width: 50px;
-          text-align: center;
+        .portfolio-items {       
+            height: 390px;
+            background-color: var(--bkColor1Claro);           
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .portfolioIMG{
+          height: 310px;
         }
 
-        .input-field {
-          min-width: 270px;
-          width: 100%;
-          padding: 5px;
-          outline: none;
-          margin: auto;
+        .textoBlackMode span{
+          color: green; 
+          background-color: black; 
+          width: 50px; 
+          display:inline-flex; 
+          justify-content: center
+        }
+        .portfolioIMG {
+          filter: grayscale(100%); /* Convierte la imagen a blanco y negro */
+          transition: filter 0.3s ease; /* Agrega una transición suave al cambio */
         }
 
-        .input-field:focus {
-          border: 2px solid dodgerblue;
+        .portfolioIMG:hover {
+          filter: grayscale(0%); /* Recupera el color en hover */
         }
-        .btn {
-        background-color: dodgerblue;
-        color: white;
-        padding: 10px 5px;
-        border: none;
-        cursor: pointer;
-        width: 100%;
-        opacity: 0.9;
-        margin: auto;
-        min-width: 270px;
-      }
       </style>
 </head>
 
-<body id="elemBody" class="modoClaro  modoOscuro">
+<div>
+  <p id="modoClarov2"  style="color: var(--modoBGcolor)">COMO FUNCIONA ESTO??</p>
+</div>
+
+<body id="elemBody" class="  modoOscuro modoClaro">
   <header>
     <%- include ("partials/_heads") %>
   </header>
   <div >
     <div style="width: 80%; margin: 0 auto;">
-      <p class="main-texto">Mi <span class="main-nombre"> PERFIL</span><span class="main-punto"
-          id="main-punto">_</span>
+      <p class="main-texto">Estos son mis <span class="main-nombre"> PROYECTOS</span><span class="main-punto" id="main-punto">_</span>
       </p>      
     </div>
   </div>
-  <div style="border-bottom: 1px solid rgba(128, 128, 128, 0.282);">
-    <div class="card">
-      <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width: 150px; text-align: center;
-      ">
-        <h4><b><%- datosUsuario[0].user_name %></b></h4> 
-        <p><%- datosUsuario[0].EMAIL %></p> 
-      <div class="container">
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top: 3px;">
-    <div class="w3-container" style="width: 35%; margin: auto; min-width: 290px">
-      <div class="input-container" style="margin: 5px;">        
-        <input class="input-field" type="text" placeholder="Contraseña Actual" name="usrnm">
-      </div>
-    
-      <div class="input-container" style="margin: 5px;">        
-        <input class="input-field" type="text" placeholder="Nueva contraseña" name="email">
-      </div>
-      
-      <div class="input-container" style="margin: 5px;">        
-        <input class="input-field" type="password" placeholder="Repita nueva contraseña" name="psw">
-      </div>
-      <button type="submit" class="btn" style="margin: 5px;">CAMBIAR CONTRASEÑA</button>
-    </div>
-  </div>
- 
   
 
-
-
-
-
-
+  <div >
+    <ul id="portfolioContainer">
+      <li class="portfolio-items">
+        <img class="portfolioIMG" src="https://i.postimg.cc/Dm0jPMYZ/sitio1.png">
+        <p class="textoBlackMode">MUSICAL KEY</p>
+        <p class="textoBlackMode" style="text-align: center; align-items: center;" > <span >HTML</span> <span s>CSS</span> <span >JS</span></p>
+        <p class="textoBlackMode"><a target="_blank" href="https://codepen.io/GermanDaniG/full/gORWgeZ">try it!</a> </p>
+      </li>      
+    </ul>
+  </div>
 
   <footer>
     <div class="containterMain--redes">
@@ -148,8 +125,9 @@
     window.addEventListener("load", () => {
 
       
-      var iconoLight = document.getElementById("iconoLight")
+        var iconoLight = document.getElementsByClassName("fa-moon")
         var iconoMenu = document.getElementById("iconoMenu")
+       
     
         let puntos = document.getElementById("main-punto")
         let puntoTitulo = document.getElementById("puntoTitulo")
@@ -160,25 +138,27 @@
         }
         puntoIntermitente()
 
-        iconoLight.addEventListener('click', (e) => {      
-        var btnModo = document.getElementById('btnModo')
-        var elemBody = document.getElementById('elemBody')
+        iconoLight[0].addEventListener('click', (e) => {
+        
+            var btnModo = document.getElementById('btnModo')
+            var elemBody = document.getElementById('elemBody')
 
-        if (btnModo.value == `-Dark Mode-`) {
-
-          iconoMenu.style.color = "#ffffff"
-          btnModo.value = "-Light Mode-"
-          elemBody.classList.toggle("modoClaro")
-          iconoLight.classList.toggle("fa-sun")
-          iconoLight.classList.toggle("fa-moon")
-        } else {
-          btnModo.value = "-Dark Mode-"
-          iconoMenu.style.color = "#000000"
-          elemBody.classList.toggle("modoClaro")
-          iconoLight.classList.toggle("fa-sun")
-          iconoLight.classList.toggle("fa-moon")
-        }
-      });
+            if (btnModo.value == `-Dark Mode-`) {
+                iconoMenu.style.color = "#ffffff"
+                btnModo.value = "-Light Mode-"
+                elemBody.classList.toggle("modoClaro")
+                modoClarov2.classList.toggle("modoOscurov2")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            } else {
+                btnModo.value = "-Dark Mode-"
+                iconoMenu.style.color = "#000000"
+                elemBody.classList.toggle("modoClaro")
+                modoClarov2.classList.toggle("modoOscurov2")
+                iconoLight[0].classList.toggle("fa-sun")
+                iconoLight[0].classList.toggle("fa-moon")
+            }
+        });
 
         iconoMenu.addEventListener("click", ()=>{
           document.getElementById('sidebar').classList.toggle('active');

@@ -52,6 +52,7 @@ app.use(middlewares.logRequestInfo);
 app.get("/", require("./routes/index.js"))
         
 app.get("/proyects",  require("./routes/index.js"))
+app.get("/test",  require("./routes/index.js"))
 
 app.get("/cine", require("./routes/secure.js"))
   
@@ -63,8 +64,6 @@ app.get("/login", require("./routes/secure.js") )
   //GERMANG password23
   
 app.post('/login', require("./routes/secure.js")); 
-
-
 
 app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{  
   if(!req.cookies.token){    

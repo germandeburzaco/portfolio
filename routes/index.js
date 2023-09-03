@@ -23,7 +23,19 @@ router.get("/proyects",  async (req, res)=>{
     res.render("proyects",{    
       userName: helpersENV.usuario
     })
-  })
+})
+
+router.get("/test",  async (req, res)=>{  
+    if(!req.cookies.token){    
+      helpersENV.usuario = ""
+      helpersENV.usuario_id = ""
+    }  
+   // bk_bd()
+  
+    res.render("test",{    
+      userName: helpersENV.usuario
+    })
+})
 
 
 module.exports = router

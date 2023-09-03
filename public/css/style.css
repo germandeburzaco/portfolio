@@ -296,7 +296,7 @@ footer {
     position: fixed;
     width: 370px;
     height: 300px;
-    background: var(--bkColor2Claro);
+    background: var(--bkColor1Claro);
     left: -370px;
     transition: all 20ms linear;
     box-shadow: 0 4px 6px -6px rgb(5, 5, 5);
