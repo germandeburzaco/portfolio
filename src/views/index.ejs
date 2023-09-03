@@ -113,17 +113,17 @@
   <script>
     window.addEventListener("load", () => {
 
+      let usuario_config = <%- JSON.stringify(usuario_config) %>;
 
-
-
-
-
-      
-
-
+      if(usuario_config && usuario_config.modo === "oscuro"){
+        console.log("usuario quiere modo oscuro")
+        document.getElementById('elemBody').classList.toggle("modoClaro")
+        document.getElementById("iconoLight").classList.toggle("fa-sun")
+        document.getElementById("iconoLight").classList.toggle("fa-moon")
+      }
+    
 
       var iconoLight = document.getElementById("iconoLight")
-
 
       let puntos = document.getElementById("main-punto")
       let puntosSkill = document.getElementById("main-puntoSkill")
@@ -148,8 +148,7 @@
           iconoLight.classList.toggle("fa-sun")
           iconoLight.classList.toggle("fa-moon")
         } else {
-          btnModo.value = "-Dark Mode-"
-          
+          btnModo.value = "-Dark Mode-"          
           elemBody.classList.toggle("modoClaro")
           iconoLight.classList.toggle("fa-sun")
           iconoLight.classList.toggle("fa-moon")
