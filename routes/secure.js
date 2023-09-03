@@ -26,7 +26,7 @@ router.get("/perfil",  middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
   }
-
+  let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
   var respuestaQRY
   miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${helpersENV.usuario}'`
   respuestaQRY = await misDatos(miSQLqry)
@@ -34,7 +34,8 @@ router.get("/perfil",  middlewares.authenticateToken, async (req, res)=>{
 
   res.render("perfil",{    
     userName: helpersENV.usuario,
-    datosUsuario: respuestaQRY
+    datosUsuario: respuestaQRY,
+    usuario_config: usuario_config
   })
 })
 

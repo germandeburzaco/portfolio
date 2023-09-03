@@ -22,9 +22,10 @@ router.get("/proyects",  async (req, res)=>{
       helpersENV.usuario_id = ""
     }  
    // bk_bd()
-  
+   let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
     res.render("proyects",{    
-      userName: helpersENV.usuario
+      userName: helpersENV.usuario,
+      usuario_config: usuario_config
     })
 })
 
