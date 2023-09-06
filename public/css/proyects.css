@@ -62,8 +62,8 @@ header{
     grid-column: 7/18;
 }
 .navbar--botones-ul{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 120px);
+    display: flex;
+    gap: 20px;
     color: var(--txtColor1Claro); 
     cursor: pointer;
 }
@@ -232,6 +232,13 @@ footer{
 #modalIMG{
     width:350px
 }  
+
+@media screen and (max-width: 1400px) {
+    .navbar--botones-ul {
+        display: none; /* Cambiar a flexbox para apilar elementos verticalmente */       
+      }        
+}
+
 
 @media screen and (max-width: 700px) {
     .navbar--botones-ul {

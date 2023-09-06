@@ -57,8 +57,8 @@ header {
 }
 
 .navbar--botones-ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 120px);
+    display: flex; 
+    gap: 20px;
     color: var(--txtColor1Claro);
     cursor: pointer;
 }
@@ -302,34 +302,40 @@ footer {
     box-shadow: 0 4px 6px -6px rgb(5, 5, 5);
     border: 1px solid rgba(128, 128, 128, 0.282);
 
-  }
+}
 
-  #sidebar.active {
-    left: 0px;
-  }
+#sidebar.active {
+left: 0px;
+}
 
-  #sidebar ul li {
-    list-style: none;
-    padding: 10px 5px;
-    border-bottom: 1px solid rgba(100, 100, 100, .3);
-    text-align: center;
-  }
+#sidebar ul li {
+list-style: none;
+padding: 10px 5px;
+border-bottom: 1px solid rgba(100, 100, 100, .3);
+text-align: center;
+}
 
-  #sidebar .toggle-btn {
-    position: absolute;
-    left: 180px;
-    top: 5px;
-    cursor: pointer;
-    background: #f1f2f3;
-  }
+#sidebar .toggle-btn {
+position: absolute;
+left: 180px;
+top: 5px;
+cursor: pointer;
+background: #f1f2f3;
+}
 
-  #sidebar .toggle-btn span {
-    display: block;
-    width: 20px;
-    text-align: center;
-    font-size: 10px;
-    border: 1px solid #000;
-  }
+#sidebar .toggle-btn span {
+display: block;
+width: 20px;
+text-align: center;
+font-size: 10px;
+border: 1px solid #000;
+}
+
+@media screen and (max-width: 1400px) {
+.navbar--botones-ul {
+    display: none; /* Cambiar a flexbox para apilar elementos verticalmente */       
+    }        
+}
 
 /* Estilos para dispositivos móviles utilizando media queries */
 @media (max-width: 768px) {
