@@ -41,5 +41,17 @@ router.get("/test",  async (req, res)=>{
     })
 })
 
+router.get("/aprender",  async (req, res)=>{  
+  if(!req.cookies.token){    
+    helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
+  }  
+ // bk_bd()
+
+  res.render("aprender",{    
+    userName: helpersENV.usuario
+  })
+})
+
 
 module.exports = router

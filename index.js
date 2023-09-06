@@ -52,6 +52,7 @@ app.use(middlewares.logRequestInfo);
 app.get("/", require("./routes/index.js"))
         
 app.get("/proyects",  require("./routes/index.js"))
+app.get("/aprender",  require("./routes/index.js"))
 app.get("/test",  require("./routes/index.js"))
 
 app.get("/cine", require("./routes/secure.js"))
@@ -115,7 +116,7 @@ app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{
 
 app.get("/clima", middlewares.authenticateToken, async (req, res)=>{  
   let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
-  
+
   if(!req.cookies.token){    
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""
