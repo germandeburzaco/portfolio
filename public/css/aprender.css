@@ -1,0 +1,61 @@
+.contenedor{
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.contenedorNavBar{
+    background-color:  var(--bkColor2Claro); 
+    display: flex; 
+    height: 100vh;
+    flex-direction: column;
+    padding: 10px 0 0 20px;
+}
+
+/* CONTENEDORES DE CODIGO*/
+.contenedorCodigo{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border: 0.1px solid rgb(52, 50, 50);
+    margin: 12px 0 12px 0;
+    border-radius: 1px;
+    box-shadow:  4px 4px 11px 0 #000;;
+}
+
+/* CONTENEDOR CODIGO*/
+.contenedorCodigoVisualStudio{
+    display: flex;
+    flex-direction: column;
+    border: 20px;
+}
+
+.codigo{
+    margin: 5px 10px;
+    padding: 10px 20px;
+    background-color: #1b1b1b;
+    color: rgb(40, 162, 27);
+    font-size: 17px;
+    border-radius: 4px;    
+}
+
+/* CONTENEDOR CONSOLA*/
+.contenedorConsola{
+    background-color: white;
+}
+
+.consola{
+    border-radius: 4px;
+    margin: 5px 10px;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+}
+
+.btnProbar{
+    width: 80px;
+    padding: 1px 3px;
+    display: none;
+}
+
+
+

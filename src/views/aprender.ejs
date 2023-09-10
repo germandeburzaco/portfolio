@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
     <link rel="stylesheet" href="/css/test.css">
+    <link rel="stylesheet" href="/css/aprender.css">
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -93,42 +94,96 @@
   <header>
     <%- include ("partials/_heads") %>
   </header>
-  <div style="display: grid; grid-template-columns: 20% 80%;">
-    <div style="background-color:  var(--bkColor2Claro); display: flex;">
-      <p>TEMA1</p>
-      <br>
-      <p>TEMA1</p>
-      <br>
-      <p>TEMA1</p>
-      <br>
-      <p>TEMA1</p>
-      <br>
-      <p>TEMA1</p>
-      <br>
+  <div class="contenedor">
+    <div class="contenedorNavBar">
+      <div>
+        <p>QUE ES JS?</p>
+      </div>
+      <div>
+        <p>TEMA1</p>
+      </div>
+      <div>
+        <p>TEMA1</p>
+      </div>
+      <div>
+        <p>TEMA1</p>
+      </div>
+      <div>
+        <p>TEMA1</p>
+      </div>    
 
     </div>
-    <div style="background-color: var(--bkColor1Claro);">
+    <div style="background-color: var(--bkColor1Claro);"> <!-- hijo2-->
       <div style="width: 80%; margin: 0 auto;">
         <p class="main-texto">Aprende <span class="main-nombre"> JS</span><span class="main-punto" id="main-punto">_</span>
         </p>      
       </div>
 
-      <div>
-        <div class="container" style="width: 80%; margin: auto;">
-          <h5 class="accordion" >SERVICIO DE WIFI</h5>
-          <div class="panel">             
-              
+      
+      <div class="container" style="width: 90%; margin: auto;">
+        
+        <h5 class="accordion" >QUE ES JS?</h5> <!--- JS -->
+        <div class="panel">  
+            <div>
+              <p>JavaScript fue creado para “dar vida a las páginas web”.
 
-              <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt pariatur ad porro!</p>
+                Los programas en este lenguaje se llaman scripts. Se pueden escribir directamente en el HTML de una página web y ejecutarse automáticamente a medida que se carga la página.
+                
+                Los scripts se proporcionan y ejecutan como texto plano. No necesitan preparación especial o compilación para correr.</p>
+            </div>
+        </div>
+
+        <h5 class="accordion" >HOLA MUNDO</h5> <!--- HOLA MUNDO -->
+        <div class="panel">  
+          <div>
+            <p>Tu primer HOLA MUNDO con JS.</p>
+            <div class="contenedorCodigo"><!--- LENGHT -->
+              <div class="contenedorCodigoVisualStudio">
+                <p class="codigo">console.log("HOLA MUNDO")</p>
+                <button class="btnProbar">PROBAR</button>
               </div>
+              <div class="contenedorConsola">
+                <p class="consola">Hola mundo</p>
+              </div>
+            </div>
 
           </div>
-      </div>
-      </div>
+        </div>
 
-    </div>
-  </div> 
+        <h5 class="accordion" >TRABAJAR CON STRINGS</h5> <!--- HOLA MUNDO -->
+        <div class="panel">  
+          <div>
+            <p>Metodos para procesar STRINGS</p>
+            <div class="contenedorCodigo"><!--- LENGHT -->
+              <div class="contenedorCodigoVisualStudio">
+                <p class="codigo">msg.lenght()</p>
+                <button class="btnProbar">PROBAR</button>
+              </div>
+              <div class="contenedorConsola">
+                <p class="consola">Hola mundo</p>
+              </div>
+            </div>
+
+            <div class="contenedorCodigo"><!--- LENGHT -->
+              <div class="contenedorCodigoVisualStudio">
+                <p class="codigo">msg.toUpperCase()</p>
+                <button class="btnProbar">PROBAR</button>
+              </div>
+              <div class="contenedorConsola">
+                <p class="consola">Hola mundo</p>
+              </div>
+            </div>
+
+            
+
+          </div>
+        </div>
+
+      </div>
+           
+
+    </div> <!-- fin hijo2-->
+  </div> <!-- fin contenedor-->
 
   <footer>
     <div class="containterMain--redes">
