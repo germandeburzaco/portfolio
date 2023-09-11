@@ -23,6 +23,8 @@ helpersENV.usuario_id = ""
  
 config()
 
+var miString = "Hola mundo"
+miString.toUpperCase()
     
 //const iv = crypto.randomBytes(16); // Initialization Vector
 //const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(secretKey), iv);
