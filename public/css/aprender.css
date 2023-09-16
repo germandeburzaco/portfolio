@@ -49,4 +49,11 @@
 }
 
 
+/* Estilos para dispositivos móviles utilizando media queries */
+@media (max-width: 768px) {
 
+    .contenedor{
+        display: grid;
+        grid-template-columns: 0% 99%;
+    }
+}

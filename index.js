@@ -50,7 +50,7 @@ app.use(middlewares.logRequestInfo);
 //************************************************************/
 // RUTAS
 //************************************************************/
-
+ 
 app.get("/", require("./routes/index.js"))
         
 app.get("/proyects",  require("./routes/index.js"))

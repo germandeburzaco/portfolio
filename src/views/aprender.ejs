@@ -205,7 +205,29 @@
   <script>
     window.addEventListener("load", () => {
 
-      
+        var db_learnJS 
+
+        async function getData(){
+            fetch('/files/db_learnJS.json')
+            .then(response => response.json())
+            .then(data => {
+                    return data;
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        }
+
+        var db_learnJS =  getData()
+        console.log(db_learnJS)
+
+        async function loadAndLogData() {
+          try {
+            db_learnJS = await getData();
+            console.log(db_learnJS);
+          } catch (error) {            
+            console.error('Error al cargar y mostrar datos:', error);
+          }
+        }
+
         var iconoLight = document.getElementsByClassName("fa-moon")
         var iconoMenu = document.getElementById("iconoMenu")
        
