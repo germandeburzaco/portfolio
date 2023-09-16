@@ -20,6 +20,9 @@
 
     <link rel="stylesheet" href="/css/test.css">
     <link rel="stylesheet" href="/css/aprender.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.css">
+    
     <title>PORTFOLIO</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -84,13 +87,17 @@
         .active:after {
             content: "\2212";
         }
+
+        pre.line-numbers {
+          padding-left: 0;
+        }
         
       </style>
 </head>
 
 
 
-<body id="elemBody" class="  modoOscuro modoClaro">
+<body id="elemBody" class="  modoOscuro modoClaro line-numbers">
   <header>
     <%- include ("partials/_heads") %>
   </header>
@@ -139,9 +146,11 @@
             <p>Tu primer HOLA MUNDO con JS.</p>
             <div class="contenedorCodigo"><!--- LENGHT -->
               <div class="contenedorCodigoVisualStudio">
-                <p class="codigo">console.log("Hola Mundo")</p>
-                <p class="consola">// Hola mundo</p>
-                <button class="btnProbar">PROBAR</button>
+                <pre class="line-numbers">
+                  <code class="language-javascript ">                  
+                  console.log("Hola mundo") //Hola mundo
+                  </code>
+                </pre> 
               </div>              
             </div>
 
@@ -154,27 +163,33 @@
             <p>Metodos para procesar STRINGS</p>
             <div class="contenedorCodigo"><!--- LENGHT -->
               <div class="contenedorCodigoVisualStudio">
-                <p class="codigo">msg.lenght()</p>
-                <p class="consola">// 7</p>
-                <button class="btnProbar">PROBAR</button>
+                <pre class="line-numbers">
+                  <code class="language-javascript ">                  
+                  msg.lenght() //9
+                  </code>
+                </pre> 
               </div>              
             </div>
 
             <div class="contenedorCodigo"><!--- uppercase -->
-              <div class="contenedorCodigoVisualStudio">
-                <p class="codigo">msg.toUpperCase()</p>
-                <p class="consola">// HOLA MUNDO</p>
-                <button class="btnProbar">PROBAR</button>              
-              </div>
+              <pre class="line-numbers">
+                <code class="language-javascript ">                  
+                function saludar() { console.log("¡Hola, mundo!");
+                } var mensaje = "Hola mundo" 
+                </code>
+              </pre>  
             </div>
 
             <div class="contenedorCodigo"><!--- uppercase -->
               <div class="contenedorCodigoVisualStudio">
-                <p class="codigo">msg.toUpperCase()</p>
-                <p class="consola">// HOLA MUNDO</p>
-                <button class="btnProbar">PROBAR</button>              
+                <pre class="line-numbers">
+                  <code class="language-javascript ">                  
+                  function saludar() { console.log("¡Hola, mundo!");
+                  } var mensaje = "Hola mundo" 
+                  </code>
+                </pre>             
               </div>
-            </div>
+            </div>            
 
             
 
@@ -201,11 +216,14 @@
 
     </div>
   </footer>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script>
     window.addEventListener("load", () => {
 
         var db_learnJS 
+        Prism.highlightAll();
+      
 
         async function getData(){
             fetch('/files/db_learnJS.json')
@@ -217,7 +235,7 @@
         }
 
         var db_learnJS =  getData()
-        console.log(db_learnJS)
+        //console.log(db_learnJS)
 
         async function loadAndLogData() {
           try {

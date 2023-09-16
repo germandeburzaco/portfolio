@@ -12,23 +12,19 @@
 }
 
 /* CONTENEDORES DE CODIGO*/
-.contenedorCodigo{
+/*.contenedorCodigo{
     display: grid;
     border: 0.1px solid rgb(174 174 175);
     margin: 12px 0 12px 0;
     border-radius: 1px;
     box-shadow:  4px 4px 5px 0 #000;;
-}
+}*/
 
 /* CONTENEDOR CODIGO*/
 .contenedorCodigoVisualStudio{    
     border: 20px;
-    background-color: #1b1b1b;
-    margin: 5px 10px;
-    padding: 10px 20px;
-    border-radius: 4px;  
-    display: flex;  
-    width: 97%;
+    background-color: #1b1b1b;    
+    border-radius: 4px;      
 }
 
 .codigo{
@@ -42,11 +38,6 @@
     font-size: 16px;
 }
 
-.btnProbar{
-    width: 80px;
-    padding: 1px 3px;
-    display: none;
-}
 
 
 /* Estilos para dispositivos móviles utilizando media queries */
