@@ -23,28 +23,24 @@
 /* CONTENEDOR CODIGO*/
 .contenedorCodigoVisualStudio{    
     border: 20px;
-    background-color: #1b1b1b;    
+    background-color: #272822;    
     border-radius: 4px;      
 }
 
-.codigo{
-    color: rgb(40, 162, 27);
+.contenedorCodigo{    
+    border: 20px;
+    background-color: #272822;    
+    border-radius: 4px;      
+}
+
+.explicaciones{
+    color: white; 
+    padding: 15px 8px 15px 12px; 
     font-size: 17px;
 }
 
-.consola{    
-    padding: 0 0 0 10px  ;
-    color: rgb(148, 148, 148);    
-    font-size: 16px;
-}
 
 
 
-/* Estilos para dispositivos móviles utilizando media queries */
-@media (max-width: 768px) {
 
-    .contenedor{
-        display: grid;
-        grid-template-columns: 0% 99%;
-    }
-}
+
