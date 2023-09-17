@@ -9,6 +9,7 @@
     height: 100vh;
     flex-direction: column;
     padding: 10px 0 0 20px;
+    display: ;
 }
 
 /* CONTENEDORES DE CODIGO*/
@@ -41,6 +42,13 @@
 
 
 
+@media screen and (max-width: 700px) {
 
+    .contenedor{
+        display: grid;
+        grid-template-columns: 1% 99%;
+    }
 
+    
+}
 
