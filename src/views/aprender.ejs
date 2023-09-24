@@ -92,6 +92,9 @@
           padding-left: 0;
         }
         
+        .comment{
+          white-space: pre-wrap;
+        }
       </style>
 </head>
 
@@ -101,8 +104,8 @@
   <header>
     <%- include ("partials/_heads") %>
   </header>
-  <div class="contenedor">
-    <div class="contenedorNavBar">
+  <div class="contenedor"> <!--CONTENEDRO PRINCIPA-->
+    <div class="contenedorNavBar"> <!--hijo1-->
       <div>
         <p>QUE ES JS?</p>
       </div>
@@ -118,8 +121,8 @@
       <div>
         <p>TEMA1</p>
       </div>    
+    </div><!--fin hijo1-->
 
-    </div>
     <div style="background-color: var(--bkColor1Claro); margin-bottom: 65px;"> <!-- hijo2-->
       <div style="width: 80%; margin: 0 auto;">
         <p class="main-texto">Aprende <span class="main-nombre"> JS</span><span class="main-punto" id="main-punto">_</span>
@@ -127,7 +130,7 @@
       </div>
 
       
-      <div class="container" style="width: 90%; margin: auto;">
+      <div class="container" style="width: 90%; margin: auto;"> <!-- hijo2 CONTAINER-->
         
         <h5 class="accordion" >QUE ES JS?</h5> <!--- JS -->
         <div class="panel">             
@@ -136,77 +139,66 @@
               Los scripts se proporcionan y ejecutan como texto plano. No necesitan preparación especial o compilación para correr.</p>          
         </div>
 
-        <h5 class="accordion" >HOLA MUNDO</h5> <!--- HOLA MUNDO -->
-        <div class="panel">  
-          <div>
-            <p class="contenedorCodigo explicaciones" >Tu primer Hola Mundo</p>            
-              <div class="contenedorCodigo">
-      <pre class="line-numbers">
-      <code class="language-javascript ">                  
-      console.log("Hola Mundo!")   // Hola mundo
-      </code>
-      </pre> 
-              </div>  
-          </div>
-        </div>
-
-        <h5 class="accordion" >TRABAJAR CON STRINGS</h5> <!--- HOLA MUNDO -->
-        <div class="panel">  
-          <div>
-            <p class="contenedorCodigo explicaciones">Trabajando con STRINGS</p>  
-
-            <div class="contenedorCodigo"><!--- LENGHT -->              
-      <pre >
-      <code id="primero" class="language-javascript ">   
-var msg = "Hola mundo"               
-msg.lenght() // 10             
-msg.charAt(6) // m
-msg.endsWith("o") // true
-msg.includes("do") // true
-msg.indexOf("do") // 8
-msg.substring(0, 4); // "Hola"
-msg.toUpperCase(); // "HOLA MUNDO"
-msg.toLowerCase(); // "hola mundo"
-msg.replace("mundo", "amigo"); // "Hola amigo"
-
-var msg = "   Hola mundo   "; 🌍
-var trimmedMsg = msg.trim(); // "Hola mundo"
-
-var msg = "Hola,mundo,cruel";
-var parts = msg.split(","); // ["Hola", "mundo", "cruel"]
-
-var slicedMsg = msg.slice(5, 10); // "mundo"
-
-var msg = "Hola mundo, Hola todos";
-var replacedMsg = msg.replace(/Hola/g, "Hi"); // "Hi mundo, Hi todos"
-
-var msg = "Hola mundo, Hola todos";
-var replacedMsg = msg.replace(/Hola/g, "Hi"); // "Hi mundo, Hi todos"
-
-var str1 = "Hola";
-var str2 = "mundo";
-var result = str1.concat(" ", str2); // "Hola mundo"
-
-var str = "JavaScript";
-var unicodeValue = str.charCodeAt(0); // 74
-
-var str = "42";
-var paddedStr = str.padStart(5, "0"); // "00042"
-      </code>
-      </pre>                            
+          <h5 class="accordion" >HOLA MUNDO</h5> <!--- HOLA MUNDO -->
+          <div class="panel">  
+            <div>
+              <p class="contenedorCodigo explicaciones" >Tu primer Hola Mundo</p>            
+                <div class="contenedorCodigo">
+                <pre class="line-numbers">
+                <code class="language-javascript ">                  
+                console.log("Hola Mundo!")   // Hola mundo
+                </code>
+                </pre> 
+                </div>  
             </div>
-                      
+          </div> <!--- FIN HOLA MUNDO -->
+<!--- BLOQUE CODIGO MODELO -->
+<h5 class="accordion" >TIPO DE DATOS. ESTRUCTURAS DE DATOS</h5> <!--- TRABAJAR CON STRINGS -->
+<div class="panel">  <!--- panel -->            
+  <p class="contenedorCodigo explicaciones">Trabajando con STRINGS</p> 
+  <div class="contenedorCodigo"><!--- contenedorCodigo -->              
+  <pre >
+  <code id="primero" class="language-javascript ">   
+<%- dataFILEtiposDatos %>
+  </code>
+  </pre>                            
+  </div><!--- FIN contenedorCodigo -->
+</div> <!--- FIN panel -->
+<!---FIN BLOQUE CODIGO MODELO -->
 
-            
 
-          </div>
-        </div>
+<!--- BLOQUE CODIGO MODELO -->
+<h5 class="accordion" >TRABAJAR CON STRINGS</h5> <!--- TRABAJAR CON STRINGS -->
+<div class="panel">  <!--- panel -->            
+  <p class="contenedorCodigo explicaciones">Trabajando con STRINGS</p> 
+  <div class="contenedorCodigo"><!--- contenedorCodigo -->              
+  <pre >
+  <code id="primero" class="language-javascript ">   
+<%- dataFILEstrings %>
+  </code>
+  </pre>                            
+  </div><!--- FIN contenedorCodigo -->
+</div> <!--- FIN panel -->
+<!---FIN BLOQUE CODIGO MODELO -->
 
-      </div>
-           
+<!--- BLOQUE CODIGO MODELO -->
+<h5 class="accordion" >TRABAJAR CON ARRAYS</h5> <!--- TRABAJAR CON STRINGS -->
+<div class="panel">  <!--- panel -->            
+  <p class="contenedorCodigo explicaciones">Trabajando con STRINGS</p> 
+  <div class="contenedorCodigo"><!--- contenedorCodigo -->              
+  <pre >
+  <code id="primero" class="language-javascript ">   
+<%- dataFILEarrays %>
+  </code>
+  </pre>                            
+  </div><!--- FIN contenedorCodigo -->
+</div> <!--- FIN panel -->
+<!---FIN BLOQUE CODIGO MODELO -->
 
+
+      </div> <!-- FIN hijo2 CONTAINER-->   
     </div> <!-- fin hijo2-->
-  </div> <!-- fin contenedor-->
+  </div> <!-- CONTENEDRO PRINCIPA-->
 
   <footer>
     <div class="containterMain--redes">
@@ -225,39 +217,10 @@ var paddedStr = str.padStart(5, "0"); // "00042"
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script>
-    window.addEventListener("load", () => {
+    window.addEventListener("load", ()=> {
+        
+        Prism.highlightAll();         
 
-        var db_learnJS 
-        Prism.highlightAll();
-      
-
-        async function getData(){
-            fetch('/files/db_learnJS.json')
-            .then(response => response.json())
-            .then(data => {
-                    return data;
-                })
-                .catch(error => console.error('Error al cargar el archivo JSON:', error));
-        }
-
-        var db_learnJS =  getData()
-        //console.log(db_learnJS)
-
-        async function loadAndLogData() {
-          try {
-            db_learnJS = await getData();
-            console.log(db_learnJS);
-          } catch (error) {            
-            console.error('Error al cargar y mostrar datos:', error);
-          }
-        }
-
-        // Obtener el elemento del bloque de código
-        var codeElement = document.getElementById("primero");
-
-        // Modificar el contenido
-       // codeElement.textContent = "function nuevaFuncion() {\n      // Nuevo código aquí\n}";
-       // Prism.highlightElement(codeElement);
 
         var iconoLight = document.getElementsByClassName("fa-moon")
         var iconoMenu = document.getElementById("iconoMenu")

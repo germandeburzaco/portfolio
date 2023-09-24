@@ -1,0 +1,88 @@
+// Crear un array
+var frutas = ["manzana", "plátano", "uva"];
+
+// Obtener la longitud del array
+var longitud = frutas.length; // 3
+
+// Acceder a un elemento por su índice
+var primeraFruta = frutas[0]; // "manzana"
+
+// Añadir un elemento al final del array
+frutas.push("naranja"); // ["manzana", "plátano", "uva", "naranja"]
+
+// Eliminar el último elemento del array
+var ultimaFruta = frutas.pop(); // "naranja"
+
+// Encontrar el índice de un elemento en el array
+var indicePlatano = frutas.indexOf("plátano"); // 1
+
+// Eliminar un elemento por su índice
+frutas.splice(indicePlatano, 1); // ["manzana", "uva"]
+
+// Unir elementos de un array en una cadena de texto
+var cadenaFrutas = frutas.join(", "); // "manzana, uva"
+
+// Ordenar un array alfabéticamente
+frutas.sort(); // ["manzana", "uva"]
+
+// Invertir el orden de un array
+frutas.reverse(); // ["uva", "manzana"]
+
+// Crear una copia del array
+var copiaFrutas = frutas.slice(); // ["uva", "manzana"]
+
+/*
+ARRYS ANIDADOS
+*/
+
+// Crear una matriz (array anidado)
+var matriz = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+// Acceder a elementos de la matriz
+var primerElemento = matriz[0][0]; // 1
+var segundoElemento = matriz[1][2]; // 6
+
+// Iterar sobre una matriz utilizando bucles
+for (var i = 0; i < matriz.length; i++) {
+  for (var j = 0; j < matriz[i].length; j++) {
+    console.log(matriz[i][j]);
+  }
+}
+
+// Concatenar matrices anidadas
+var matriz1 = [[1, 2], [3, 4]];
+var matriz2 = [[5, 6], [7, 8]];
+
+var matrizConcatenada = matriz1.concat(matriz2);
+/*
+Resultado:
+[
+  [1, 2],
+  [3, 4],
+  [5, 6],
+  [7, 8]
+]
+*/
+
+// Usar el operador de propagación para concatenar matrices anidadas
+var matrizConcatenadaSpread = [...matriz1, ...matriz2];
+/*
+Resultado:
+[
+  [1, 2],
+  [3, 4],
+  [5, 6],
+  [7, 8]
+]
+*/
+
+// Acceder a elementos de una matriz anidada usando forEach
+matriz.forEach(function(fila) {
+  fila.forEach(function(elemento) {
+    console.log(elemento);
+  });
+});

@@ -1,0 +1,37 @@
+//Números (Number): Los números en JavaScript pueden ser enteros o decimales
+var numeroEntero = 42;
+var numeroDecimal = 3.14;
+
+//Cadenas de texto (String): Las cadenas de texto representan texto y se pueden crear utilizando comillas simples o dobles.
+var nombre = "Juan";
+var mensaje = 'Hola, ¿cómo estás?';
+
+//Booleanos (Boolean): Los booleanos representan valores de verdad o falsedad. Pueden ser true (verdadero) o false (falso). 
+var esMayorDeEdad = true;
+var esDiaSoleado = false;
+
+//Valores nulos (null) y valores indefinidos (undefined): null se utiliza para representar la ausencia de valor, mientras que undefined se utiliza cuando una variable ha sido declarada pero aún no se le ha asignado un valor.
+var valorNulo = null;
+var valorIndefinido;
+
+//Objetos (Object): Los objetos son estructuras de datos que pueden contener múltiples valores en pares clave-valor
+var persona = {
+  nombre: "Ana",
+  edad: 28,
+  ciudad: "Madrid"
+};
+
+//Arreglos (Array): Los arreglos son listas ordenadas de valores. Se accede a los elementos de un arreglo por su índice.
+var colores = ["rojo", "verde", "azul"];
+var numeros = [1, 2, 3, 4, 5];
+
+//Funciones (Function): Las funciones son bloques de código reutilizables que pueden realizar tareas específicas. Pueden aceptar argumentos y devolver valores.
+function suma(a, b) {
+  return a + b;
+}
+
+//Fecha (Date): El tipo Date permite trabajar con fechas y horas.
+var fechaActual = new Date();
+
+Expresiones regulares (RegExp): Las expresiones regulares son patrones utilizados para buscar y manipular texto.
+var patron = /abc/;

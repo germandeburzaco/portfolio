@@ -35,7 +35,7 @@ appConfiguraciones(app);
 // VARIABLES
 //************************************************************/
 
-const APP_PORT = process.env.PORT ?? "8080"
+const APP_PORT = process.env.PORT ?? "3000"
 
 
 //************************************************************/
@@ -52,7 +52,7 @@ app.use(middlewares.logRequestInfo);
 //************************************************************/
  
 app.get("/", require("./routes/index.js"))
-        
+         
 app.get("/proyects",  require("./routes/index.js"))
 app.get("/aprender",  require("./routes/index.js"))
 app.get("/test",  require("./routes/index.js"))

@@ -1,0 +1,24 @@
+var trimmedMsg = msg.trim(); // "xxxxxxxxxxxxxxx"
+
+var trimmedMsg = msg.trim(); // "Hola mundo"
+
+var msg = "Hola,mundo,cruel";
+var parts = msg.split(","); // ["Hola", "mundo", "cruel"]
+
+var slicedMsg = msg.slice(5, 10); // "mundo"
+
+var msg = "Hola mundo, Hola todos";
+var replacedMsg = msg.replace(/Hola/g, "Hi"); // "Hi mundo, Hi todos"
+
+var msg = "Hola mundo, Hola todos";
+var replacedMsg = msg.replace(/Hola/g, "Hi"); // "Hi mundo, Hi todos"
+
+var str1 = "Hola";
+var str2 = "mundo";
+var result = str1.concat(" ", str2); // "Hola mundo"
+
+var str = "JavaScript";
+var unicodeValue = str.charCodeAt(0); // 74
+
+var str = "42";
+var paddedStr = str.padStart(5, "0"); // "00042"
