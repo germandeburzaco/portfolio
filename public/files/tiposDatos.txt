@@ -33,5 +33,5 @@ function suma(a, b) {
 //Fecha (Date): El tipo Date permite trabajar con fechas y horas.
 var fechaActual = new Date();
 
-Expresiones regulares (RegExp): Las expresiones regulares son patrones utilizados para buscar y manipular texto.
+//Expresiones regulares (RegExp): Las expresiones regulares son patrones utilizados para buscar y manipular texto.
 var patron = /abc/;
