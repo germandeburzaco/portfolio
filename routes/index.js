@@ -75,6 +75,13 @@ router.get("/aprender",  async (req, res)=>{
   } catch (err) {
     console.error('Error al leer el archivo:', err);
   }
+
+  var dataFILEoperadoresLOGICOS
+  try {
+    dataFILEoperadoresLOGICOS = fs.readFileSync('./public/files/operadoresLogicos.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
   
 
   res.render("aprender",{    
@@ -83,6 +90,7 @@ router.get("/aprender",  async (req, res)=>{
     dataFILEarrays: dataFILEarrays,
     dataFILEtiposDatos: dataFILEtiposDatos,
     dataFILEloops: dataFILEloops,
+    dataFILEoperadoresLOGICOS: dataFILEoperadoresLOGICOS,
 
   })
 })

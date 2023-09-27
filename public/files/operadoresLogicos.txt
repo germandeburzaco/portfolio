@@ -1,0 +1,66 @@
+// Operadores Aritméticos:
+let x = 5;
+let y = 3;
+
+// Suma
+let suma = x + y;
+console.log(suma); // Salida: 8
+
+// Resta
+let resta = x - y;
+console.log(resta); // Salida: 2
+
+// Multiplicación
+let multiplicacion = x * y;
+console.log(multiplicacion); // Salida: 15
+
+// División
+let division = x / y;
+console.log(division); // Salida: 1.6666666666666667
+
+// Módulo (resto de la división)
+let modulo = x % y;
+console.log(modulo); // Salida: 2
+
+// Operadores Lógicos:
+let a = true;
+let b = false;
+
+// AND lógico
+let and = a && b;
+console.log(and); // Salida: false
+
+// OR lógico
+let or = a || b;
+console.log(or); // Salida: true
+
+// NOT lógico
+let not = !a;
+console.log(not); // Salida: false
+
+// Operadores de Asignación:
+let num = 10;
+
+// Asignación simple
+num = 20;
+console.log(num); // Salida: 20
+
+// Asignación con suma
+num += 5; // Equivalente a num = num + 5
+console.log(num); // Salida: 25
+
+// Asignación con resta
+num -= 3; // Equivalente a num = num - 3
+console.log(num); // Salida: 22
+
+// Asignación con multiplicación
+num *= 2; // Equivalente a num = num * 2
+console.log(num); // Salida: 44
+
+// Asignación con división
+num /= 4; // Equivalente a num = num / 4
+console.log(num); // Salida: 11
+
+// Asignación con módulo
+num %= 3; // Equivalente a num = num % 3
+console.log(num); // Salida: 2
