@@ -1,0 +1,58 @@
+// Bucle "for" - Itera sobre una secuencia de números
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+// Salida: 0, 1, 2, 3, 4
+
+// Bucle "while" - Itera mientras una condición sea verdadera
+let contador = 0;
+while (contador < 3) {
+  console.log(contador);
+  contador++;
+}
+// Salida: 0, 1, 2
+
+// Bucle "do...while" - Similar a "while", pero se ejecuta al menos una vez
+let num = 5;
+do {
+  console.log(num);
+  num--;
+} while (num > 0);
+// Salida: 5, 4, 3, 2, 1
+
+// Bucle "for...in" - Itera sobre las propiedades de un objeto
+const persona = { nombre: 'Juan', edad: 30 };
+for (let propiedad in persona) {
+  console.log(propiedad + ': ' + persona[propiedad]);
+}
+// Salida: nombre: Juan, edad: 30
+
+// Bucle "for...of" - Itera sobre elementos de una colección (Arrays, Strings)
+const colores = ['rojo', 'verde', 'azul'];
+for (let color of colores) {
+  console.log(color);
+}
+// Salida: rojo, verde, azul
+
+// Bucle "forEach" - Itera sobre elementos de un Array (sin índice)
+const frutas = ['manzana', 'banana', 'naranja'];
+frutas.forEach(function(fruta) {
+  console.log(fruta);
+});
+// Salida: manzana, banana, naranja
+
+// Bucle "map" - Transforma elementos de un Array y devuelve un nuevo Array
+const numeros = [1, 2, 3];
+const duplicados = numeros.map(function(numero) {
+  return numero * 2;
+});
+console.log(duplicados);
+// Salida: [2, 4, 6]
+
+// Bucle "filter" - Filtra elementos de un Array basado en una condición
+const edades = [25, 30, 18, 12];
+const mayoresDeEdad = edades.filter(function(edad) {
+  return edad >= 18;
+});
+console.log(mayoresDeEdad);
+// Salida: [25, 30, 18]

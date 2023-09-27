@@ -1,5 +1,5 @@
 // Crear un array
-var frutas = ["manzana", "plátano", "uva"];
+var frutas = ["manzana", "banana", "uva"];
 
 // Obtener la longitud del array
 var longitud = frutas.length; // 3
@@ -8,13 +8,13 @@ var longitud = frutas.length; // 3
 var primeraFruta = frutas[0]; // "manzana"
 
 // Añadir un elemento al final del array
-frutas.push("naranja"); // ["manzana", "plátano", "uva", "naranja"]
+frutas.push("naranja"); // ["manzana", "banana", "uva", "naranja"]
 
 // Eliminar el último elemento del array
 var ultimaFruta = frutas.pop(); // "naranja"
 
 // Encontrar el índice de un elemento en el array
-var indicePlatano = frutas.indexOf("plátano"); // 1
+var indicePlatano = frutas.indexOf("banana"); // 1
 
 // Eliminar un elemento por su índice
 frutas.splice(indicePlatano, 1); // ["manzana", "uva"]

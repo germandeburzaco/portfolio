@@ -68,6 +68,13 @@ router.get("/aprender",  async (req, res)=>{
   } catch (err) {
     console.error('Error al leer el archivo:', err);
   }
+
+  var dataFILEloops
+  try {
+    dataFILEloops = fs.readFileSync('./public/files/loops.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
   
 
   res.render("aprender",{    
@@ -75,6 +82,7 @@ router.get("/aprender",  async (req, res)=>{
     dataFILEstrings:  dataFILEstrings,
     dataFILEarrays: dataFILEarrays,
     dataFILEtiposDatos: dataFILEtiposDatos,
+    dataFILEloops: dataFILEloops,
 
   })
 })
