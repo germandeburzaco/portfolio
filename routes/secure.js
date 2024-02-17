@@ -136,7 +136,7 @@ router.post("/login", async (req, res) => {
   //PARA BD LOCAL
   miSQLqry = `${username}`
   respuestaQRY = await misDatos(miSQLqry)
-  console.log("DESDE BD WEB DIGO:")
+  console.log("17feb24 DESDE BD WEB DIGO:")
   console.log(respuestaQRY)
   //FIN PARA BD LOCAL
   
@@ -145,6 +145,9 @@ router.post("/login", async (req, res) => {
     // console
     res.status(401).json({ message: 'Credenciales inválidas' });
   } else { 
+
+    console.log(process.env.CRYPTO_SECRETKEY)
+
     const iv = crypto.randomBytes(16); // Initialization Vector
     const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(process.env.CRYPTO_SECRETKEY), iv);
    
