@@ -9,7 +9,7 @@ function generateRandomNumber() {
 }
 
 
-async function misDatos1(qry) { //BD ONLINE
+async function misDatosBKP(qry) { //BD ONLINE
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -24,7 +24,7 @@ async function misDatos1(qry) { //BD ONLINE
   return rows
 }
 
-async function misDatos(qry) {
+async function misDatosLOCAL(qry) {
   console.log(qry)
   try {
     console.log("llegamos a nueva funcion 1");
@@ -52,6 +52,27 @@ async function misDatos(qry) {
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+async function misDatos(qry) {
+
+  let db_user = [
+    {
+      "id": 3394,
+      "user_name": "GERMANG",
+      "password": "$2b$15$UDaDUNKzhYi4YU43LrtVR./Ph4qveHlMKqpenrtp.FzEnD4hTvF8.",
+      "EMAIL": "germandeburzaco@hotmail.com"
+    },
+    {
+      "id": 9794,
+      "user_name": "MARIANAM",
+      "password": "$2b$15$veuud30WaS5Bp./HyVQyy.0yDPWeQGwMiWKMBJRYKjOlFzIqz5LCi",
+      "EMAIL": "marianamolina@live.com"
+    }
+  ]
+  const usernameToSearch = qry;
+  const foundUser = db_user.find(user => user.user_name === usernameToSearch);
+  return [foundUser];
 }
 
 module.exports = {
