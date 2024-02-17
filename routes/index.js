@@ -15,8 +15,8 @@ router.get("/", async (req, res)=>{
       userName: helpersENV.usuario,
       usuario_config: usuario_config
     })
-})
-
+})  
+  
 router.get("/proyects",  async (req, res)=>{  
     if(!req.cookies.token){    
       helpersENV.usuario = ""

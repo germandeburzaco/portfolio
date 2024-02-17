@@ -58,6 +58,8 @@ app.get("/aprender",  require("./routes/index.js"))
 app.get("/test",  require("./routes/index.js"))
 
 app.get("/cine", require("./routes/secure.js"))
+
+app.get("/admin", require("./routes/secure.js"))
   
 app.get("/perfil", require("./routes/secure.js"))
 
@@ -68,7 +70,7 @@ app.get("/login", require("./routes/secure.js") )
   
 app.post('/login', require("./routes/secure.js")); 
 
-app.get("/bancocentral", middlewares.authenticateToken, async (req, res)=>{  
+app.get("/bancocentral",  async (req, res)=>{  
   if(!req.cookies.token){    
     helpersENV.usuario = ""
     helpersENV.usuario_id = ""

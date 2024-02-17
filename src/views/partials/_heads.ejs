@@ -15,6 +15,9 @@
             <li><a style="color: inherit;" href="/cine"> Cine</a> </li>
             <li><a style="color: inherit;" href="/bancocentral"> BcoCentral</a> </li>
             <li><a style="color: inherit;" href="/clima"> Clima</a> </li>
+            <%if ( userName==='GERMANG'  ) { %>
+              <li><a style="color: inherit;" href="/admin"> Admin</a> </li>
+            <% } %>
             <li><a style="color: inherit;" href="/perfil"> <%- userName %>  <i id="iconoUsuario" class="fas fa-user"></i></a></li>
             <li><a style="color: inherit;" href="/salir"> Salir</a> </li>
           <% } %>
@@ -46,6 +49,9 @@
             <li><a style="color: inherit;" href="/cine"> Cine</a> </li>
             <li><a style="color: inherit;" href="/bancocentral"> BcoCentral</a> </li>
             <li><a style="color: inherit;" href="/clima"> Clima</a> </li>
+            <%if ( userName==='GERMANG'  ) { %>
+              <li><a style="color: inherit;" href="/admin"> Admin</a> </li>
+            <% } %>
             <li><a style="color: inherit;" href="/perfil"> <%- userName %> <i id="iconoUsuario" class="fas fa-user"></i></a></li>
             <li><a style="color: inherit;" href="/salir"> Salir</a> </li>
           <% } %>

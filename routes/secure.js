@@ -2,6 +2,7 @@ var router = require("express").Router()
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 var helpersENV = require('../helpers/variables.js');
 const middlewares = require('../middlewares/middlewares.js');
@@ -27,15 +28,84 @@ router.get("/perfil",  middlewares.authenticateToken, async (req, res)=>{
     helpersENV.usuario_id = ""
   }
   let usuario_config = helpersENV.usuario_configuraciones.find((objeto) => objeto.user_name === helpersENV.usuario);
-  var respuestaQRY
+  
+  /*var respuestaQRY
   miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${helpersENV.usuario}'`
   respuestaQRY = await misDatos(miSQLqry)
+  console.log(respuestaQRY)*/
+
+  //PARA BD ONLINE
+  /*miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log("DESDE BD WEB DIGO:")
+  console.log(respuestaQRY)*/
+  //FIN PARA BD ONLINE
+  
+  //PARA BD LOCAL
+  miSQLqry = `${helpersENV.usuario}`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log("DESDE BD WEB DIGO:")
   console.log(respuestaQRY)
+  //FIN PARA BD LOCAL
+
 
   res.render("perfil",{    
     userName: helpersENV.usuario,
     datosUsuario: respuestaQRY,
     usuario_config: usuario_config
+  })
+})
+
+router.get("/admin", async (req, res)=>{   
+  if(!req.cookies.token){    
+    helpersENV.usuario = ""
+    helpersENV.usuario_id = ""
+  }  
+ // bk_bd()
+  var dataFILEstrings
+  try {
+  dataFILEstrings = fs.readFileSync('./public/files/strings.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
+
+ var dataFILEarrays
+  try {
+  dataFILEarrays = fs.readFileSync('./public/files/arrays.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
+
+  var dataFILEtiposDatos
+  try {
+    dataFILEtiposDatos = fs.readFileSync('./public/files/tiposDatos.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
+
+  var dataFILEloops
+  try {
+    dataFILEloops = fs.readFileSync('./public/files/loops.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
+
+  var dataFILEoperadoresLOGICOS
+  try {
+    dataFILEoperadoresLOGICOS = fs.readFileSync('./public/files/operadoresLogicos.txt', 'utf8');    
+  } catch (err) {
+    console.error('Error al leer el archivo:', err);
+  }
+  
+
+  res.render("admin",{    
+    userName: helpersENV.usuario,
+    dataFILEstrings:  dataFILEstrings,
+    dataFILEarrays: dataFILEarrays,
+    dataFILEtiposDatos: dataFILEtiposDatos,
+    dataFILEloops: dataFILEloops,
+    dataFILEoperadoresLOGICOS: dataFILEoperadoresLOGICOS,
+
   })
 })
 
@@ -55,11 +125,21 @@ router.post("/login", async (req, res) => {
   console.log(username)
   console.log(password)
   var respuestaQRY
-  miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
+
+  //PARA BD ONLINE
+  /*miSQLqry = `SELECT * FROM USUARIOS WHERE user_name = '${username}'`
+  respuestaQRY = await misDatos(miSQLqry)
+  console.log("DESDE BD WEB DIGO:")
+  console.log(respuestaQRY)*/
+  //FIN PARA BD ONLINE
+  
+  //PARA BD LOCAL
+  miSQLqry = `${username}`
   respuestaQRY = await misDatos(miSQLqry)
   console.log("DESDE BD WEB DIGO:")
   console.log(respuestaQRY)
-    
+  //FIN PARA BD LOCAL
+  
        
   if (respuestaQRY.length === 0 || !bcrypt.compareSync(password, respuestaQRY[0].password)) {
     // console
