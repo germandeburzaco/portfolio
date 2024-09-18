@@ -358,9 +358,9 @@ client.on('message', async message => {
   console.log(message.body )
   console.log("-------------------------" )
   //CONTROL USUARIOS AUTENTICADOS
-  if(message.from == "5491138026729@c.us"){
+  if(message.from == "54911xxxxxxx@c.us"){
       client.sendMessage(message.from, 'Hola German soy *SHERLOCK* 🕵️ v1');
-  }else if(message.from == "5491132852915@c.us"){
+  }else if(message.from == "549xxxxxxxxx@c.us"){
      // client.sendMessage(message.from, 'Hola German soy *SHERLOCK* 🕵️ v1');
   }else {
      // client.sendMessage(message.from, 'Hola soy *SHERLOCK* 🕵️ v1 - NO estas registrado en mi base de datos');
