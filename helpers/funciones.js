@@ -60,14 +60,14 @@ async function misDatos(qry) {
     {
       "id": 3394,
       "user_name": "GERMANG",
-      "password": "$2b$15$UDaDUNKzhYi4YU43LrtVR./Ph4qveHlMKqpenrtp.FzEnD4hTvF8.",
-      "EMAIL": "germandeburzaco@hotmail.com"
+      "password": "$2b$15$Kqpenrtp.FzEnD4hTvF8.",
+      "EMAIL": "ge@hotmail.com"
     },
     {
       "id": 9794,
       "user_name": "MARIANAM",
-      "password": "$2b$15$veuud30WaS5Bp./HyVQyy.0yDPWeQGwMiWKMBJRYKjOlFzIqz5LCi",
-      "EMAIL": "marianamolina@live.com"
+      "password": "$2b$15zIqz5LCi",
+      "EMAIL": "ma@live.com"
     }
   ]
   const usernameToSearch = qry;
